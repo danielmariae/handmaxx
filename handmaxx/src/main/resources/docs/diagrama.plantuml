@@ -1,0 +1,17 @@
+@startuml diagrama
+
+class Usuario {
+    id: Long
+    login: String
+    senha: String
+    perfil: Perfil
+}
+
+
+enum Perfil {
+    + USER
+    + ADMIN
+}
+
+Usuario "1" o--> "1" Perfil
+
