@@ -19,4 +19,6 @@ public class Atleta extends DefaultEntity {
     private Sexo sexo; 
 
     private Categoria categoria;
+
+    
 }

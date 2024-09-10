@@ -6,7 +6,6 @@ class Usuario {
     id: Long
     login: String
     senha: String
-    isAdmin: Boolean
 }
 
 class Atleta {
