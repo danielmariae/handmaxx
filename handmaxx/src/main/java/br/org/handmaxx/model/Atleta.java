@@ -3,10 +3,13 @@ package br.org.handmaxx.model;
 import java.time.LocalDate;
 
 import jakarta.persistence.Entity;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Entity
+@Data
+@EqualsAndHashCode(callSuper = true)
 public class Atleta extends DefaultEntity {
-    
     private String nome;
 
     private String cpf;
@@ -16,6 +19,4 @@ public class Atleta extends DefaultEntity {
     private Sexo sexo; 
 
     private Categoria categoria;
-
-    
 }
