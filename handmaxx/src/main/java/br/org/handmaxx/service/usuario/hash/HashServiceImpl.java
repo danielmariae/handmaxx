@@ -22,7 +22,7 @@ public class HashServiceImpl implements HashService {
             return Base64.getEncoder().encodeToString(result);
         } catch (Exception e) {
             e.printStackTrace();
-            throw new RuntimeException("Erro ao criar um hash");
+            throw new RuntimeException("Erro ao criar um hash.");
         }
     }
 }
