@@ -5,9 +5,11 @@ import br.org.handmaxx.dto.usuario.UsuarioDTO;
 import br.org.handmaxx.dto.usuario.UsuarioResponseDTO;
 import br.org.handmaxx.repository.UsuarioRepository;
 import br.org.handmaxx.service.usuario.hash.HashService;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 
+@ApplicationScoped
 public class UsuarioServiceImpl implements UsuarioService {
     @Inject
     UsuarioRepository usuarioRepository;
