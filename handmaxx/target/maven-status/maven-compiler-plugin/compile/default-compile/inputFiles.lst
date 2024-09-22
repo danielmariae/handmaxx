@@ -1,3 +1,7 @@
+C:\Users\lucas\Desenvolvimento\handmaxx\handmaxx\src\main\java\br\org\handmaxx\app\error\CustomException.java
+C:\Users\lucas\Desenvolvimento\handmaxx\handmaxx\src\main\java\br\org\handmaxx\app\error\CustomExceptionMapper.java
+C:\Users\lucas\Desenvolvimento\handmaxx\handmaxx\src\main\java\br\org\handmaxx\app\error\ErrorResponse.java
+C:\Users\lucas\Desenvolvimento\handmaxx\handmaxx\src\main\java\br\org\handmaxx\app\error\GlobalExceptionMapper.java
 C:\Users\lucas\Desenvolvimento\handmaxx\handmaxx\src\main\java\br\org\handmaxx\app\GreetingResource.java
 C:\Users\lucas\Desenvolvimento\handmaxx\handmaxx\src\main\java\br\org\handmaxx\app\Main.java
 C:\Users\lucas\Desenvolvimento\handmaxx\handmaxx\src\main\java\br\org\handmaxx\dto\atleta\AtletaDTO.java
@@ -17,6 +21,7 @@ C:\Users\lucas\Desenvolvimento\handmaxx\handmaxx\src\main\java\br\org\handmaxx\m
 C:\Users\lucas\Desenvolvimento\handmaxx\handmaxx\src\main\java\br\org\handmaxx\MyEntity.java
 C:\Users\lucas\Desenvolvimento\handmaxx\handmaxx\src\main\java\br\org\handmaxx\repository\UsuarioRepository.java
 C:\Users\lucas\Desenvolvimento\handmaxx\handmaxx\src\main\java\br\org\handmaxx\resource\AuthResource.java
+C:\Users\lucas\Desenvolvimento\handmaxx\handmaxx\src\main\java\br\org\handmaxx\resource\UsuarioResource.java
 C:\Users\lucas\Desenvolvimento\handmaxx\handmaxx\src\main\java\br\org\handmaxx\service\usuario\hash\HashService.java
 C:\Users\lucas\Desenvolvimento\handmaxx\handmaxx\src\main\java\br\org\handmaxx\service\usuario\hash\HashServiceImpl.java
 C:\Users\lucas\Desenvolvimento\handmaxx\handmaxx\src\main\java\br\org\handmaxx\service\usuario\jwt\JwtService.java
