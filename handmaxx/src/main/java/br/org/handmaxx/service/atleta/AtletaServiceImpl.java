@@ -39,7 +39,8 @@ public class AtletaServiceImpl implements AtletaService {
         atleta.setDataNascimento(dto.dataNascimento());
         atleta.setSexo(dto.sexo());
         atleta.setCategoria(dto.categoria());
-        atleta.setEndereco(dto.endereco().toModel());
+
+        //atleta.setEndereco(dto.endereco().toModel());
 
         try {
             atletaRepository.persist(atleta);
@@ -66,7 +67,8 @@ public class AtletaServiceImpl implements AtletaService {
         atleta.setDataNascimento(dto.dataNascimento());
         atleta.setSexo(dto.sexo());
         atleta.setCategoria(dto.categoria());
-        atleta.setEndereco(dto.endereco().toModel());
+
+        //atleta.setEndereco(dto.endereco().toModel());
 
         return AtletaResponseDTO.valueOf(atleta);
     }
