@@ -6,7 +6,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-//import jakarta.persistence.OneToOne;
+import jakarta.persistence.OneToOne;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -27,6 +27,9 @@ public class Atleta extends DefaultEntity {
 
     //@OneToOne
     //private Endereco endereco;
+    
+    @OneToOne
+    private QuestionarioSocial dadosSociais;
 
     private Categoria categoria;
 }
