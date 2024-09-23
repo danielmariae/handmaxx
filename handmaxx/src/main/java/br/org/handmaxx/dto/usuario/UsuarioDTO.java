@@ -4,7 +4,7 @@ import br.org.handmaxx.model.Usuario;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
-public record UsuarioDTO (
+public record UsuarioDTO(
 
     @NotBlank(message = "O CNPJ não pode ser nulo.")
     @Pattern(regexp = "^\\d{14}$", message = "CNPJ deve conter exatamente 14 dígitos.")
