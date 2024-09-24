@@ -14,6 +14,4 @@
         private String local;
         private LocalDate horario;
 
-        // Inserir aqui frequência.
-
     }
