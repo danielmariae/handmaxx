@@ -8,11 +8,18 @@ import br.org.handmaxx.app.error.global.ErrorResponse;
 import br.org.handmaxx.dto.atleta.AtletaDTO;
 import br.org.handmaxx.dto.atleta.AtletaResponseDTO;
 import br.org.handmaxx.model.Atleta;
+<<<<<<< HEAD
+=======
+import br.org.handmaxx.model.QuestionarioSocial;
+>>>>>>> 3a8d1967d30c04c6f9e475b4aac1e0c1421ecc26
 import br.org.handmaxx.repository.AtletaRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.PersistenceException;
+<<<<<<< HEAD
 //import jakarta.validation.Valid;
+=======
+>>>>>>> 3a8d1967d30c04c6f9e475b4aac1e0c1421ecc26
 
 @ApplicationScoped
 public class AtletaServiceImpl implements AtletaService {
@@ -31,7 +38,10 @@ public class AtletaServiceImpl implements AtletaService {
 
     @Override
     public AtletaResponseDTO create(AtletaDTO dto) {
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3a8d1967d30c04c6f9e475b4aac1e0c1421ecc26
         Atleta atleta = new Atleta();
 
         atleta.setNome(dto.nome());
@@ -40,8 +50,22 @@ public class AtletaServiceImpl implements AtletaService {
         atleta.setSexo(dto.sexo());
         atleta.setCategoria(dto.categoria());
 
+<<<<<<< HEAD
         //atleta.setEndereco(dto.endereco().toModel());
 
+=======
+        atleta.setEndereco(dto.endereco().toModel());
+
+        // atleta.setDadosSociais(dto.questionario().toModel());
+        QuestionarioSocial questionario = new QuestionarioSocial();
+        questionario.setRendaFamiliar(dto.questionario().rendaFamiliar());
+        questionario.setPessoasEmCasa(dto.questionario().pessoasEmCasa());
+        questionario.setCondicoesMoradia(dto.questionario().condicoesMoradia());
+        questionario.setCadastroNIS(dto.questionario().cadastroNIS());
+        
+        atleta.setDadosSociais(questionario);
+        
+>>>>>>> 3a8d1967d30c04c6f9e475b4aac1e0c1421ecc26
         try {
             atletaRepository.persist(atleta);
         } catch (PersistenceException e) {
@@ -56,7 +80,10 @@ public class AtletaServiceImpl implements AtletaService {
 
     @Override
     public AtletaResponseDTO update(AtletaDTO dto, Long id) {
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3a8d1967d30c04c6f9e475b4aac1e0c1421ecc26
         Atleta atleta = atletaRepository.findById(id);
         if (atleta == null) {
             throw new CustomException(new ErrorResponse("Atleta não encontrado", "AtletaServiceImpl(update)", 404));
@@ -68,7 +95,8 @@ public class AtletaServiceImpl implements AtletaService {
         atleta.setSexo(dto.sexo());
         atleta.setCategoria(dto.categoria());
 
-        //atleta.setEndereco(dto.endereco().toModel());
+        atleta.setEndereco(dto.endereco().toModel());
+        atleta.setDadosSociais(dto.questionario().toModel());
 
         return AtletaResponseDTO.valueOf(atleta);
     }
@@ -82,7 +110,11 @@ public class AtletaServiceImpl implements AtletaService {
         try {
             atletaRepository.delete(atleta);
         } catch (Exception e) {
+<<<<<<< HEAD
             throw new CustomException(new ErrorResponse("Erro no servidor.", "AtletaServiceImpl(delete)", 500));
+=======
+            throw new CustomException(new ErrorResponse("Erro no servidor.", "AtletaServiceImpl(delete): "+e.getMessage(), 500));
+>>>>>>> 3a8d1967d30c04c6f9e475b4aac1e0c1421ecc26
         }
     }
 

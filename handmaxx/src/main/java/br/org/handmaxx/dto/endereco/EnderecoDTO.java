@@ -10,6 +10,19 @@ public record EnderecoDTO(
     String localidade,
     String UF
 ) {
+
+    // Método para converter de DTO para a entidade Endereco
+    public Endereco toModel() {
+        Endereco endereco = new Endereco();
+        endereco.setCEP(this.CEP);
+        endereco.setLogradouro(this.logradouro);
+        endereco.setNumeroLote(this.numeroLote);
+        endereco.setComplemento(this.complemento);
+        endereco.setLocalidade(this.localidade);
+        endereco.setUF(this.UF);
+        return endereco;
+    }
+
     public static EnderecoDTO valueOf(Endereco endereco){
         return new EnderecoDTO(endereco.getCEP(), 
                                endereco.getLogradouro(), 
