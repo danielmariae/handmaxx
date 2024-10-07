@@ -32,5 +32,6 @@ public class Atleta extends DefaultEntity {
     @OneToOne(cascade = CascadeType.PERSIST)
     private QuestionarioSocial dadosSociais;
 
+    @Enumerated(EnumType.ORDINAL)
     private Categoria categoria;
 }

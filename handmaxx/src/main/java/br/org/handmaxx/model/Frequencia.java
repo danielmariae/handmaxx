@@ -1,6 +1,8 @@
 package br.org.handmaxx.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToOne;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -8,7 +10,11 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class Frequencia extends DefaultEntity {
+    
+    @OneToOne(cascade = CascadeType.PERSIST)
     private Treino treino;
+
+    @OneToOne(cascade = CascadeType.PERSIST)
     private Atleta atleta;
     private boolean presenca;
 }
