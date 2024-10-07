@@ -5,6 +5,7 @@
     import lombok.EqualsAndHashCode;
 
     import java.time.LocalDate;
+    import java.time.LocalTime;
 
     @Entity
     @Data
@@ -12,8 +13,7 @@
     public class Treino extends DefaultEntity {
 
         private String local;
-        private LocalDate horario;
-
-        // Inserir aqui frequência.
-
+        // Atualizar esse treino depois com a UML.
+        private LocalDate data;
+        private LocalTime horario;
     }

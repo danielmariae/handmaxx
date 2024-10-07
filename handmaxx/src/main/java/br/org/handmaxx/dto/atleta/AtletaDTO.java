@@ -2,11 +2,12 @@ package br.org.handmaxx.dto.atleta;
 
 import java.time.LocalDate;
 
-//import br.org.handmaxx.dto.endereco.EnderecoDTO;
+import br.org.handmaxx.dto.atleta.questionariosocial.QuestionarioSocialDTO;
+import br.org.handmaxx.dto.endereco.EnderecoDTO;
 import br.org.handmaxx.model.Atleta;
 import br.org.handmaxx.model.Categoria;
 import br.org.handmaxx.model.Sexo;
-//import jakarta.validation.Valid;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 //import jakarta.validation.constraints.Pattern;
@@ -30,10 +31,13 @@ public record AtletaDTO(
         Sexo sexo,
 
         @NotNull(message = "A categoria não pode ser nula.") 
-        Categoria categoria
+        Categoria categoria,
         
-        // @Valid
-        // EnderecoDTO endereco
+        @Valid
+        EnderecoDTO endereco,
+
+        @Valid
+        QuestionarioSocialDTO questionario
 ) {
     public static AtletaDTO valueOf(Atleta atleta) {
         return new AtletaDTO(
@@ -41,8 +45,9 @@ public record AtletaDTO(
                 atleta.getCpf(),
                 atleta.getDataNascimento(),
                 atleta.getSexo(),
-                atleta.getCategoria()
-        // EnderecoDTO.valueOf(atleta.getEndereco())
+                atleta.getCategoria(),
+                EnderecoDTO.valueOf(atleta.getEndereco()),
+                QuestionarioSocialDTO.valueOf(atleta.getDadosSociais())
         );
     }
 }

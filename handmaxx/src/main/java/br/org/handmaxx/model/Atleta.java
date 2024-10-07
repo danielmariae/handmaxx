@@ -2,6 +2,7 @@ package br.org.handmaxx.model;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -25,10 +26,10 @@ public class Atleta extends DefaultEntity {
     @Enumerated(EnumType.STRING)
     private Sexo sexo; 
 
-    //@OneToOne
-    //private Endereco endereco;
+    @OneToOne(cascade = CascadeType.PERSIST)
+    private Endereco endereco;
     
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     private QuestionarioSocial dadosSociais;
 
     private Categoria categoria;

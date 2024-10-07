@@ -4,3 +4,22 @@
 -- insert into myentity (id, field) values(2, 'field-2');
 -- insert into myentity (id, field) values(3, 'field-3');
 -- alter sequence myentity_seq restart with 4;
+
+INSERT INTO usuario (datahoraatualizacao, datahoracriacao, cnpj, login, senha)
+VALUES
+    --SENHA: senha1
+    ('2024-09-23 14:41:29', '2024-09-23 14:41:29', '12.345.678/0001-95', 'usuario1', 'Csp1B3FE7ExIsmLUCT0FVSjsEviRumTRIAa6xujepRcSSx4iEKX96DaaeJlahnZQJWNSeAcK+wMLHEjK6QEGQw=='),
+    --SENHA: senha2
+    ('2024-09-23 14:41:29', '2024-09-23 14:41:29', '98.765.432/0001-96', 'usuario2', '0hA2bYWKI8y54epeHAaLy6dtROowgFxQWaz1nqQo8/I3RJ/607nbFlzICXKB8LiduecPFH9tcY/GbfewNimxtw==');
+
+INSERT INTO endereco (datahoraatualizacao, datahoracriacao, cep, logradouro, numerolote, complemento, localidade, UF)
+VALUES
+    ('2024-09-23 14:41:29', '2024-09-23 14:41:29', '77001-906', 'Praça dos Girassóis', 'S/N', 'Esplanada das Secretarias', 'Palmas', 'TO');
+
+INSERT INTO questionariosocial (datahoraatualizacao, datahoracriacao, cadastronis, pessoasemcasa, rendafamiliar, condicoesMORADIA) 
+VALUES 
+    ('2024-09-23 14:41:29', '2024-09-23 14:41:29', true, 3, 200.00, 'PRECÁRIAS');
+
+
+INSERT INTO atleta (categoria, datanascimento, dadossociais_id, datahoraatualizacao, datahoracriacao, endereco_id, cpf, nome, sexo)
+	VALUES (0, '2004-10-20', 1, '2024-09-23 14:41:29', '2024-09-23 14:41:29', 1, '07863820154', 'Lucas Daniel Santos', 'MASCULINO');
