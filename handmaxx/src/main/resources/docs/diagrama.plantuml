@@ -50,19 +50,12 @@ class Mensagem {
     destinatario: Atleta
 }
 
-class Competicao {
+class NoticiaHome {
     id: Long
-    nome: String
-    local: String
-    dataInicio: Date
-    dataFim: Date
-}
-
-class Partida {
-    id: Long
-    dataHora: Date
-    local: String
-    competicao: Competicao
+    titulo: String
+    conteudo: String
+    dataPublicacao: Date
+    autor: Usuario
 }
 
 interface RelatorioService {
@@ -88,14 +81,14 @@ Atleta "1" --> "0..*" Frequencia : registra
 Treino "0..*" --> "0..*" Frequencia : inclui
 
 Usuario "1" --> "0..*" Frequencia : preenche/administra
+Usuario "1" --> "0..*" NoticiaHome : cria
 
 Mensagem "1" --> "1" Atleta : envia
 Usuario "1" --> "0..*" Mensagem : cria/envia
 
-' Relações secundárias (Expansão futura)
+' Relacionamento para Relatório
 
-Competicao "1" --> "0..*" Partida : organiza
-Usuario "1" --> "0..*" Competicao : gerencia
-Usuario "1" --> "0..*" Partida : administra
+Usuario "1" --> "1" RelatorioService : gera
+RelatorioService --> RelatorioDTO : retorna
 
 @enduml
