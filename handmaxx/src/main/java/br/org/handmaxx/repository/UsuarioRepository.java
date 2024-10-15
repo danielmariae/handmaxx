@@ -7,11 +7,12 @@ import jakarta.persistence.NoResultException;
 
 @ApplicationScoped
 public class UsuarioRepository implements PanacheRepository<Usuario> {
+    
     public Usuario findByLogin(String login) {
         try {
             return find("login = ?1", login).singleResult();
         } catch (NoResultException e) {
-            e.printStackTrace();
+            System.out.println("Usuário não encontrado com login: " + login);
             return null;
         }
     }
@@ -20,7 +21,7 @@ public class UsuarioRepository implements PanacheRepository<Usuario> {
         try {
             return find("login = ?1 and senha = ?2", login, senha).singleResult();
         } catch (NoResultException e) {
-            e.printStackTrace();
+            System.out.println("Usuário não encontrado com login e senha fornecidos.");
             return null;
         }
     }

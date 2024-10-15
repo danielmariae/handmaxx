@@ -14,13 +14,15 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class NoticiaHome extends DefaultEntity {
+public class Publicacao extends DefaultEntity {
     
     @Column(nullable = false)
     private String titulo;
 
     @Column(nullable = false)
     private String conteudo;
+
+    private String nomeImagem;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataPublicacao;

@@ -50,7 +50,7 @@ class Mensagem {
     destinatario: Atleta
 }
 
-class NoticiaHome {
+class Publicacao{
     id: Long
     titulo: String
     conteudo: String
@@ -81,7 +81,7 @@ Atleta "1" --> "0..*" Frequencia : registra
 Treino "0..*" --> "0..*" Frequencia : inclui
 
 Usuario "1" --> "0..*" Frequencia : preenche/administra
-Usuario "1" --> "0..*" NoticiaHome : cria
+Usuario "1" --> "0..*" Publicacao : cria
 
 Mensagem "1" --> "1" Atleta : envia
 Usuario "1" --> "0..*" Mensagem : cria/envia
