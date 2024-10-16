@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.eclipse.microprofile.jwt.JsonWebToken;
 
+import br.org.handmaxx.dto.atleta.AtletaCadastroInicialDTO;
 import br.org.handmaxx.dto.atleta.AtletaDTO;
 import br.org.handmaxx.dto.atleta.AtletaResponseDTO;
 import br.org.handmaxx.service.atleta.AtletaService;
@@ -15,6 +16,7 @@ import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.PATCH;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
@@ -37,6 +39,13 @@ public class AtletaResource {
     @Inject
     AtletaService atletaService;
 
+    // Cadastro inicial com PATCH (dados mínimos)
+    @PATCH
+    @Transactional
+    public Response createInitial(@Valid AtletaCadastroInicialDTO dto) {
+        return Response.status(201).entity(atletaService.createInitial(dto)).build();
+    }
+
     @POST
     @Transactional
     public Response create(@Valid AtletaDTO dto) {
@@ -45,7 +54,7 @@ public class AtletaResource {
     }
 
     @PUT
-    @Path("/{id}")
+    @Path("/update/{id}")
     @Transactional
     public Response update(@Valid AtletaDTO dto, @PathParam("id") Long id) {
 
@@ -76,9 +85,16 @@ public class AtletaResource {
     @GET
     @Path("/nome/{nome}")
     @Transactional
-
     public Response getByNome(@PathParam("nome") String nome) {
         List<AtletaResponseDTO> atletas = atletaService.findByNome(nome);
+        return Response.ok(atletas).build();
+    }
+
+    @GET
+    @Path("/all")
+    @Transactional
+    public Response findAll() {
+        List<AtletaResponseDTO> atletas = atletaService.findAll();
         return Response.ok(atletas).build();
     }
 }
