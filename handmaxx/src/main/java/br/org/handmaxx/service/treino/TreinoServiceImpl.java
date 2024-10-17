@@ -6,9 +6,11 @@ import br.org.handmaxx.dto.treino.TreinoDTO;
 import br.org.handmaxx.dto.treino.TreinoResponseDTO;
 import br.org.handmaxx.model.Treino;
 import br.org.handmaxx.repository.TreinoRepository;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.PersistenceException;
 
+@ApplicationScoped
 public class TreinoServiceImpl implements TreinoService {
 
     @Inject
