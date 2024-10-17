@@ -41,4 +41,6 @@ public class AuthResource {
 
         return Response.ok(result).header("authorization", token).build();
     }
+
+
 }

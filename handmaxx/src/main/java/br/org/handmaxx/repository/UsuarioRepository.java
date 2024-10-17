@@ -17,6 +17,16 @@ public class UsuarioRepository implements PanacheRepository<Usuario> {
         }
     }
 
+    public Usuario findByEmail(String email) {
+        try {
+            return find("email = ?1", email).singleResult();
+        } catch (NoResultException e) {
+            System.out.println("Usuário não encontrado com email: " + email);
+            return null;
+        }
+    }
+
+
     public Usuario findByLoginAndSenha(String login, String senha) {
         try {
             return find("login = ?1 and senha = ?2", login, senha).singleResult();

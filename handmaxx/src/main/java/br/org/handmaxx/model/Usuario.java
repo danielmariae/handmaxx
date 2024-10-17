@@ -8,10 +8,9 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class Usuario extends DefaultEntity {
-    
+public class Usuario extends DefaultEntity { 
     @Column(unique = true)
-    private String cnpj;
+    private String email;
 
     private String login;
 
