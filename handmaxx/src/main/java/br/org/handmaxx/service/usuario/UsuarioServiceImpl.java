@@ -1,24 +1,15 @@
 package br.org.handmaxx.service.usuario;
 
-import br.org.handmaxx.model.CodigoRecuperacao;
-import br.org.handmaxx.model.Usuario;
-import br.org.handmaxx.dto.usuario.ResetPasswordDTO;
-import br.org.handmaxx.dto.usuario.UsuarioDTO;
-import br.org.handmaxx.dto.usuario.UsuarioResponseDTO;
-import br.org.handmaxx.repository.TokenRecuperacaoRepository;
-import br.org.handmaxx.repository.UsuarioRepository;
-import br.org.handmaxx.service.messaging.EmailService;
-import br.org.handmaxx.service.usuario.hash.HashService;
-
-import java.time.LocalDateTime;
-import java.util.UUID;
-
 import br.org.handmaxx.app.error.custom.CustomException;
 import br.org.handmaxx.app.error.global.ErrorResponse;
+import br.org.handmaxx.dto.usuario.UsuarioDTO;
+import br.org.handmaxx.dto.usuario.UsuarioResponseDTO;
+import br.org.handmaxx.model.Usuario;
+import br.org.handmaxx.repository.UsuarioRepository;
+import br.org.handmaxx.service.usuario.hash.HashService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.PersistenceException;
-import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
 
@@ -29,12 +20,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Inject 
     HashService hashService;
-
-    @Inject
-    TokenRecuperacaoRepository tokenRecuperacaoRepository;
-
-    @Inject
-    EmailService emailService;
 
     @Override
     public UsuarioResponseDTO findByLoginAndSenha(String login, String senha) {

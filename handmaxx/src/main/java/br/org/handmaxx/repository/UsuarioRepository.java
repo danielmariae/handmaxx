@@ -1,5 +1,7 @@
 package br.org.handmaxx.repository;
 
+import java.util.Optional;
+
 import br.org.handmaxx.model.Usuario;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -26,6 +28,9 @@ public class UsuarioRepository implements PanacheRepository<Usuario> {
         }
     }
 
+    public Optional<Usuario> findByEmailOptional(String email) {
+        return find("email", email).firstResultOptional();
+    }
 
     public Usuario findByLoginAndSenha(String login, String senha) {
         try {
