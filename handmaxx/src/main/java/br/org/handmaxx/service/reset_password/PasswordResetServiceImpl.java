@@ -1,4 +1,4 @@
-package br.org.handmaxx.service.passwordreset;
+package br.org.handmaxx.service.reset_password;
 
 import java.util.Date;
 import java.util.Optional;

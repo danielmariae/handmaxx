@@ -3,7 +3,7 @@ package br.org.handmaxx.resource;
 import br.org.handmaxx.dto.resetpassword.PasswordResetDTO;
 import br.org.handmaxx.dto.resetpassword.PasswordResetRequestDTO;
 import br.org.handmaxx.dto.resetpassword.PasswordResetResponseDTO;
-import br.org.handmaxx.service.passwordreset.PasswordResetService;
+import br.org.handmaxx.service.reset_password.PasswordResetService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
