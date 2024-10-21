@@ -5,12 +5,12 @@
 -- insert into myentity (id, field) values(3, 'field-3');
 -- alter sequence myentity_seq restart with 4;
 
-INSERT INTO usuario (datahoraatualizacao, datahoracriacao, cnpj, login, senha)
+INSERT INTO usuario (datahoraatualizacao, datahoracriacao, email, login, senha)
 VALUES
     --SENHA: senha1
-    ('2024-09-23 14:41:29', '2024-09-23 14:41:29', '12.345.678/0001-95', 'usuario1', 'Csp1B3FE7ExIsmLUCT0FVSjsEviRumTRIAa6xujepRcSSx4iEKX96DaaeJlahnZQJWNSeAcK+wMLHEjK6QEGQw=='),
+    ('2024-09-23 14:41:29', '2024-09-23 14:41:29', 'lucas-daniel2004@hotmail.com', 'usuario1', 'Csp1B3FE7ExIsmLUCT0FVSjsEviRumTRIAa6xujepRcSSx4iEKX96DaaeJlahnZQJWNSeAcK+wMLHEjK6QEGQw=='),
     --SENHA: senha2
-    ('2024-09-23 14:41:29', '2024-09-23 14:41:29', '98.765.432/0001-96', 'usuario2', '0hA2bYWKI8y54epeHAaLy6dtROowgFxQWaz1nqQo8/I3RJ/607nbFlzICXKB8LiduecPFH9tcY/GbfewNimxtw==');
+    ('2024-09-23 14:41:29', '2024-09-23 14:41:29', 'joaopaulo@gmail.com', 'usuario2', '0hA2bYWKI8y54epeHAaLy6dtROowgFxQWaz1nqQo8/I3RJ/607nbFlzICXKB8LiduecPFH9tcY/GbfewNimxtw==');
 
 INSERT INTO endereco (datahoraatualizacao, datahoracriacao, cep, logradouro, numerolote, complemento, localidade, UF)
 VALUES

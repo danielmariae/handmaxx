@@ -1,12 +1,12 @@
 package br.org.handmaxx.service.usuario;
 
-import br.org.handmaxx.model.Usuario;
-import br.org.handmaxx.dto.usuario.UsuarioDTO;
-import br.org.handmaxx.dto.usuario.UsuarioResponseDTO;
-import br.org.handmaxx.repository.UsuarioRepository;
-import br.org.handmaxx.service.usuario.hash.HashService;
 import br.org.handmaxx.app.error.custom.CustomException;
 import br.org.handmaxx.app.error.global.ErrorResponse;
+import br.org.handmaxx.dto.usuario.UsuarioDTO;
+import br.org.handmaxx.dto.usuario.UsuarioResponseDTO;
+import br.org.handmaxx.model.Usuario;
+import br.org.handmaxx.repository.UsuarioRepository;
+import br.org.handmaxx.service.usuario.hash.HashService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.PersistenceException;
@@ -40,7 +40,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     public UsuarioResponseDTO create(@Valid UsuarioDTO dto){
         Usuario user = new Usuario();
 
-        user.setCnpj(dto.cnpj());
+        user.setEmail(dto.email());
         user.setLogin(dto.login());
         user.setSenha(hashService.getHashSenha(dto.senha()));
         
@@ -63,7 +63,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         if(user == null){
             throw new CustomException(new ErrorResponse("Usuário não encontrado", "UsuarioServiceImpl(update)", 404));
         }
-        user.setCnpj(dto.cnpj());
+        user.setEmail(dto.email());
         user.setLogin(dto.login());
         if(!dto.senha().isEmpty()){
             user.setSenha(hashService.getHashSenha(dto.senha()));
@@ -84,5 +84,4 @@ public class UsuarioServiceImpl implements UsuarioService {
             throw new CustomException(new ErrorResponse("Erro no servidor.", "UsuarioServiceImpl(delete)", 500));
         }
     }
-
 }
