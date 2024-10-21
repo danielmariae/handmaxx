@@ -1,4 +1,4 @@
-package br.org.handmaxx.service.passwordreset;
+package br.org.handmaxx.service.password-reset;
 
 import br.org.handmaxx.dto.resetpassword.PasswordResetDTO;
 import br.org.handmaxx.dto.resetpassword.PasswordResetRequestDTO;

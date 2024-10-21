@@ -23,8 +23,9 @@ public class EmailServiceImpl implements EmailService {
     @Override
     public void enviarEmail(EmailDTO emailDTO) {
         try {
-            mailer.send(Mail.withHtml(emailDTO.destinatario(), emailDTO.assunto(), emailDTO.corpoMensagem()));
-            log.info("Email enviado para {}", emailDTO.destinatario());
+            mailer.send(Mail.withHtml(emailDTO.destinatario(), emailDTO.assunto(), emailDTO.corpoMensagem())
+            .addHeader("Content-Type", "text/html; charset=UTF-8"));
+        log.info("Email enviado para {}", emailDTO.destinatario());
         } catch (Exception e) {
             log.error("Erro ao enviar o email: {}", e.getMessage());
             throw new RuntimeException("Falha ao enviar email", e);
