@@ -6,9 +6,9 @@ import jakarta.validation.constraints.Pattern;
 
 public record UsuarioDTO(
 
-    @NotBlank(message = "O CNPJ não pode ser nulo.")
-    @Pattern(regexp = "^\\d{14}$", message = "CNPJ deve conter exatamente 14 dígitos.")
-    String cnpj,
+    @NotBlank(message = "O email não pode ser nulo.")
+    // @Pattern(regexp = "^\\d{14}$", message = "CNPJ deve conter exatamente 14 dígitos.")
+    String email,
 
     @NotBlank(message = "O campo login não pode ser nulo.")
     String login,
@@ -20,7 +20,7 @@ public record UsuarioDTO(
 ) {
     public static UsuarioDTO valueOf(Usuario usuario) {
         return new UsuarioDTO(
-            usuario.getCnpj(),
+            usuario.getEmail(),
             usuario.getLogin(),
             "Senha gerada com sucesso" // Evitar retornar a senha diretamente por segurança
         );
