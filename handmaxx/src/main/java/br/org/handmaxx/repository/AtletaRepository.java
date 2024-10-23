@@ -18,4 +18,8 @@ public class AtletaRepository implements PanacheRepository<Atleta> {
     public Atleta findByCpf(String cpf) {
         return find("cpf", cpf).firstResult();
     }
+
+    public List<Atleta> findAtletasByTreinoId(Long treinoId) {
+        return list("SELECT a FROM Atleta a JOIN Frequencia f ON a.id = f.atleta.id WHERE f.treino.id = ?1", treinoId);
+    }   
 }

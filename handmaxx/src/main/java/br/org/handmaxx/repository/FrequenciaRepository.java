@@ -20,4 +20,6 @@ public class FrequenciaRepository implements PanacheRepository<Frequencia>{
     public List<Frequencia> findByTreinoIdOrderByAtletaNome(Long treinoId) {
         return find("treino.id = ?1 ORDER BY atleta.nome", treinoId).list();
     }
+
+    
 }

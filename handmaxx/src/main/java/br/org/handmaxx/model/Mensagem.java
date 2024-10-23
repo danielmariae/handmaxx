@@ -10,8 +10,10 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(force=true)
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper=true)
 public class Mensagem extends DefaultEntity {
-    private final String destinatario;
-    private final String conteudo;
+    private final String phone;
+    private final String text;
+    private final String apiSession;
+    private final String status;
 }
