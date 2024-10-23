@@ -51,7 +51,6 @@ br\org\handmaxx\dto\atleta\questionariosocial\QuestionarioSocialDTO.class
 br\org\handmaxx\resource\PasswordResetResource.class
 br\org\handmaxx\dto\mensagem\otp\OTPRequestDTO.class
 br\org\handmaxx\resource\TreinoResource.class
-br\org\handmaxx\service\treino\TreinoServiceImpl.class
 br\org\handmaxx\repository\AtletaRepository.class
 br\org\handmaxx\service\atleta\AtletaServiceImpl.class
 br\org\handmaxx\app\error\UniqueConstraintExceptionMapper.class
@@ -73,6 +72,7 @@ br\org\handmaxx\service\usuario\jwt\JwtService.class
 br\org\handmaxx\model\Atleta.class
 br\org\handmaxx\model\Publicacao.class
 br\org\handmaxx\service\usuario\hash\HashService.class
+br\org\handmaxx\service\whatsapp\waha\WahaService.class
 br\org\handmaxx\resource\PublicacaoResource.class
 br\org\handmaxx\dto\email\EmailDTO.class
 br\org\handmaxx\dto\usuario\UsuarioDTO.class

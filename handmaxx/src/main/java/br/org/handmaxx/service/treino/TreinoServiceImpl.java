@@ -9,7 +9,7 @@ import br.org.handmaxx.model.Atleta;
 import br.org.handmaxx.model.Treino;
 import br.org.handmaxx.repository.AtletaRepository;
 import br.org.handmaxx.repository.TreinoRepository;
-import br.org.handmaxx.service.atleta.AtletaService;
+import br.org.handmaxx.resource.WhatsappResource;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
@@ -30,7 +30,7 @@ public class TreinoServiceImpl implements TreinoService {
     AtletaRepository atletaRepository;
 
     @Inject
-    WhatsappService whatsappService;
+    WhatsappResource whatsAppResource;
     
     @Override
     public TreinoResponseDTO create(TreinoDTO dto) {
@@ -50,6 +50,7 @@ public class TreinoServiceImpl implements TreinoService {
             throw new CustomException(errorResponse);
         }
 
+        notificarTodosAtletasCreate(dto);
 
         return TreinoResponseDTO.valueOf(treino);
     }
@@ -87,16 +88,15 @@ public class TreinoServiceImpl implements TreinoService {
         treino.setData(dto.data());
         treino.setHorario(dto.horario());
 
-        notificarTodosAtletas(dto);
         
         return TreinoResponseDTO.valueOf(treino);
     }    
 
-    private void notificarTodosAtletas(TreinoDTO dto){
+    private void notificarTodosAtletasCreate(TreinoDTO dto){
         List<Atleta> atletas = atletaRepository.findAll().list();
         
         for(Atleta atleta : atletas){
-            whatsappService.sendTextMessage(new MensagemDTO("55"+atleta.getTelefone()+"@c.us", criarMensagemTreino(atleta, dto), "default"));
+            whatsAppResource.sendTextMessage(new MensagemDTO("55"+atleta.getTelefone()+"@c.us", criarMensagemTreino(atleta, dto), "default"));
         }
     }
 

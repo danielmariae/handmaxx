@@ -4,7 +4,7 @@ import br.org.handmaxx.model.Mensagem;
 
 public record MensagemResponseDTO(
     Long id,
-    String phone, 
+    String mensagem, 
     String text,
     String session,
     String status

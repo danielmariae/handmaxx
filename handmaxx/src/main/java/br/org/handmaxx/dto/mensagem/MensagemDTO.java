@@ -3,7 +3,7 @@ package br.org.handmaxx.dto.mensagem;
 import br.org.handmaxx.model.Mensagem;
 
 public record MensagemDTO(
-    String phone, 
+    String chatId, 
     String text,
     String session
 ) {
