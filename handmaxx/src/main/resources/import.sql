@@ -22,4 +22,4 @@ VALUES
 
 
 INSERT INTO atleta (categoria, datanascimento, dadossociais_id, datahoraatualizacao, datahoracriacao, endereco_id, cpf, nome, sexo, cadastrocompleto, telefone)
-	VALUES (0, '2004-10-20', 1, '2024-09-23 14:41:29', '2024-09-23 14:41:29', 1, '07863820154', 'Lucas Daniel Santos', 'MASCULINO', false, '99887766');
+	VALUES (0, '2004-10-20', 1, '2024-09-23 14:41:29', '2024-09-23 14:41:29', 1, '07863820154', 'Alvaro Calebe', 'MASCULINO', false, '63984294658');
