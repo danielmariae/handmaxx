@@ -1,4 +1,4 @@
-<h1> Olá! Bem-vindo ao projeto HARDSTOP.</h1>
+<h1> Olá! Bem-vindo ao projeto HANDMAXX.</h1>
 
 Este projeto foi feito usando a plataforma Quarkus e as linguagens: Java, SQL (através do SGBD PostgreSQL), AngularJS, NodeJS.
 
