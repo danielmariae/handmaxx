@@ -11,13 +11,13 @@ Como fazer para executar o projeto:
 **1. Criar usuário no PgAdmin com as seguintes informações de usuário:**
 
 ```java
-Nome de usuário: topicos2
+Nome de usuário: handmaxx_admin
 Senha: 123456
 ```
-**2. Criar o banco de dados informando o usuário 'topicos2' como admin.**
+**2. Criar o banco de dados informando o usuário 'handmaxx_admin' como admin.**
 
 ```
-Nome da base de dados: topicos2db
+Nome da base de dados: handmaxx_db
 ```
 
 **3. Atualizar endereço do Postgres no arquivo application.propeties no seguinte caminho:**
@@ -38,6 +38,9 @@ java --version
 ```
 cd ./backend
 ./mvnw compile quarkus:dev
+
+# Caso esteja no Linux ou MacOs, usar:
+mvn compile quarkus:dev
 ```
 
 <h3>API DO WHATSAPP</h3>
@@ -52,3 +55,20 @@ docker run -it -p 3000:3000/tcp devlikeapro/waha
 ```
 
 **Fazer a conexão com WhatsApp, acessando o endereço: http://localhost:3000/dashboard**
+
+<h3>EMAIL (GMAIL)</h3>
+
+*Necessário ter o Docker Desktop instalado (em qualquer plataforma).*
+
+**1. Configurar em application.properties:**
+
+```
+quarkus.mailer.from=#@gmail.com // Colocar aqui seu email do Google.
+quarkus.mailer.host=smtp.gmail.com
+quarkus.mailer.port=465
+quarkus.mailer.ssl=true
+quarkus.mailer.username=#@gmail.com // Colocar aqui também seu email do Google.
+quarkus.mailer.password=# // Aqui digitar a senha de aplicativo, obtida nas configurações de segurança do seu gmail.
+quarkus.mailer.mock=false // Se colocar = true, ele não enviará os emails.
+```
+
