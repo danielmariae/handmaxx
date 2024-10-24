@@ -1,0 +1,94 @@
+@startuml SistemaDeGestaoAtletas
+
+' Definição das classes principais
+
+class Usuario {
+    id: Long
+    login: String
+    senha: String
+}
+
+class Atleta {
+    id: Long
+    nome: String
+    cpf: String
+    dataNascimento: Date
+    categoria: Categoria
+}
+
+class Endereco {
+    rua: String
+    numero: String
+    cidade: String
+    estado: String
+    cep: String
+}
+
+class QuestionarioSocial {
+    rendaFamiliar: Double
+    pessoasEmCasa: Integer
+    condicoesMoradia: String
+    cadastroNIS: Boolean
+}
+
+class Treino {
+    id: Long
+    local: String
+    horario: Date
+}
+
+class Frequencia {
+    id: Long
+    presente: Boolean
+    treino: Treino
+    atleta: Atleta
+}
+
+class Mensagem {
+    id: Long
+    conteudo: String
+    destinatario: Atleta
+}
+
+class Publicacao{
+    id: Long
+    titulo: String
+    conteudo: String
+    dataPublicacao: Date
+    autor: Usuario
+}
+
+interface RelatorioService {
+    gerarRelatorioAtleta(atletaId: Long, inicio: LocalDate, fim: LocalDate): RelatorioDTO
+}
+
+class RelatorioDTO {
+    nomeAtleta: String
+    cpf: String
+    categoria: String
+    totalTreinos: int
+    totalPresencas: int
+    totalFaltas: int
+}
+
+' Relações principais
+
+Usuario "1" --> "0..*" Atleta : gere
+Atleta "1" *-- "1" Endereco : possui
+Atleta "1" *-- "1" QuestionarioSocial : possui
+
+Atleta "1" --> "0..*" Frequencia : registra
+Treino "0..*" --> "0..*" Frequencia : inclui
+
+Usuario "1" --> "0..*" Frequencia : preenche/administra
+Usuario "1" --> "0..*" Publicacao : cria
+
+Mensagem "1" --> "1" Atleta : envia
+Usuario "1" --> "0..*" Mensagem : cria/envia
+
+' Relacionamento para Relatório
+
+Usuario "1" --> "1" RelatorioService : gera
+RelatorioService --> RelatorioDTO : retorna
+
+@enduml

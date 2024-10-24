@@ -1,0 +1,74 @@
+-------------------------------------------------------------------------------
+Test set: br.org.handmaxx.GreetingResourceTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 6.394 s <<< FAILURE! -- in br.org.handmaxx.GreetingResourceTest
+br.org.handmaxx.GreetingResourceTest.testHelloEndpoint -- Time elapsed: 0.009 s <<< ERROR!
+java.lang.RuntimeException: 
+java.lang.RuntimeException: io.quarkus.builder.BuildException: Build failure: Build failed due to errors
+	[error]: Build step io.quarkus.resteasy.reactive.common.deployment.ResteasyReactiveCommonProcessor#checkMixingStacks threw an exception: jakarta.enterprise.inject.spi.DeploymentException: Mixing Quarkus REST and RESTEasy Classic server parts is not supported
+	at io.quarkus.resteasy.reactive.common.deployment.ResteasyReactiveCommonProcessor.checkMixingStacks(ResteasyReactiveCommonProcessor.java:108)
+	at java.base/java.lang.invoke.MethodHandle.invokeWithArguments(MethodHandle.java:733)
+	at io.quarkus.deployment.ExtensionLoader$3.execute(ExtensionLoader.java:854)
+	at io.quarkus.builder.BuildContext.run(BuildContext.java:256)
+	at org.jboss.threads.ContextHandler$1.runWith(ContextHandler.java:18)
+	at org.jboss.threads.EnhancedQueueExecutor$Task.doRunWith(EnhancedQueueExecutor.java:2516)
+	at org.jboss.threads.EnhancedQueueExecutor$Task.run(EnhancedQueueExecutor.java:2495)
+	at org.jboss.threads.EnhancedQueueExecutor$ThreadBody.run(EnhancedQueueExecutor.java:1521)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+	at org.jboss.threads.JBossThread.run(JBossThread.java:483)
+
+	at io.quarkus.test.junit.QuarkusTestExtension.throwBootFailureException(QuarkusTestExtension.java:643)
+	at io.quarkus.test.junit.QuarkusTestExtension.interceptTestClassConstructor(QuarkusTestExtension.java:727)
+	at java.base/java.util.Optional.orElseGet(Optional.java:364)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+Caused by: java.lang.RuntimeException: io.quarkus.builder.BuildException: Build failure: Build failed due to errors
+	[error]: Build step io.quarkus.resteasy.reactive.common.deployment.ResteasyReactiveCommonProcessor#checkMixingStacks threw an exception: jakarta.enterprise.inject.spi.DeploymentException: Mixing Quarkus REST and RESTEasy Classic server parts is not supported
+	at io.quarkus.resteasy.reactive.common.deployment.ResteasyReactiveCommonProcessor.checkMixingStacks(ResteasyReactiveCommonProcessor.java:108)
+	at java.base/java.lang.invoke.MethodHandle.invokeWithArguments(MethodHandle.java:733)
+	at io.quarkus.deployment.ExtensionLoader$3.execute(ExtensionLoader.java:854)
+	at io.quarkus.builder.BuildContext.run(BuildContext.java:256)
+	at org.jboss.threads.ContextHandler$1.runWith(ContextHandler.java:18)
+	at org.jboss.threads.EnhancedQueueExecutor$Task.doRunWith(EnhancedQueueExecutor.java:2516)
+	at org.jboss.threads.EnhancedQueueExecutor$Task.run(EnhancedQueueExecutor.java:2495)
+	at org.jboss.threads.EnhancedQueueExecutor$ThreadBody.run(EnhancedQueueExecutor.java:1521)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+	at org.jboss.threads.JBossThread.run(JBossThread.java:483)
+
+	at io.quarkus.runner.bootstrap.AugmentActionImpl.runAugment(AugmentActionImpl.java:335)
+	at io.quarkus.runner.bootstrap.AugmentActionImpl.createInitialRuntimeApplication(AugmentActionImpl.java:254)
+	at io.quarkus.runner.bootstrap.AugmentActionImpl.createInitialRuntimeApplication(AugmentActionImpl.java:58)
+	at io.quarkus.test.junit.QuarkusTestExtension.doJavaStart(QuarkusTestExtension.java:219)
+	at io.quarkus.test.junit.QuarkusTestExtension.ensureStarted(QuarkusTestExtension.java:610)
+	at io.quarkus.test.junit.QuarkusTestExtension.beforeAll(QuarkusTestExtension.java:660)
+	... 1 more
+Caused by: io.quarkus.builder.BuildException: Build failure: Build failed due to errors
+	[error]: Build step io.quarkus.resteasy.reactive.common.deployment.ResteasyReactiveCommonProcessor#checkMixingStacks threw an exception: jakarta.enterprise.inject.spi.DeploymentException: Mixing Quarkus REST and RESTEasy Classic server parts is not supported
+	at io.quarkus.resteasy.reactive.common.deployment.ResteasyReactiveCommonProcessor.checkMixingStacks(ResteasyReactiveCommonProcessor.java:108)
+	at java.base/java.lang.invoke.MethodHandle.invokeWithArguments(MethodHandle.java:733)
+	at io.quarkus.deployment.ExtensionLoader$3.execute(ExtensionLoader.java:854)
+	at io.quarkus.builder.BuildContext.run(BuildContext.java:256)
+	at org.jboss.threads.ContextHandler$1.runWith(ContextHandler.java:18)
+	at org.jboss.threads.EnhancedQueueExecutor$Task.doRunWith(EnhancedQueueExecutor.java:2516)
+	at org.jboss.threads.EnhancedQueueExecutor$Task.run(EnhancedQueueExecutor.java:2495)
+	at org.jboss.threads.EnhancedQueueExecutor$ThreadBody.run(EnhancedQueueExecutor.java:1521)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+	at org.jboss.threads.JBossThread.run(JBossThread.java:483)
+
+	at io.quarkus.builder.Execution.run(Execution.java:123)
+	at io.quarkus.builder.BuildExecutionBuilder.execute(BuildExecutionBuilder.java:79)
+	at io.quarkus.deployment.QuarkusAugmentor.run(QuarkusAugmentor.java:159)
+	at io.quarkus.runner.bootstrap.AugmentActionImpl.runAugment(AugmentActionImpl.java:331)
+	... 6 more
+Caused by: jakarta.enterprise.inject.spi.DeploymentException: Mixing Quarkus REST and RESTEasy Classic server parts is not supported
+	at io.quarkus.resteasy.reactive.common.deployment.ResteasyReactiveCommonProcessor.checkMixingStacks(ResteasyReactiveCommonProcessor.java:108)
+	at java.base/java.lang.invoke.MethodHandle.invokeWithArguments(MethodHandle.java:733)
+	at io.quarkus.deployment.ExtensionLoader$3.execute(ExtensionLoader.java:854)
+	at io.quarkus.builder.BuildContext.run(BuildContext.java:256)
+	at org.jboss.threads.ContextHandler$1.runWith(ContextHandler.java:18)
+	at org.jboss.threads.EnhancedQueueExecutor$Task.doRunWith(EnhancedQueueExecutor.java:2516)
+	at org.jboss.threads.EnhancedQueueExecutor$Task.run(EnhancedQueueExecutor.java:2495)
+	at org.jboss.threads.EnhancedQueueExecutor$ThreadBody.run(EnhancedQueueExecutor.java:1521)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+	at org.jboss.threads.JBossThread.run(JBossThread.java:483)
+
