@@ -51,7 +51,7 @@ mvn compile quarkus:dev
 
 ```
 docker pull devlikeapro/waha
-docker run -it -p 3000:3000/tcp devlikeapro/waha
+docker run -it -p 3000:3000/tcp -e "WHATSAPP_DEFAULT_ENGINE=NOWEB" devlikeapro/waha
 ```
 
 **Fazer a conexão com WhatsApp, acessando o endereço: http://localhost:3000/dashboard**

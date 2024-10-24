@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
 
+import br.org.handmaxx.app.error.custom.CustomException;
+import br.org.handmaxx.app.error.global.ErrorResponse;
 import br.org.handmaxx.dto.email.EmailDTO;
 import br.org.handmaxx.dto.resetpassword.PasswordResetDTO;
 import br.org.handmaxx.dto.resetpassword.PasswordResetRequestDTO;
@@ -31,11 +33,19 @@ public class PasswordResetServiceImpl implements PasswordResetService {
     @Transactional
     public void requestPasswordReset(PasswordResetRequestDTO request) {
         Optional<Usuario> userOpt = usuarioRepository.findByEmailOptional(request.email());
+        if(userOpt.isEmpty())
+            throw new CustomException(new ErrorResponse("Usuário não encontrado pelo email informado.", "PasswordResetServiceImpl(requestPasswordToken)", 404));
         if (userOpt.isPresent()) {
             Usuario user = userOpt.get();
+            
+            if(passwordResetTokenRepository.findByUserId(user.getId()) != null){
+                PasswordResetToken oldToken = passwordResetTokenRepository.findByUserId(user.getId());
+                passwordResetTokenRepository.delete(oldToken);
+            }
+
             String token = UUID.randomUUID().toString();
             Date expirationDate = new Date(System.currentTimeMillis() + 3600000); // 1 hora
-
+            
             PasswordResetToken resetToken = new PasswordResetToken(token, user, expirationDate);
             passwordResetTokenRepository.persist(resetToken); // Persistir o token
 
@@ -43,7 +53,7 @@ public class PasswordResetServiceImpl implements PasswordResetService {
             String corpoEmail = gerarCorpoEmailHtml(resetLink);
 
             // Usando EmailService para enviar o e-mail
-            EmailDTO emailDTO = new EmailDTO(user.getEmail(), "Recuperação de Senha - " + user.getEmail(), corpoEmail);
+            EmailDTO emailDTO = new EmailDTO(user.getEmail(), "Recuperação de Senha - " + user.getLogin(), corpoEmail);
             emailService.enviarEmail(emailDTO);
         }
     }
@@ -77,7 +87,10 @@ public class PasswordResetServiceImpl implements PasswordResetService {
         PasswordResetToken resetToken = passwordResetTokenRepository.findByToken(resetDTO.token());
         if (resetToken != null && resetToken.getExpirationDate().after(new Date())) {
             Usuario user = resetToken.getUsuario();
-            user.setSenha(resetDTO.newPassword()); // Considere usar hashing
+            if(resetDTO.newPassword() != resetDTO.confirmPassword())
+                throw new CustomException(new ErrorResponse("Senha digitada diferente da confirmação", "PasswordResetServiceImpl(resetPassword)", 400));    
+            else
+                user.setSenha(resetDTO.newPassword()); // Considere usar hashing
             usuarioRepository.persist(user); // Persistir o usuário com a nova senha
         } else {
             throw new RuntimeException("Token inválido ou expirado.");

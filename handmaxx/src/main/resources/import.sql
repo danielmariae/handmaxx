@@ -8,7 +8,7 @@
 INSERT INTO usuario (datahoraatualizacao, datahoracriacao, email, login, senha)
 VALUES
     --SENHA: senha1
-    ('2024-09-23 14:41:29', '2024-09-23 14:41:29', 'lucas-daniel2004@hotmail.com', 'usuario1', 'Csp1B3FE7ExIsmLUCT0FVSjsEviRumTRIAa6xujepRcSSx4iEKX96DaaeJlahnZQJWNSeAcK+wMLHEjK6QEGQw=='),
+    ('2024-09-23 14:41:29', '2024-09-23 14:41:29', 'lucasdaniel@unitins.br', 'usuario1', 'Csp1B3FE7ExIsmLUCT0FVSjsEviRumTRIAa6xujepRcSSx4iEKX96DaaeJlahnZQJWNSeAcK+wMLHEjK6QEGQw=='),
     --SENHA: senha2
     ('2024-09-23 14:41:29', '2024-09-23 14:41:29', 'joaopaulo@gmail.com', 'usuario2', '0hA2bYWKI8y54epeHAaLy6dtROowgFxQWaz1nqQo8/I3RJ/607nbFlzICXKB8LiduecPFH9tcY/GbfewNimxtw==');
 
