@@ -22,7 +22,7 @@ Nome da base de dados: handmaxx_db
 
 **3. Atualizar endereço do Postgres no arquivo application.propeties no seguinte caminho:**
 ```
-.\backend\src\main\resources\application.properties
+.\src\main\resources\application.properties
 ```
 
 <h3>BACKEND</h3>
@@ -36,7 +36,6 @@ java --version
 ```
 **2. Compilar o Quarkus e iniciar execução do servidor através dos comandos (usar Terminal ou PowerShell):**
 ```
-cd ./backend
 ./mvnw compile quarkus:dev
 
 # Caso esteja no Linux ou MacOs, usar:
@@ -51,7 +50,7 @@ mvn compile quarkus:dev
 
 ```
 docker pull devlikeapro/waha
-docker run -it -p 3000:3000/tcp devlikeapro/waha
+docker run -it -p 3000:3000/tcp -e "WHATSAPP_DEFAULT_ENGINE=NOWEB" devlikeapro/waha
 ```
 
 **Fazer a conexão com WhatsApp, acessando o endereço: http://localhost:3000/dashboard**
