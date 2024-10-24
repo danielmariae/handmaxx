@@ -17,8 +17,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 import jakarta.persistence.PersistenceException;
 
@@ -51,7 +49,8 @@ public class TreinoServiceImpl implements TreinoService {
                     500);
             throw new CustomException(errorResponse);
         }
-        // notificarTodosAtletasCreate(dto);
+        
+        // notificarTodosAtletasCreate(treino);
 
         return TreinoResponseDTO.valueOf(treino);
     }
@@ -84,23 +83,26 @@ public class TreinoServiceImpl implements TreinoService {
     public TreinoResponseDTO update(TreinoDTO dto, Long id) {
         Treino treino = treinoRepository.findById(id);
         if (treino == null) {
-            throw new CustomException(new ErrorResponse("Atleta não encontrado", "AtletaServiceImpl(update)", 404));
+            throw new CustomException(new ErrorResponse("Treino não encontrado", "TreinoServiceImpl(update)", 404));
         }
 
-        treino.setLocal(dto.local());
-        treino.setData(dto.data());
-        treino.setHorario(dto.horario());
+        if(dto.local()!=null)
+            treino.setLocal(dto.local());
+        if(dto.data()!=null)
+            treino.setData(dto.data());
+        if(dto.horario()!=null)
+            treino.setHorario(dto.horario());
         
-        notificarTodosAtletasUpdate(dto);
+        notificarTodosAtletasUpdate(treino);
 
         return TreinoResponseDTO.valueOf(treino);
     }    
 
-    private void notificarTodosAtletasCreate(TreinoDTO dto){
+    private void notificarTodosAtletasCreate(Treino treino){
         List<Atleta> atletas = atletaRepository.findAll().list();
 
         for(Atleta atleta : atletas){
-            whatsAppResource.sendTextMessage(new MensagemDTO("55"+retirarPrimeiroNove(atleta.getTelefone())+"@c.us", criarMensagemTreinoCadastro(atleta, dto), "default"));
+            whatsAppResource.sendTextMessage(new MensagemDTO("55"+retirarPrimeiroNove(atleta.getTelefone())+"@c.us", criarMensagemTreinoCadastro(atleta, treino), "default"));
             System.out.println("Enviado para "+retirarPrimeiroNove(atleta.getTelefone())+"!");
         }
     }
@@ -114,25 +116,25 @@ public class TreinoServiceImpl implements TreinoService {
         }
     }
 
-    private void notificarTodosAtletasUpdate(TreinoDTO dto){
+    private void notificarTodosAtletasUpdate(Treino treino){
         List<Atleta> atletas = atletaRepository.findAll().list();
 
         for(Atleta atleta : atletas){
-            whatsAppResource.sendTextMessage(new MensagemDTO("55"+retirarPrimeiroNove(atleta.getTelefone())+"@c.us", criarMensagemTreinoAtualizando(atleta, dto), "default"));
+            whatsAppResource.sendTextMessage(new MensagemDTO("55"+retirarPrimeiroNove(atleta.getTelefone())+"@c.us", criarMensagemTreinoAtualizando(atleta, treino), "default"));
             System.out.println("Enviado para "+retirarPrimeiroNove(atleta.getTelefone())+"!");
         }
     }
 
-    private String criarMensagemTreinoCadastro(Atleta atleta, TreinoDTO dto){
+    private String criarMensagemTreinoCadastro(Atleta atleta, Treino treino){
         return "Olá, atleta "+atleta.getNome()+"!\n\nFoi agendado um treino na sua escolinha Handmaxx!\n\nSerá em "
-                +formatarData(dto.data())+", às "+formatarHorario(dto.horario())+".\nO local será no(a) "+
-                dto.local()+"\n\n*Aguardamos você!*";
+                +formatarData(treino.getData())+", às "+formatarHorario(treino.getHorario())+".\nO local será no(a) "+
+                treino.getLocal()+".\n\n*Aguardamos você!*";
     }
 
-    private String criarMensagemTreinoAtualizando(Atleta atleta, TreinoDTO dto){
+    private String criarMensagemTreinoAtualizando(Atleta atleta, Treino treino){
         return "Olá, atleta "+atleta.getNome()+"!\n\nSeu treino foi remarcado!\nAgora, será em "
-                +formatarData(dto.data())+", às "+formatarHorario(dto.horario())+".\nO local será no(a) "+
-                dto.local()+"\n\n*Aguardamos você!*";
+                +formatarData(treino.getData())+", às "+formatarHorario(treino.getHorario())+".\nO local será no(a) "+
+                treino.getLocal()+"\n\n*Aguardamos você!*";
     }
 
 
@@ -158,10 +160,11 @@ public class TreinoServiceImpl implements TreinoService {
     }
 
     private String retirarPrimeiroNove(String numero){
-        if (numero == null || numero.length() < 4) {
+
+        if (numero == null || numero.length() <= 10) {
             return numero; 
         }
-
+        
         int indiceDoNove = numero.indexOf('9', 2); 
         if (indiceDoNove == 2) {
             return numero.substring(0, 2) + numero.substring(3);

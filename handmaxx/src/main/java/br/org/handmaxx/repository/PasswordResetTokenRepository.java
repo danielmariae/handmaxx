@@ -7,6 +7,9 @@ import jakarta.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class PasswordResetTokenRepository implements PanacheRepository<PasswordResetToken> {
     public PasswordResetToken findByToken(String token){
-        return find("token", token).firstResult();
+        return find("token", token).singleResult();
+    }
+    public PasswordResetToken findByUserId(Long id){
+        return find("SELECT p FROM PasswordResetToken p WHERE p.usuario.id = ?1", id).firstResult();
     }
 }

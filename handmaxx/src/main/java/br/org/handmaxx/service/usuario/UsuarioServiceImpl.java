@@ -10,7 +10,6 @@ import br.org.handmaxx.service.usuario.hash.HashService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.PersistenceException;
-import jakarta.validation.Valid;
 
 
 @ApplicationScoped
@@ -37,7 +36,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public UsuarioResponseDTO create(@Valid UsuarioDTO dto){
+    public UsuarioResponseDTO create(UsuarioDTO dto){
         Usuario user = new Usuario();
 
         user.setEmail(dto.email());
