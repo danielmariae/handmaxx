@@ -17,8 +17,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 import jakarta.persistence.PersistenceException;
 
@@ -52,7 +50,7 @@ public class TreinoServiceImpl implements TreinoService {
             throw new CustomException(errorResponse);
         }
         
-        notificarTodosAtletasCreate(treino);
+        // notificarTodosAtletasCreate(treino);
 
         return TreinoResponseDTO.valueOf(treino);
     }

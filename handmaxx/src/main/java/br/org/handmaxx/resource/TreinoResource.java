@@ -37,14 +37,13 @@ public class TreinoResource {
     @POST
     @Transactional
     public Response create(@Valid TreinoDTO dto) {
-
         return Response.status(201).entity(treinoService.create(dto)).build();
     }
 
     @PUT
     @Path("/{id}")
     @Transactional
-    public Response update(@Valid TreinoDTO dto, @PathParam("id") Long id) {
+    public Response update(TreinoDTO dto, @PathParam("id") Long id) {
 
         treinoService.update(dto, id);
         return Response.status(Status.NO_CONTENT).build();

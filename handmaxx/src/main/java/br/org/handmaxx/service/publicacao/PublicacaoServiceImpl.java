@@ -92,6 +92,7 @@ public class PublicacaoServiceImpl implements PublicacaoService {
     @PATCH
     @Path("/upload/imagem/{id}")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Override
     public Response salvarImagem(@MultipartForm PublicacaoImageForm form, @PathParam("id") Long id) {
         try {
             publicacaoFileService.salvar(form.getNomeImagem(), form.getImagem());
