@@ -19,8 +19,8 @@ VALUES
 
 INSERT INTO questionariosocial (datahoraatualizacao, datahoracriacao, cadastronis, pessoasemcasa, rendafamiliar, condicoesMORADIA) 
 VALUES 
-    ('2024-09-23 14:41:29', '2024-09-23 14:41:29', true, 3, 200.00, 'PRECÁRIAS'),
-    ('2024-09-23 14:41:29', '2024-09-23 14:41:29', true, 3, 200.00, 'PRECÁRIAS');
+    ('2024-09-23 14:41:29', '2024-09-23 14:41:29', true, 3, 200.00, 'PESSIMA'),
+    ('2024-09-23 14:41:29', '2024-09-23 14:41:29', true, 3, 200.00, 'PESSIMA');
 
 
 INSERT INTO atleta (categoria, datanascimento, dadossociais_id, datahoraatualizacao, datahoracriacao, endereco_id, cpf, nome, sexo, cadastrocompleto, telefone)
