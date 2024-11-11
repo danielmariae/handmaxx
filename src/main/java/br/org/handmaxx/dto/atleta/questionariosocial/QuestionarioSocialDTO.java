@@ -1,11 +1,12 @@
 package br.org.handmaxx.dto.atleta.questionariosocial;
 
+import br.org.handmaxx.model.CondicoesMoradia;
 import br.org.handmaxx.model.QuestionarioSocial;
 
 public record QuestionarioSocialDTO(
     Double rendaFamiliar,
     Integer pessoasEmCasa,
-    String condicoesMoradia,
+    CondicoesMoradia condicoesMoradia,
     Boolean cadastroNIS
 ) {
 

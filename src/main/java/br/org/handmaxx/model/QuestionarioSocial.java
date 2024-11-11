@@ -1,6 +1,8 @@
 package br.org.handmaxx.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -10,6 +12,7 @@ import lombok.EqualsAndHashCode;
 public class QuestionarioSocial extends DefaultEntity {
     private Double rendaFamiliar;
     private Integer pessoasEmCasa;
-    private String condicoesMoradia;
+    @Enumerated(EnumType.STRING)
+    private CondicoesMoradia condicoesMoradia;
     private Boolean cadastroNIS;
 }
