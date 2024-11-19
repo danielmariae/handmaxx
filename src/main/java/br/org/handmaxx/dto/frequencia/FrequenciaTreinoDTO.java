@@ -10,3 +10,4 @@ public record FrequenciaTreinoDTO(
     public static FrequenciaTreinoDTO valueOf(Frequencia f){
         return new FrequenciaTreinoDTO(f.getAtleta().getId(), f.getAtleta().getNome(), f.isPresenca());
     }
+}
