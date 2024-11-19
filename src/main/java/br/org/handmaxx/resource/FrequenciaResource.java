@@ -2,8 +2,8 @@ package br.org.handmaxx.resource;
 
 import java.util.List;
 
-import br.org.handmaxx.dto.atleta.AtletaTreinoDTO;
 import br.org.handmaxx.dto.frequencia.FrequenciaDTO;
+import br.org.handmaxx.dto.frequencia.FrequenciaTreinoDTO;
 import br.org.handmaxx.model.Frequencia;
 import br.org.handmaxx.service.frequencia.FrequenciaService;
 import jakarta.inject.Inject;
@@ -39,7 +39,7 @@ public class FrequenciaResource {
 
     @GET
     @Path("/treino/{treinoId}/atletas")
-    public List<AtletaTreinoDTO> listarAtletasPorTreino(@PathParam("treinoId") Long treinoId) {
+    public List<FrequenciaTreinoDTO> listarAtletasPorTreino(@PathParam("treinoId") Long treinoId) {
         return frequenciaService.listarAtletasPorTreino(treinoId);
     }
 }

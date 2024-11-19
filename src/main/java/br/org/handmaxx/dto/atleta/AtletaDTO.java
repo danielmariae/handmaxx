@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import br.org.handmaxx.dto.atleta.questionariosocial.QuestionarioSocialDTO;
 import br.org.handmaxx.dto.endereco.EnderecoDTO;
 import br.org.handmaxx.model.Atleta;
-//import br.org.handmaxx.model.Categoria;
 import br.org.handmaxx.model.Sexo;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -31,9 +30,6 @@ public record AtletaDTO(
         @NotNull(message = "O campo sexo não pode ser nulo.") 
         Sexo sexo,
 
-        // @NotNull(message = "A categoria não pode ser nula.") 
-        // Categoria categoria,
-        
         @Valid
         EnderecoDTO endereco,
 

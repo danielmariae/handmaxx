@@ -1,5 +1,10 @@
 package br.org.handmaxx.service.treino;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+
 import br.org.handmaxx.app.error.custom.CustomException;
 import br.org.handmaxx.app.error.global.ErrorResponse;
 import br.org.handmaxx.dto.mensagem.MensagemDTO;
@@ -12,12 +17,6 @@ import br.org.handmaxx.repository.TreinoRepository;
 import br.org.handmaxx.resource.WhatsappResource;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-
 import jakarta.persistence.PersistenceException;
 
 @ApplicationScoped
@@ -50,7 +49,7 @@ public class TreinoServiceImpl implements TreinoService {
             throw new CustomException(errorResponse);
         }
         
-        // notificarTodosAtletasCreate(treino);
+        notificarTodosAtletasCreate(treino);
 
         return TreinoResponseDTO.valueOf(treino);
     }

@@ -1,24 +1,24 @@
-    package br.org.handmaxx.model;
+package br.org.handmaxx.model;
 
-    import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import lombok.Data;
-    import lombok.EqualsAndHashCode;
-
-    import java.time.LocalDate;
-    import java.time.LocalTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
-    @Entity
-    @Data
-    @EqualsAndHashCode(callSuper = true)
-    public class Treino extends DefaultEntity {
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-        private String local;
-        // Atualizar esse treino depois com a UML.
-        private LocalDate data;
-        private LocalTime horario;
+@Entity
+@Data
+@EqualsAndHashCode(callSuper = true)
+public class Treino extends DefaultEntity {
 
-        @OneToMany(mappedBy = "treino")
-        private List<Frequencia> frequencia;
-    }
+    private String local;
+    // Atualizar esse treino depois com a UML.
+    private LocalDate data;
+    private LocalTime horario;
+    private List<Atleta> listaAtletas;
+    @OneToMany(mappedBy = "treino")
+    private List<Frequencia> frequencia;
+}

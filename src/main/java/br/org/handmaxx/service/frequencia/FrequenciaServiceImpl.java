@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import br.org.handmaxx.dto.atleta.AtletaTreinoDTO;
 import br.org.handmaxx.dto.frequencia.FrequenciaDTO;
+import br.org.handmaxx.dto.frequencia.FrequenciaTreinoDTO;
 import br.org.handmaxx.model.Atleta;
 import br.org.handmaxx.model.Frequencia;
 import br.org.handmaxx.repository.AtletaRepository;
@@ -38,11 +39,6 @@ public class FrequenciaServiceImpl implements FrequenciaService {
         frequenciaRepository.persist(frequencia);
     }
 
-    // @Override
-    // public List<Frequencia> listarFrequenciasPorTreino(Long treinoId) {
-    // return frequenciaRepository.findByTreinoId(treinoId);
-    // }
-
     @Override
     public List<Frequencia> listarFrequenciasPorAtleta(Long atletaId) {
         return frequenciaRepository.findByAtletaId(atletaId);
@@ -54,19 +50,24 @@ public class FrequenciaServiceImpl implements FrequenciaService {
     }
 
     @Override
-    public List<AtletaTreinoDTO> listarAtletasPorTreino(Long treinoId) {
-    List<Atleta> atletas = atletaRepository.findAll().list();
-    List<Frequencia> frequencias = frequenciaRepository.findByTreinoId(treinoId);
+    public List<FrequenciaTreinoDTO> listarAtletasPorTreino(Long treinoId) {
+        List<Atleta> atletas = atletaRepository.findAll().list();
+        List<Frequencia> frequencias = frequenciaRepository.findByTreinoId(treinoId);
 
-    return atletas.stream()
-        .map(atleta -> {
-            Optional<Frequencia> frequencia = frequencias.stream()
-                .filter(f -> f.getAtleta().getId().equals(atleta.getId()))
-                .findFirst();
-            boolean presenca = frequencia.map(Frequencia::isPresenca).orElse(false);
-            return new AtletaTreinoDTO(atleta.getId(), atleta.getNome(), presenca);
-        })
-        .sorted(Comparator.comparing(AtletaTreinoDTO::nome)) // Ordenar alfabeticamente
-        .collect(Collectors.toList());
-}
+        // Mapeia atletas para DTO, incluindo a presença
+        return atletas.stream()
+                .map(atleta -> {
+                    Optional<Frequencia> frequencia = frequencias.stream()
+                            .filter(f -> f.getAtleta().getId().equals(atleta.getId()))
+                            .findFirst();
+
+                    boolean presenca = frequencia.map(Frequencia::isPresenca).orElse(false);
+
+                    // Retorna o DTO correspondente
+                    return new FrequenciaTreinoDTO(atleta.getId(), atleta.getNome(), presenca);
+                })
+                // Ordena os atletas alfabeticamente pelo nome
+                .sorted(Comparator.comparing(FrequenciaTreinoDTO::nomeAtleta))
+                .collect(Collectors.toList());
+    }
 }
