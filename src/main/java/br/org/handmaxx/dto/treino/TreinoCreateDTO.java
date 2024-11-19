@@ -16,7 +16,6 @@ public record TreinoCreateDTO(
     LocalDate data,
     @NotNull  
     LocalTime horario,
-    @NotBlank
     boolean criarTreinoTodosAtletas,
     List<AtletaTreinoDTO> listarAtletas
 ) {}

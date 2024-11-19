@@ -5,11 +5,16 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import br.org.handmaxx.app.error.custom.CustomException;
+import br.org.handmaxx.app.error.global.ErrorResponse;
+import br.org.handmaxx.dto.atleta.AtletaResponseDTO;
 import br.org.handmaxx.dto.atleta.AtletaTreinoDTO;
 import br.org.handmaxx.dto.frequencia.FrequenciaDTO;
+import br.org.handmaxx.dto.frequencia.FrequenciaResponseDTO;
 import br.org.handmaxx.dto.frequencia.FrequenciaTreinoDTO;
 import br.org.handmaxx.model.Atleta;
 import br.org.handmaxx.model.Frequencia;
+import br.org.handmaxx.model.Treino;
 import br.org.handmaxx.repository.AtletaRepository;
 import br.org.handmaxx.repository.FrequenciaRepository;
 import br.org.handmaxx.repository.TreinoRepository;
@@ -45,13 +50,20 @@ public class FrequenciaServiceImpl implements FrequenciaService {
     }
 
     @Override
-    public List<Frequencia> listarFrequenciasPorTreino(Long treinoId) {
-        return frequenciaRepository.findByTreinoIdOrderByAtletaNome(treinoId);
+    public List<FrequenciaResponseDTO> listarFrequenciasPorTreino(Long treinoId) {
+        List<Frequencia> frequencias = frequenciaRepository.findByTreinoIdOrderByAtletaNome(treinoId);
+        if (frequencias == null) {
+            throw new CustomException(
+                    new ErrorResponse("Nenhuma frequencia encontrada", "FrequenciaServiceImpl(listarFrequenciasPorTreino)", 404));
+        }
+        return frequencias.stream()
+                .map(FrequenciaResponseDTO::valueOf)
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<FrequenciaTreinoDTO> listarAtletasPorTreino(Long treinoId) {
-        List<Atleta> atletas = atletaRepository.findAll().list();
+        List<Atleta> atletas = atletaRepository.findAtletasByTreinoId(treinoId);
         List<Frequencia> frequencias = frequenciaRepository.findByTreinoId(treinoId);
 
         // Mapeia atletas para DTO, incluindo a presença

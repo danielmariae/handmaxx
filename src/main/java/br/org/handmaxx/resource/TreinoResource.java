@@ -2,6 +2,7 @@ package br.org.handmaxx.resource;
 
 import org.eclipse.microprofile.jwt.JsonWebToken;
 
+import br.org.handmaxx.dto.treino.TreinoCreateDTO;
 import br.org.handmaxx.dto.treino.TreinoDTO;
 import br.org.handmaxx.service.treino.TreinoService;
 // import io.quarkus.security.Authenticated;
@@ -36,7 +37,7 @@ public class TreinoResource {
 
     @POST
     @Transactional
-    public Response create(@Valid TreinoDTO dto) {
+    public Response create(@Valid TreinoCreateDTO dto) {
         return Response.status(201).entity(treinoService.create(dto)).build();
     }
 

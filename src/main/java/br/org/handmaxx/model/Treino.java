@@ -5,6 +5,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,6 +19,7 @@ public class Treino extends DefaultEntity {
     // Atualizar esse treino depois com a UML.
     private LocalDate data;
     private LocalTime horario;
+    @ManyToMany
     private List<Atleta> listaAtletas;
     @OneToMany(mappedBy = "treino")
     private List<Frequencia> frequencia;

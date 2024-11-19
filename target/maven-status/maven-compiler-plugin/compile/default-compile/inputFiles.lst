@@ -20,6 +20,7 @@ C:\Users\07863820154\Documents\Faculdade\handmaxx\src\main\java\br\org\handmaxx\
 C:\Users\07863820154\Documents\Faculdade\handmaxx\src\main\java\br\org\handmaxx\dto\endereco\EnderecoResponseDTO.java
 C:\Users\07863820154\Documents\Faculdade\handmaxx\src\main\java\br\org\handmaxx\dto\frequencia\FrequenciaDTO.java
 C:\Users\07863820154\Documents\Faculdade\handmaxx\src\main\java\br\org\handmaxx\dto\frequencia\FrequenciaResponseDTO.java
+C:\Users\07863820154\Documents\Faculdade\handmaxx\src\main\java\br\org\handmaxx\dto\frequencia\FrequenciaTreinoDTO.java
 C:\Users\07863820154\Documents\Faculdade\handmaxx\src\main\java\br\org\handmaxx\dto\mensagem\MensagemDTO.java
 C:\Users\07863820154\Documents\Faculdade\handmaxx\src\main\java\br\org\handmaxx\dto\mensagem\MensagemResponseDTO.java
 C:\Users\07863820154\Documents\Faculdade\handmaxx\src\main\java\br\org\handmaxx\dto\mensagem\otp\OTPRequestDTO.java
@@ -27,6 +28,7 @@ C:\Users\07863820154\Documents\Faculdade\handmaxx\src\main\java\br\org\handmaxx\
 C:\Users\07863820154\Documents\Faculdade\handmaxx\src\main\java\br\org\handmaxx\dto\resetpassword\PasswordResetDTO.java
 C:\Users\07863820154\Documents\Faculdade\handmaxx\src\main\java\br\org\handmaxx\dto\resetpassword\PasswordResetRequestDTO.java
 C:\Users\07863820154\Documents\Faculdade\handmaxx\src\main\java\br\org\handmaxx\dto\resetpassword\PasswordResetResponseDTO.java
+C:\Users\07863820154\Documents\Faculdade\handmaxx\src\main\java\br\org\handmaxx\dto\treino\TreinoCreateDTO.java
 C:\Users\07863820154\Documents\Faculdade\handmaxx\src\main\java\br\org\handmaxx\dto\treino\TreinoDTO.java
 C:\Users\07863820154\Documents\Faculdade\handmaxx\src\main\java\br\org\handmaxx\dto\treino\TreinoResponseDTO.java
 C:\Users\07863820154\Documents\Faculdade\handmaxx\src\main\java\br\org\handmaxx\dto\usuario\ResetPasswordDTO.java
@@ -36,6 +38,7 @@ C:\Users\07863820154\Documents\Faculdade\handmaxx\src\main\java\br\org\handmaxx\
 C:\Users\07863820154\Documents\Faculdade\handmaxx\src\main\java\br\org\handmaxx\form\PublicacaoImageForm.java
 C:\Users\07863820154\Documents\Faculdade\handmaxx\src\main\java\br\org\handmaxx\model\Atleta.java
 C:\Users\07863820154\Documents\Faculdade\handmaxx\src\main\java\br\org\handmaxx\model\Categoria.java
+C:\Users\07863820154\Documents\Faculdade\handmaxx\src\main\java\br\org\handmaxx\model\CondicoesMoradia.java
 C:\Users\07863820154\Documents\Faculdade\handmaxx\src\main\java\br\org\handmaxx\model\DefaultEntity.java
 C:\Users\07863820154\Documents\Faculdade\handmaxx\src\main\java\br\org\handmaxx\model\Email.java
 C:\Users\07863820154\Documents\Faculdade\handmaxx\src\main\java\br\org\handmaxx\model\Endereco.java

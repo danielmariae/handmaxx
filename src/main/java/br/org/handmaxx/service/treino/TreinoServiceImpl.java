@@ -4,11 +4,14 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import br.org.handmaxx.app.error.custom.CustomException;
 import br.org.handmaxx.app.error.global.ErrorResponse;
+import br.org.handmaxx.dto.atleta.AtletaTreinoDTO;
 import br.org.handmaxx.dto.mensagem.MensagemDTO;
 import br.org.handmaxx.dto.treino.TreinoDTO;
+import br.org.handmaxx.dto.treino.TreinoCreateDTO;
 import br.org.handmaxx.dto.treino.TreinoResponseDTO;
 import br.org.handmaxx.model.Atleta;
 import br.org.handmaxx.model.Treino;
@@ -32,13 +35,36 @@ public class TreinoServiceImpl implements TreinoService {
     WhatsappResource whatsAppResource;
     
     @Override
-    public TreinoResponseDTO create(TreinoDTO dto) {
+    public TreinoResponseDTO create(TreinoCreateDTO treinoDTO) {
         Treino treino = new Treino();
         
-        treino.setLocal(dto.local());
-        treino.setData(dto.data());
-        treino.setHorario(dto.horario());
+        treino.setLocal(treinoDTO.local());
+        treino.setData(treinoDTO.data());
+        treino.setHorario(treinoDTO.horario());
         
+
+        if(treinoDTO.criarTreinoTodosAtletas()){
+            List<Atleta> todosAtletas = atletaRepository.findAll().list();
+            treino.setListaAtletas(todosAtletas);}
+        else{
+            List<String> cpfs = treinoDTO.listarAtletas().stream().map(AtletaTreinoDTO::cpf).toList();
+            List<Atleta> atletasEncontrados = atletaRepository.findByCpfs(cpfs);
+            List<String> cpfsNaoEncontrados = cpfs.stream()
+                                                .filter(cpf -> atletasEncontrados.stream()
+                                                .noneMatch(atleta -> atleta.getCpf().equals(cpf)))
+                                                .toList();
+            
+            if (!cpfsNaoEncontrados.isEmpty()) {
+                throw new CustomException(new ErrorResponse(
+                    "Atletas não encontrados para os CPFs: " + String.join(", ", cpfsNaoEncontrados),
+                "TreinoService(criarTreino)",
+                404
+                ));
+
+            }
+            
+            treino.setListaAtletas(atletasEncontrados);
+        }
         try {
             treinoRepository.persist(treino);
         } catch (PersistenceException e) {
@@ -49,7 +75,7 @@ public class TreinoServiceImpl implements TreinoService {
             throw new CustomException(errorResponse);
         }
         
-        notificarTodosAtletasCreate(treino);
+        // notificarTodosAtletasCreate(treino);
 
         return TreinoResponseDTO.valueOf(treino);
     }
@@ -62,7 +88,7 @@ public class TreinoServiceImpl implements TreinoService {
             throw new CustomException(new ErrorResponse("Treino não encontrado", "TreinoServiceImpl(delete)", 404));
         }
         try {
-            notificarTodosAtletasDelete(treino);
+            // notificarTodosAtletasDelete(treino);
             treinoRepository.delete(treino);
         } catch (Exception e) {
             throw new CustomException(new ErrorResponse("Erro no servidor.", "TreinoServiceImpl(delete): "+e.getMessage(), 500));
@@ -92,7 +118,7 @@ public class TreinoServiceImpl implements TreinoService {
         if(dto.horario()!=null)
             treino.setHorario(dto.horario());
         
-        notificarTodosAtletasUpdate(treino);
+        // notificarTodosAtletasUpdate(treino);
 
         return TreinoResponseDTO.valueOf(treino);
     }    

@@ -20,6 +20,11 @@ public class AtletaRepository implements PanacheRepository<Atleta> {
     }
 
     public List<Atleta> findAtletasByTreinoId(Long treinoId) {
-        return list("SELECT a FROM Atleta a JOIN Frequencia f ON a.id = f.atleta.id WHERE f.treino.id = ?1", treinoId);
-    }   
+        return list("SELECT a FROM Treino t JOIN t.listaAtletas a WHERE t.id = ?1", treinoId);
+    }    
+
+    public List<Atleta> findByCpfs(List<String> cpfs) {
+        return list("cpf IN ?1", cpfs);
+    }
+    
 }
