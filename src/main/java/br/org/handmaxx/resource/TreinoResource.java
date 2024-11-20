@@ -23,7 +23,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 
-@Authenticated
+// @Authenticated
 @Path("treino")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -44,8 +44,7 @@ public class TreinoResource {
     @PUT
     @Path("/{id}")
     @Transactional
-    public Response update(TreinoDTO dto, @PathParam("id") Long id) {
-
+    public Response update(TreinoDTO dto, @PathParam("id") Long id) {   
         treinoService.update(dto, id);
         return Response.status(Status.NO_CONTENT).build();
     }
@@ -54,7 +53,6 @@ public class TreinoResource {
     @Path("/{id}")
     @Transactional
     public Response delete(@PathParam("id") Long id) {
-
         treinoService.delete(id);
         return Response.status(Status.NO_CONTENT).build();
     }
@@ -65,18 +63,25 @@ public class TreinoResource {
     @Transactional
 
     public Response getById(@PathParam("id") Long id) {
-
         return Response.status(200).entity(treinoService.findById(id)).build();
     }
 
-//     // Permitir que qualquer usuário autenticado possa buscar atletas por nome
-//     @GET
-//     @Path("/nome/{nome}")
-//     @Transactional
+    // Permitir que qualquer usuário autenticado possa buscar um atleta por ID
+    @GET
+    @Transactional
 
-//     public Response getByNome(@PathParam("nome") String nome) {
-//         List<AtletaResponseDTO> atletas = atletaService.findByNome(nome);
-//         return Response.ok(atletas).build();
-//     }
-// 
+    public Response getAll() {
+        return Response.status(200).entity(treinoService.findAll()).build();
+    }
+
+    // // Permitir que qualquer usuário autenticado possa buscar atletas por nome
+    // @GET
+    // @Path("/nome/{nome}")
+    // @Transactional
+
+    // public Response getByNome(@PathParam("nome") String nome) {
+    // List<AtletaResponseDTO> atletas = atletaService.findByNome(nome);
+    // return Response.ok(atletas).build();
+    // }
+    //
 }

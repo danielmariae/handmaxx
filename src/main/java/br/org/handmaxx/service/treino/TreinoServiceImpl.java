@@ -11,6 +11,7 @@ import br.org.handmaxx.app.error.global.ErrorResponse;
 import br.org.handmaxx.dto.atleta.AtletaTreinoDTO;
 import br.org.handmaxx.dto.mensagem.MensagemDTO;
 import br.org.handmaxx.dto.treino.TreinoDTO;
+import br.org.handmaxx.dto.treino.TreinoFullResponseDTO;
 import br.org.handmaxx.dto.treino.TreinoCreateDTO;
 import br.org.handmaxx.dto.treino.TreinoResponseDTO;
 import br.org.handmaxx.model.Atleta;
@@ -21,6 +22,7 @@ import br.org.handmaxx.resource.WhatsappResource;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.PersistenceException;
+import jakarta.transaction.Transactional;
 
 @ApplicationScoped
 public class TreinoServiceImpl implements TreinoService {
@@ -35,7 +37,8 @@ public class TreinoServiceImpl implements TreinoService {
     WhatsappResource whatsAppResource;
     
     @Override
-    public TreinoResponseDTO create(TreinoCreateDTO treinoDTO) {
+    @Transactional
+    public TreinoFullResponseDTO create(TreinoCreateDTO treinoDTO) {
         Treino treino = new Treino();
         
         treino.setLocal(treinoDTO.local());
@@ -47,16 +50,16 @@ public class TreinoServiceImpl implements TreinoService {
             List<Atleta> todosAtletas = atletaRepository.findAll().list();
             treino.setListaAtletas(todosAtletas);}
         else{
-            List<String> cpfs = treinoDTO.listarAtletas().stream().map(AtletaTreinoDTO::cpf).toList();
-            List<Atleta> atletasEncontrados = atletaRepository.findByCpfs(cpfs);
-            List<String> cpfsNaoEncontrados = cpfs.stream()
-                                                .filter(cpf -> atletasEncontrados.stream()
-                                                .noneMatch(atleta -> atleta.getCpf().equals(cpf)))
+            List<Long> ids = treinoDTO.listarAtletas().stream().map(AtletaTreinoDTO::id).toList();
+            List<Atleta> atletasEncontrados = atletaRepository.findByIds(ids);
+            List<Long> idsNaoEncontrados = ids.stream()
+                                                .filter(id -> atletasEncontrados.stream()
+                                                .noneMatch(atleta -> atleta.getId().equals(id)))
                                                 .toList();
             
-            if (!cpfsNaoEncontrados.isEmpty()) {
+            if (!idsNaoEncontrados.isEmpty()) {
                 throw new CustomException(new ErrorResponse(
-                    "Atletas não encontrados para os CPFs: " + String.join(", ", cpfsNaoEncontrados),
+                    "Atletas não encontrados para os ID's: " + String.join(", ", idsNaoEncontrados.toString()),
                 "TreinoService(criarTreino)",
                 404
                 ));
@@ -77,7 +80,7 @@ public class TreinoServiceImpl implements TreinoService {
         
         // notificarTodosAtletasCreate(treino);
 
-        return TreinoResponseDTO.valueOf(treino);
+        return TreinoFullResponseDTO.valueOf(treino);
     }
 
     @Override
@@ -96,15 +99,22 @@ public class TreinoServiceImpl implements TreinoService {
     }
 
     @Override
-    public TreinoResponseDTO findById(Long id) {
+    public TreinoFullResponseDTO findById(Long id) {
         Treino treino = treinoRepository.findById(id);
         if(treino == null){
             throw new CustomException(new ErrorResponse("Treino não encontrado", "TreinoServiceImpl(findById)", 404));
         }
-        return TreinoResponseDTO.valueOf(treino);
+        return TreinoFullResponseDTO.valueOf(treino);
     }
 
     @Override
+    public List<TreinoResponseDTO> findAll(){
+        List<Treino> treinos = treinoRepository.findAll().list();
+        return treinos.stream().map(TreinoResponseDTO::valueOf).collect(Collectors.toList());
+
+    }
+    @Override
+    @Transactional
     public TreinoResponseDTO update(TreinoDTO dto, Long id) {
         Treino treino = treinoRepository.findById(id);
         if (treino == null) {
@@ -117,10 +127,8 @@ public class TreinoServiceImpl implements TreinoService {
             treino.setData(dto.data());
         if(dto.horario()!=null)
             treino.setHorario(dto.horario());
-        
-        // notificarTodosAtletasUpdate(treino);
 
-        return TreinoResponseDTO.valueOf(treino);
+            return TreinoResponseDTO.valueOf(treino);
     }    
 
     private void notificarTodosAtletasCreate(Treino treino){

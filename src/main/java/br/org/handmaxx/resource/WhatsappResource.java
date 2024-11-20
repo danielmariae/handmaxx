@@ -51,14 +51,6 @@ public class WhatsappResource {
         return Response.ok(qrCode).build();
     }
 
-    // @GET
-    // @Path("/screenshot")
-    // @Produces({"image/png", "application/json"})
-    // public Response getQRCode(@PathParam("session") String session, @QueryParam("format") String format) {
-    //     byte[] qrCode = whatsappService.getQRCode(session, format);
-    //     return Response.ok(qrCode).build();
-    // }
-
     @POST
     @Path("/sendText")
     public Response sendTextMessage(MensagemDTO message) {

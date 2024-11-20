@@ -5,6 +5,7 @@ import java.util.List;
 import br.org.handmaxx.dto.atleta.AtletaCadastroInicialDTO;
 import br.org.handmaxx.dto.atleta.AtletaDTO;
 import br.org.handmaxx.dto.atleta.AtletaResponseDTO;
+import br.org.handmaxx.dto.atleta.AtletaTreinoDTO;
 
 public interface AtletaService {
     public AtletaResponseDTO findById(Long id);
@@ -14,4 +15,5 @@ public interface AtletaService {
     public void delete(Long id);
     public List<AtletaResponseDTO> findByNome(String nome);
     public List<AtletaResponseDTO> findAll();
+    public List<AtletaTreinoDTO> findAllTreinos();
 }

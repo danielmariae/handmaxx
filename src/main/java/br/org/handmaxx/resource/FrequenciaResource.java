@@ -5,7 +5,6 @@ import java.util.List;
 import br.org.handmaxx.dto.frequencia.FrequenciaDTO;
 import br.org.handmaxx.dto.frequencia.FrequenciaResponseDTO;
 import br.org.handmaxx.dto.frequencia.FrequenciaTreinoDTO;
-import br.org.handmaxx.model.Frequencia;
 import br.org.handmaxx.service.frequencia.FrequenciaService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
@@ -27,8 +26,8 @@ public class FrequenciaResource {
 
     @GET
     @Path("/treino/{treinoId}")
-    public List<FrequenciaResponseDTO> listarFrequenciasPorTreino(@PathParam("treinoId") Long treinoId) {
-        return frequenciaService.listarFrequenciasPorTreino(treinoId);
+    public Response listarFrequenciasPorTreino(@PathParam("treinoId") Long treinoId) {
+        return Response.status(201).entity(frequenciaService.listarFrequenciasPorTreino(treinoId)).build();
     }
 
     @POST
@@ -40,7 +39,7 @@ public class FrequenciaResource {
 
     @GET
     @Path("/treino/{treinoId}/atletas")
-    public List<FrequenciaTreinoDTO> listarAtletasPorTreino(@PathParam("treinoId") Long treinoId) {
-        return frequenciaService.listarAtletasPorTreino(treinoId);
+    public Response listarAtletasPorTreino(@PathParam("treinoId") Long treinoId) {
+        return Response.status(201).entity(frequenciaService.listarAtletasPorTreino(treinoId)).build();
     }
 }

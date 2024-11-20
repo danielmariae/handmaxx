@@ -23,8 +23,8 @@ public class AtletaRepository implements PanacheRepository<Atleta> {
         return list("SELECT a FROM Treino t JOIN t.listaAtletas a WHERE t.id = ?1", treinoId);
     }    
 
-    public List<Atleta> findByCpfs(List<String> cpfs) {
-        return list("cpf IN ?1", cpfs);
+    public List<Atleta> findByIds(List<Long> ids) {
+        return list("id IN ?1", ids);
     }
     
 }

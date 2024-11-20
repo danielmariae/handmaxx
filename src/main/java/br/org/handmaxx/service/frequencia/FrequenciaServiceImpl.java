@@ -7,14 +7,11 @@ import java.util.stream.Collectors;
 
 import br.org.handmaxx.app.error.custom.CustomException;
 import br.org.handmaxx.app.error.global.ErrorResponse;
-import br.org.handmaxx.dto.atleta.AtletaResponseDTO;
-import br.org.handmaxx.dto.atleta.AtletaTreinoDTO;
 import br.org.handmaxx.dto.frequencia.FrequenciaDTO;
 import br.org.handmaxx.dto.frequencia.FrequenciaResponseDTO;
 import br.org.handmaxx.dto.frequencia.FrequenciaTreinoDTO;
 import br.org.handmaxx.model.Atleta;
 import br.org.handmaxx.model.Frequencia;
-import br.org.handmaxx.model.Treino;
 import br.org.handmaxx.repository.AtletaRepository;
 import br.org.handmaxx.repository.FrequenciaRepository;
 import br.org.handmaxx.repository.TreinoRepository;

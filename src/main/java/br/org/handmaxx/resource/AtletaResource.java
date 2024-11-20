@@ -7,6 +7,7 @@ import org.eclipse.microprofile.jwt.JsonWebToken;
 import br.org.handmaxx.dto.atleta.AtletaCadastroInicialDTO;
 import br.org.handmaxx.dto.atleta.AtletaDTO;
 import br.org.handmaxx.dto.atleta.AtletaResponseDTO;
+import br.org.handmaxx.dto.atleta.AtletaTreinoDTO;
 import br.org.handmaxx.service.atleta.AtletaService;
 import io.quarkus.security.Authenticated;
 
@@ -27,7 +28,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 
-@Authenticated
+// @Authenticated
 @Path("atleta")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -95,6 +96,14 @@ public class AtletaResource {
     @Transactional
     public Response findAll() {
         List<AtletaResponseDTO> atletas = atletaService.findAll();
+        return Response.ok(atletas).build();
+    }
+
+    @GET
+    @Path("/all/treinos")
+    @Transactional
+    public Response findAllTreinos() {
+        List<AtletaTreinoDTO> atletas = atletaService.findAllTreinos();
         return Response.ok(atletas).build();
     }
 }

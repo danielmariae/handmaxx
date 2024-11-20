@@ -8,6 +8,7 @@ import br.org.handmaxx.app.error.global.ErrorResponse;
 import br.org.handmaxx.dto.atleta.AtletaCadastroInicialDTO;
 import br.org.handmaxx.dto.atleta.AtletaDTO;
 import br.org.handmaxx.dto.atleta.AtletaResponseDTO;
+import br.org.handmaxx.dto.atleta.AtletaTreinoDTO;
 import br.org.handmaxx.model.Atleta;
 import br.org.handmaxx.model.QuestionarioSocial;
 import br.org.handmaxx.repository.AtletaRepository;
@@ -200,6 +201,14 @@ public class AtletaServiceImpl implements AtletaService {
         List<Atleta> atletas = atletaRepository.listAll();  // Usar PanacheRepository listAll
         return atletas.stream()
                       .map(AtletaResponseDTO::valueOf)
+                      .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<AtletaTreinoDTO> findAllTreinos() {
+        List<Atleta> atletas = atletaRepository.listAll();  // Usar PanacheRepository listAll
+        return atletas.stream()
+                      .map(AtletaTreinoDTO::valueOf)
                       .collect(Collectors.toList());
     }
 }
