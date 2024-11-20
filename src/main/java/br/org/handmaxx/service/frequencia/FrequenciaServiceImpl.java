@@ -42,6 +42,27 @@ public class FrequenciaServiceImpl implements FrequenciaService {
     }
 
     @Override
+    public void registrarVariasFrequencias(List<FrequenciaDTO> frequenciasDTO) {
+        List<Frequencia> frequencias = frequenciasDTO.stream()
+            .map(dto -> {
+                Frequencia frequencia = new Frequencia();
+                frequencia.setAtleta(atletaRepository.findById(dto.atletaId()));
+                frequencia.setTreino(treinoRepository.findById(dto.treinoId()));
+                frequencia.setPresenca(dto.presenca());
+    
+                // Remover qualquer frequência já existente com o mesmo treino e atleta
+                frequenciaRepository.deletarPorTreinoEAtleta(dto.treinoId(), dto.atletaId());
+    
+                return frequencia;
+            })
+            .toList();
+    
+        // Persistir todas as frequências em uma única transação
+        frequenciaRepository.persist(frequencias);
+    }
+    
+
+    @Override
     public List<Frequencia> listarFrequenciasPorAtleta(Long atletaId) {
         return frequenciaRepository.findByAtletaId(atletaId);
     }

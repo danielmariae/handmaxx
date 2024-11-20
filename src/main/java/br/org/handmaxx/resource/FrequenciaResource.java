@@ -37,6 +37,13 @@ public class FrequenciaResource {
         return Response.ok().build();
     }
 
+    @POST
+    @Path("/registrar-multiplas")
+    public Response registrarFrequencia(List<FrequenciaDTO> frequenciasDTO) {
+        frequenciaService.registrarVariasFrequencias(frequenciasDTO);
+        return Response.ok().build();
+    }
+
     @GET
     @Path("/treino/{treinoId}/atletas")
     public Response listarAtletasPorTreino(@PathParam("treinoId") Long treinoId) {

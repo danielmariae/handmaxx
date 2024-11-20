@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import br.org.handmaxx.app.error.custom.CustomException;
@@ -39,16 +40,23 @@ public class TreinoServiceImpl implements TreinoService {
     @Override
     @Transactional
     public TreinoFullResponseDTO create(TreinoCreateDTO treinoDTO) {
+        if(findTreinoMesmaDataHorario(treinoDTO)){
+                ErrorResponse errorResponse = new ErrorResponse(
+                        "Erro ao criar treino",
+                        "TreinoServiceImpl(create): Já há treino cadastrado na mesma data e mesmo horário.",
+                        403);
+                throw new CustomException(errorResponse);
+        }
         Treino treino = new Treino();
         
         treino.setLocal(treinoDTO.local());
         treino.setData(treinoDTO.data());
         treino.setHorario(treinoDTO.horario());
         
-
-        if(treinoDTO.criarTreinoTodosAtletas()){
+        if(treinoDTO.listarAtletas().isEmpty()){
             List<Atleta> todosAtletas = atletaRepository.findAll().list();
-            treino.setListaAtletas(todosAtletas);}
+            treino.setListaAtletas(todosAtletas);
+        }
         else{
             List<Long> ids = treinoDTO.listarAtletas().stream().map(AtletaTreinoDTO::id).toList();
             List<Atleta> atletasEncontrados = atletaRepository.findByIds(ids);
@@ -65,7 +73,6 @@ public class TreinoServiceImpl implements TreinoService {
                 ));
 
             }
-            
             treino.setListaAtletas(atletasEncontrados);
         }
         try {
@@ -95,6 +102,20 @@ public class TreinoServiceImpl implements TreinoService {
             treinoRepository.delete(treino);
         } catch (Exception e) {
             throw new CustomException(new ErrorResponse("Erro no servidor.", "TreinoServiceImpl(delete): "+e.getMessage(), 500));
+        }
+    }
+
+    private boolean findTreinoMesmaDataHorario(TreinoCreateDTO treinoDTO){
+        Optional<Treino> treino = treinoRepository.findByDataHorario(treinoDTO.data(), treinoDTO.horario());
+
+        if (treino.isPresent()) {
+            // Resultado encontrado
+            Treino t = treino.get();
+            return true;
+            // Lógica adicional aqui
+        } else {
+            // Resultado não encontrado
+            return false;
         }
     }
 

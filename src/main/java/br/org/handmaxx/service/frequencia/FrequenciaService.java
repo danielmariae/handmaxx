@@ -8,7 +8,9 @@ import br.org.handmaxx.dto.frequencia.FrequenciaTreinoDTO;
 import br.org.handmaxx.model.Frequencia;
 
 public interface FrequenciaService {
-    void registrarPresenca(FrequenciaDTO frequenciaDTO);
+    public void registrarPresenca(FrequenciaDTO frequenciaDTO);
+
+    public void registrarVariasFrequencias(List<FrequenciaDTO> frequenciasDTO);
 
     List<FrequenciaResponseDTO> listarFrequenciasPorTreino(Long treinoId);
 

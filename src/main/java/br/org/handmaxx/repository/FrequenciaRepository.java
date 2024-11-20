@@ -21,5 +21,7 @@ public class FrequenciaRepository implements PanacheRepository<Frequencia>{
         return find("treino.id = ?1 ORDER BY atleta.nome", treinoId).list();
     }
 
-    
+    public void deletarPorTreinoEAtleta(Long treinoId, Long atletaId) {
+        delete("treino.id = ?1 and atleta.id = ?2", treinoId, atletaId);
+    }    
 }
