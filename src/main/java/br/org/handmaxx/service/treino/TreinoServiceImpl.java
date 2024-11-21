@@ -11,9 +11,9 @@ import br.org.handmaxx.app.error.custom.CustomException;
 import br.org.handmaxx.app.error.global.ErrorResponse;
 import br.org.handmaxx.dto.atleta.AtletaTreinoDTO;
 import br.org.handmaxx.dto.mensagem.MensagemDTO;
+import br.org.handmaxx.dto.treino.TreinoCreateDTO;
 import br.org.handmaxx.dto.treino.TreinoDTO;
 import br.org.handmaxx.dto.treino.TreinoFullResponseDTO;
-import br.org.handmaxx.dto.treino.TreinoCreateDTO;
 import br.org.handmaxx.dto.treino.TreinoResponseDTO;
 import br.org.handmaxx.model.Atleta;
 import br.org.handmaxx.model.Treino;
@@ -87,7 +87,7 @@ public class TreinoServiceImpl implements TreinoService {
             throw new CustomException(errorResponse);
         }
         
-        notificarTodosAtletasCreate(treino);
+        // notificarTodosAtletasCreate(treino);
 
         return TreinoFullResponseDTO.valueOf(treino);
     }
@@ -101,7 +101,7 @@ public class TreinoServiceImpl implements TreinoService {
             throw new CustomException(new ErrorResponse("Treino não encontrado", "TreinoServiceImpl(delete)", 404));
         }
         try {
-            notificarTodosAtletasDelete(treino);
+            // notificarTodosAtletasDelete(treino);
             treinoRepository.delete(treino);
         } catch (Exception e) {
             throw new CustomException(new ErrorResponse("Erro no servidor.", "TreinoServiceImpl(delete): "+e.getMessage(), 500));
@@ -139,13 +139,13 @@ public class TreinoServiceImpl implements TreinoService {
             treino.setHorario(dto.horario());
         
         if(dto.listarAtletas().isEmpty()){
-            notificarTodosAtletasUpdate(treino);
+            // notificarTodosAtletasUpdate(treino);
             return TreinoFullResponseDTO.valueOf(treino);
         }else{
             List<Long> ids = dto.listarAtletas().stream().map(AtletaTreinoDTO::id).toList();
             List<Atleta> atletasEncontrados = atletaRepository.findByIds(ids);
             treino.setListaAtletas(atletasEncontrados);
-            notificarTodosAtletasUpdate(treino);
+            // notificarTodosAtletasUpdate(treino);
             return TreinoFullResponseDTO.valueOf(treino);
         }
     }    

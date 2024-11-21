@@ -5,8 +5,6 @@ import org.eclipse.microprofile.jwt.JsonWebToken;
 import br.org.handmaxx.dto.treino.TreinoCreateDTO;
 import br.org.handmaxx.dto.treino.TreinoDTO;
 import br.org.handmaxx.service.treino.TreinoService;
-// import io.quarkus.security.Authenticated;
-import io.quarkus.security.Authenticated;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -18,7 +16,6 @@ import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
-
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
@@ -44,7 +41,7 @@ public class TreinoResource {
     @PUT
     @Path("/{id}")
     @Transactional
-    public Response update(TreinoDTO dto, @PathParam("id") Long id) {   
+    public Response update(@Valid TreinoDTO dto, @PathParam("id") Long id) {   
         treinoService.update(dto, id);
         return Response.status(Status.NO_CONTENT).build();
     }
