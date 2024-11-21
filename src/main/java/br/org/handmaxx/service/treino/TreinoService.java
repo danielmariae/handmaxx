@@ -9,7 +9,7 @@ import br.org.handmaxx.dto.treino.TreinoResponseDTO;
 
 public interface TreinoService {
     public TreinoFullResponseDTO create(TreinoCreateDTO dto);
-    public TreinoResponseDTO update(TreinoDTO dto, Long id);
+    public TreinoFullResponseDTO update(TreinoDTO dto, Long id);
     public void delete(Long id);   
     public TreinoFullResponseDTO findById(Long id);
     public List<TreinoResponseDTO> findAll();
