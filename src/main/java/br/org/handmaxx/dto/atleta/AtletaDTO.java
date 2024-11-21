@@ -46,7 +46,6 @@ public record AtletaDTO(
                 atleta.getCpf(),
                 atleta.getDataNascimento(),
                 atleta.getSexo(),
-                //atleta.getCategoria(),
                 EnderecoDTO.valueOf(atleta.getEndereco()),
                 QuestionarioSocialDTO.valueOf(atleta.getDadosSociais()),
                 atleta.getTelefone()

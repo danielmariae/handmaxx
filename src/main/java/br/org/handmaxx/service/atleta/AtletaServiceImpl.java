@@ -72,7 +72,8 @@ public class AtletaServiceImpl implements AtletaService {
     public AtletaResponseDTO create(AtletaDTO dto) {
         Atleta atleta = new Atleta();
         // Definir campos básicos do atleta
-        // atleta.setNome(dto.nome());
+        atleta.setNome(dto.nome());
+        atleta.setTelefone(dto.telefone());
         atleta.setCpf(dto.cpf());
         atleta.setDataNascimento(dto.dataNascimento());
         atleta.setSexo(dto.sexo());

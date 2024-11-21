@@ -9,8 +9,9 @@ import br.org.handmaxx.model.Categoria;
 import br.org.handmaxx.model.Sexo;
 
 public record AtletaResponseDTO(
+        Long id,
         String nome,
-        String Telefone,
+        String telefone,
         String cpf,
         LocalDate dataNascimento,
         Sexo sexo,
@@ -21,6 +22,7 @@ public record AtletaResponseDTO(
 ) {
     public static AtletaResponseDTO valueOf(Atleta atleta) {
         return new AtletaResponseDTO(
+                atleta.getId(),
                 atleta.getNome(),
                 atleta.getTelefone(),
                 atleta.getCpf(),

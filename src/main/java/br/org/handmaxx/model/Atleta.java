@@ -3,6 +3,8 @@ package br.org.handmaxx.model;
 import java.time.LocalDate;
 import java.time.Period;
 
+import jakarta.persistence.CascadeType;
+
 //import org.jboss.logmanager.handlers.PeriodicRotatingFileHandler.Period;
 
 //import jakarta.persistence.CascadeType;
@@ -35,10 +37,10 @@ public class Atleta extends DefaultEntity {
     // Telefone será obrigatório no cadastro inicial
     private String telefone;
 
-    @OneToOne// Removido CascadeType.PERSIST para permitir que endereco seja nulo no cadastro inicial
+    @OneToOne(cascade = CascadeType.ALL)// Removido CascadeType.PERSIST para permitir que dados sociais seja nulo no cadastro inicial
     private Endereco endereco;
     
-    @OneToOne// Removido CascadeType.PERSIST para permitir que dados sociais seja nulo no cadastro inicial
+    @OneToOne(cascade = CascadeType.ALL)// Removido CascadeType.PERSIST para permitir que dados sociais seja nulo no cadastro inicial
     private QuestionarioSocial dadosSociais;
 
     @Enumerated(EnumType.ORDINAL)

@@ -1,5 +1,6 @@
 package br.org.handmaxx.model;
 
+import jakarta.persistence.CascadeType;
 //import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
@@ -13,11 +14,11 @@ import lombok.EqualsAndHashCode;
 public class Frequencia extends DefaultEntity {
     
     //@OneToOne(cascade = CascadeType.PERSIST)
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Treino treino;
 
     //@OneToOne(cascade = CascadeType.PERSIST)
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Atleta atleta;
 
     private boolean presenca;
