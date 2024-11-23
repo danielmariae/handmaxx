@@ -1,6 +1,6 @@
-handmaxx/target/build-metrics.json
-handmaxx/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
-handmaxx/target/maven-status/maven-compiler-plugin/testCompile/null/inputFiles.lst
+target/build-metrics.json
+target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
+target/maven-status/maven-compiler-plugin/testCompile/null/inputFiles.lst
 target/classes/br/org/handmaxx/app/GreetingResource.class
 target/classes/br/org/handmaxx/app/Main.class
 target/classes/br/org/handmaxx/app/error/UniqueConstraintExceptionMapper.class
@@ -92,3 +92,13 @@ target/classes/br/org/handmaxx/service/whatsapp/waha/WahaService.class
 target/classes/br/org/handmaxx/util/Error.class
 target/test-classes/br/org/handmaxx/GreetingResourceIT.class
 target/test-classes/br/org/handmaxx/GreetingResourceTest.class
+target/build-metrics.json
+target/handmaxx-dev.jar
+target/classes/br/org/handmaxx/dto/frequencia/FrequenciaTreinoDTO.class
+target/classes/br/org/handmaxx/dto/treino/TreinoCreateDTO.class
+target/classes/br/org/handmaxx/dto/treino/TreinoFullResponseDTO.class
+target/classes/br/org/handmaxx/model/CondicoesMoradia.class
+target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
+target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
+target/maven-status/maven-compiler-plugin/testCompile/null/inputFiles.lst
+target/quarkus/bootstrap/dev-app-model.dat
