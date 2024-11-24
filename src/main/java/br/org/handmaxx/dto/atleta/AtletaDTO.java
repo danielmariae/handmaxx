@@ -30,15 +30,16 @@ public record AtletaDTO(
         @NotNull(message = "O campo sexo não pode ser nulo.") 
         Sexo sexo,
 
+        // Telefone deve estar presente tanto no cadastro inicial quanto final
+        @NotBlank(message = "O telefone não pode ser nulo.")
+        String telefone,
+        
         @Valid
         EnderecoDTO endereco,
 
         @Valid
-        QuestionarioSocialDTO questionario,
+        QuestionarioSocialDTO questionario
 
-        // Telefone deve estar presente tanto no cadastro inicial quanto final
-        @NotBlank(message = "O telefone não pode ser nulo.")
-        String telefone
 ) {
     public static AtletaDTO valueOf(Atleta atleta) {
         return new AtletaDTO(
@@ -46,9 +47,9 @@ public record AtletaDTO(
                 atleta.getCpf(),
                 atleta.getDataNascimento(),
                 atleta.getSexo(),
+                atleta.getTelefone(),
                 EnderecoDTO.valueOf(atleta.getEndereco()),
-                QuestionarioSocialDTO.valueOf(atleta.getDadosSociais()),
-                atleta.getTelefone()
+                QuestionarioSocialDTO.valueOf(atleta.getDadosSociais())
         );
     }
 }

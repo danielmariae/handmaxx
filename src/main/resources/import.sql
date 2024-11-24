@@ -43,7 +43,7 @@ VALUES
 
 -- Inserções para a tabela atleta
 INSERT INTO atleta (categoria, datanascimento, dadossociais_id, datahoraatualizacao, datahoracriacao, endereco_id, cpf, nome, sexo, cadastrocompleto, telefone)
-	VALUES (0, '2004-10-20', 1, '2024-09-23 14:41:29', '2024-09-23 14:41:29', 1, '07863820154', 'Álvaro Calebe', 'MASCULINO', false, '63984294658'),
+	VALUES (0, '2004-10-20', 1, '2024-09-23 14:41:29', '2024-09-23 14:41:29', 1, '07863820154', 'Lucas Santos', 'MASCULINO', false, '63999632459'),
            (1, '2001-09-27', 2, '2024-09-23 14:41:30', '2024-09-23 14:41:30', 2, '03809323910', 'Marcelo Alves', 'MASCULINO', false, '63992154511'),
            (0, '1999-11-14', 3, '2024-09-23 14:41:31', '2024-09-23 14:41:31', 3, '01457923188', 'Lucas Soares', 'MASCULINO', true, '63992467030'),
            (1, '2003-08-05', 4, '2024-09-23 14:41:32', '2024-09-23 14:41:32', 4, '02159813245', 'Ana Souza', 'FEMININO', true, '63994211788'),

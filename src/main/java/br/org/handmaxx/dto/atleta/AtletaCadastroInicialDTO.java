@@ -5,14 +5,14 @@ import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 public record AtletaCadastroInicialDTO(
-        @NotBlank String nome,
-
-        // @NotBlank(message = "O campo cpf não pode ser nulo.")
-        // String cpf,
-
+        @NotBlank (message = "Nome não pode ser nulo.")
+        String nome,
         // Campo de telefone para o cadastro inicial
-        @NotBlank(message = "O telefone não pode ser nulo.") String telefone,
-
-        @NotNull(message = "A data de nascimento não pode ser nula.") LocalDate dataNascimento) {
+        @NotBlank(message = "O telefone não pode ser nulo.")
+        String telefone,
+        @NotNull(message = "A data de nascimento não pode ser nula.")
+        LocalDate dataNascimento,
+        Boolean enviarCadastroTelefone
+        ) {
 
 }

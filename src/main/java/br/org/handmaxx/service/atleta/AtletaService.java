@@ -16,4 +16,6 @@ public interface AtletaService {
     public List<AtletaResponseDTO> findByNome(String nome);
     public List<AtletaResponseDTO> findAll();
     public List<AtletaTreinoDTO> findAllTreinos();
+    public void gerarTokenCadastro(Long id);
+    public boolean validarToken(String token);
 }

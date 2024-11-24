@@ -1,6 +1,8 @@
 package br.org.handmaxx.service.atleta;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import br.org.handmaxx.app.error.custom.CustomException;
@@ -9,9 +11,13 @@ import br.org.handmaxx.dto.atleta.AtletaCadastroInicialDTO;
 import br.org.handmaxx.dto.atleta.AtletaDTO;
 import br.org.handmaxx.dto.atleta.AtletaResponseDTO;
 import br.org.handmaxx.dto.atleta.AtletaTreinoDTO;
+import br.org.handmaxx.dto.mensagem.MensagemDTO;
 import br.org.handmaxx.model.Atleta;
+import br.org.handmaxx.model.CadastroAtletaToken;
 import br.org.handmaxx.model.QuestionarioSocial;
 import br.org.handmaxx.repository.AtletaRepository;
+import br.org.handmaxx.repository.CadastroAtletaTokenRepository;
+import br.org.handmaxx.resource.WhatsappResource;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.PersistenceException;
@@ -24,6 +30,12 @@ public class AtletaServiceImpl implements AtletaService {
     @Inject
     AtletaRepository atletaRepository;
 
+    @Inject
+    CadastroAtletaTokenRepository cadastroTokenRepository;
+
+    @Inject
+    WhatsappResource whatsAppResource;
+
     @Override
     public AtletaResponseDTO findById(Long id) {
         Atleta atleta = atletaRepository.findById(id);
@@ -34,39 +46,6 @@ public class AtletaServiceImpl implements AtletaService {
         }
         return AtletaResponseDTO.valueOf(atleta);
     }
-
-    // @Override
-    // public AtletaResponseDTO create(AtletaDTO dto) {
-    // Atleta atleta = new Atleta();
-
-    // atleta.setNome(dto.nome());
-    // atleta.setCpf(dto.cpf());
-    // atleta.setDataNascimento(dto.dataNascimento());
-    // atleta.setSexo(dto.sexo());
-    // atleta.setCategoria(dto.categoria());
-
-    // atleta.setEndereco(dto.endereco().toModel());
-
-    // // atleta.setDadosSociais(dto.questionario().toModel());
-    // QuestionarioSocial questionario = new QuestionarioSocial();
-    // questionario.setRendaFamiliar(dto.questionario().rendaFamiliar());
-    // questionario.setPessoasEmCasa(dto.questionario().pessoasEmCasa());
-    // questionario.setCondicoesMoradia(dto.questionario().condicoesMoradia());
-    // questionario.setCadastroNIS(dto.questionario().cadastroNIS());
-
-    // atleta.setDadosSociais(questionario);
-
-    // try {
-    // atletaRepository.persist(atleta);
-    // } catch (PersistenceException e) {
-    // ErrorResponse errorResponse = new ErrorResponse(
-    // "Erro ao criar atleta",
-    // "AtletaServiceImpl(create): " + e.getMessage(),
-    // 500);
-    // throw new CustomException(errorResponse);
-    // }
-    // return AtletaResponseDTO.valueOf(atleta);
-    // }
 
     @Override
     public AtletaResponseDTO create(AtletaDTO dto) {
@@ -112,12 +91,16 @@ public class AtletaServiceImpl implements AtletaService {
         atleta.setDataNascimento(dto.dataNascimento());
         atleta.atualizarCategoria(); // Atualizar a categoria com base na idade
         atleta.setCadastroCompleto(false); // Definir como cadastro incompleto
-
+        
         try {
             atletaRepository.persist(atleta);
         } catch (PersistenceException e) {
             throw new CustomException(new ErrorResponse("Erro ao criar atleta",
                     "AtletaServiceImpl(createInitial): " + e.getMessage(), 500));
+        }
+    
+        if(dto.enviarCadastroTelefone()){
+            gerarTokenCadastro(atleta.getId());
         }
         return AtletaResponseDTO.valueOf(atleta);
     }
@@ -159,7 +142,9 @@ public class AtletaServiceImpl implements AtletaService {
         }
 
         atleta.atualizarCategoria();
-        atleta.setCadastroCompleto(true); // Marcar como completo após o update
+        if(!atleta.isCadastroCompleto()){
+            atleta.setCadastroCompleto(true); // Marcar como completo após o update
+        }
 
         try {
             atletaRepository.persist(atleta);
@@ -211,5 +196,130 @@ public class AtletaServiceImpl implements AtletaService {
         return atletas.stream()
                       .map(AtletaTreinoDTO::valueOf)
                       .collect(Collectors.toList());
+    }
+
+    public AtletaResponseDTO completarCadastroToken(AtletaDTO dto, String token){
+        Atleta atleta = atletaRepository.findAtletaByToken(token);
+        CadastroAtletaToken cadastroToken = cadastroTokenRepository.findByToken(token);
+
+        if(!validarToken(token)){
+            throw new CustomException(new ErrorResponse("Token de cadastro inválido e/ou expirado.", "AtletaServiceImpl(completarCadastroToken)", 401));
+        }
+        if (atleta == null) {
+            throw new CustomException(new ErrorResponse("Atleta não encontrado", "AtletaServiceImpl(completarCadastroToken)", 404));
+        }
+
+        // Atualizar apenas os campos que foram enviados e não são nulos
+        if (dto.nome() != null) {
+            atleta.setNome(dto.nome());
+        }
+        if (dto.cpf() != null) {
+            atleta.setCpf(dto.cpf());
+        }
+        if (dto.dataNascimento() != null) {
+            atleta.setDataNascimento(dto.dataNascimento());
+        }
+        if (dto.sexo() != null) {
+            atleta.setSexo(dto.sexo());
+        }
+        if (dto.telefone() != null) {
+            atleta.setTelefone(dto.telefone());
+        }
+
+        // Atualizar Endereço apenas se fornecido
+        if (dto.endereco() != null) {
+            atleta.setEndereco(dto.endereco().toModel());
+        }
+
+        // Atualizar Questionário Social apenas se fornecido
+        if (dto.questionario() != null) {
+            atleta.setDadosSociais(dto.questionario().toModel());
+        }
+
+        atleta.atualizarCategoria();
+        atleta.setCadastroCompleto(true); // Marcar como completo após o update
+
+        // Marcar token como utilizado
+        cadastroToken.setUtilizado(true);
+        cadastroTokenRepository.persist(cadastroToken);
+        
+        try {
+            atletaRepository.persist(atleta);
+        } catch (PersistenceException e) {
+            throw new CustomException(
+                    new ErrorResponse("Erro ao atualizar atleta", "AtletaServiceImpl(update): " + e.getMessage(), 500));
+        }
+
+        return AtletaResponseDTO.valueOf(atleta);
+
+    }
+
+    @Override
+    public void gerarTokenCadastro(Long atletaId) {
+        Atleta atleta = atletaRepository.findById(atletaId);
+
+        if (atleta == null) {
+            throw new CustomException(new ErrorResponse("Atleta não encontrado", "AtletaServiceImpl(completarCadastroToken)", 404));
+        }
+
+        CadastroAtletaToken tokenAnterior = cadastroTokenRepository.findByAtleta(atletaId);
+        
+        if(tokenAnterior != null){
+            cadastroTokenRepository.delete(tokenAnterior);
+        }
+
+        // Criar token único e data de expiração
+        String token = UUID.randomUUID().toString();
+        LocalDateTime dataExpiracao = LocalDateTime.now().plusHours(48);
+
+        CadastroAtletaToken cadastroToken = new CadastroAtletaToken();
+        cadastroToken.setToken(token);
+        cadastroToken.setDataExpiracao(dataExpiracao);
+        cadastroToken.setUtilizado(false);
+        cadastroToken.setAtleta(atleta);
+
+        cadastroTokenRepository.persist(cadastroToken);
+
+        // Montar URL para o cadastro
+        String urlCadastro = "http://localhost:8100/completar-cadastro/" + token;
+
+        // Enviar mensagem via WhatsApp
+        String mensagem = String.format("Olá %s, complete seu cadastro clicando no link abaixo: %s\n*Você tem 48h para completar seu cadastro.*\nAtenciosamente,\nEquipe Handmaxx.", 
+                                         atleta.getNome(), urlCadastro);
+
+        
+        whatsAppResource.sendTextMessage(new MensagemDTO(retirarPrimeiroNove(atleta.getTelefone()), mensagem, "default"));
+    }
+
+    @Override
+    public boolean validarToken(String token) {
+        CadastroAtletaToken cadastroToken = cadastroTokenRepository.findByToken(token);
+
+        if (cadastroToken == null) {
+            return false;
+        }
+
+        if (cadastroToken.isExpirado()) {
+            return false;
+        }
+
+        if (cadastroToken.isUtilizado()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private String retirarPrimeiroNove(String numero){
+
+        if (numero == null || numero.length() <= 10) {
+            return numero; 
+        }
+        
+        int indiceDoNove = numero.indexOf('9', 2); 
+        if (indiceDoNove == 2) {
+            return numero.substring(0, 2) + numero.substring(3);
+        }
+        return numero; 
     }
 }

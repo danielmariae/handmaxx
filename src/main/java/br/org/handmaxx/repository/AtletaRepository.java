@@ -26,5 +26,9 @@ public class AtletaRepository implements PanacheRepository<Atleta> {
     public List<Atleta> findByIds(List<Long> ids) {
         return list("id IN ?1", ids);
     }
+
+    public Atleta findAtletaByToken(String token){
+        return find("SELECT a from CadastroAtletaToken t JOIN t.atleta a WHERE t.token = ?1", token).singleResult();
+    }
     
 }

@@ -17,7 +17,6 @@ import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
-import jakarta.ws.rs.PATCH;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
@@ -41,7 +40,8 @@ public class AtletaResource {
     AtletaService atletaService;
 
     // Cadastro inicial com PATCH (dados mínimos)
-    @PATCH
+    @POST
+    @Path("/initial")
     @Transactional
     public Response createInitial(@Valid AtletaCadastroInicialDTO dto) {
         return Response.status(201).entity(atletaService.createInitial(dto)).build();
@@ -76,7 +76,6 @@ public class AtletaResource {
     @GET
     @Path("/{id}")
     @Transactional
-
     public Response getById(@PathParam("id") Long id) {
 
         return Response.status(200).entity(atletaService.findById(id)).build();
@@ -106,4 +105,28 @@ public class AtletaResource {
         List<AtletaTreinoDTO> atletas = atletaService.findAllTreinos();
         return Response.ok(atletas).build();
     }
+
+    @POST
+    @Path("/{id}/gerar-token")
+    public Response gerarTokenCadastro(@PathParam("id") Long atletaId) {
+        try {
+            atletaService.gerarTokenCadastro(atletaId);
+            return Response.ok("Token gerado e enviado pelo WhatsApp com sucesso!").build();
+        } catch (IllegalArgumentException e) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        }
+    }
+
+    @GET
+    @Path("/validar-token/{token}")
+    public Response validarToken(@PathParam("token") String token) {
+        try {
+            atletaService.validarToken(token);
+            return Response.ok("Token validado com sucesso!").build();
+        } catch (IllegalArgumentException e) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        }
+    }
+
+    
 }
