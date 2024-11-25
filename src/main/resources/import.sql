@@ -22,6 +22,7 @@ VALUES
     ('2024-09-23 14:41:29', '2024-09-23 14:41:29', '77001-915', 'Rua 62', '250', 'Loja 5', 'Palmas', 'TO'),
     ('2024-09-23 14:41:29', '2024-09-23 14:41:29', '77001-916', 'Avenida Leste', '400', 'Bloco A', 'Palmas', 'TO'),
     ('2024-09-23 14:41:29', '2024-09-23 14:41:29', '77001-917', 'Rua das Margaridas', '90', 'Casa 12', 'Palmas', 'TO'),
+    ('2024-09-23 14:41:29', '2024-09-23 14:41:29', '77001-918', 'Avenida JK', '500', 'Próximo ao mercado central', 'Palmas', 'TO'),
     ('2024-09-23 14:41:29', '2024-09-23 14:41:29', '77001-918', 'Avenida JK', '500', 'Próximo ao mercado central', 'Palmas', 'TO');
 
 -- Inserções para a tabela questionariosocial
@@ -39,6 +40,7 @@ VALUES
     ('2024-09-23 14:41:29', '2024-09-23 14:41:29', true, 2, 600.00, 'REGULAR'),
     ('2024-09-23 14:41:29', '2024-09-23 14:41:29', false, 5, 550.00, 'PESSIMA'),
     ('2024-09-23 14:41:29', '2024-09-23 14:41:29', true, 7, 700.00, 'BOA'),
+    ('2024-09-23 14:41:29', '2024-09-23 14:41:29', false, 8, 800.00, 'EXCELENTE'),
     ('2024-09-23 14:41:29', '2024-09-23 14:41:29', false, 8, 800.00, 'EXCELENTE');
 
 -- Inserções para a tabela atleta
@@ -52,7 +54,7 @@ INSERT INTO atleta (categoria, datanascimento, dadossociais_id, datahoraatualiza
            (0, '2000-07-22', 7, '2024-09-23 14:41:35', '2024-09-23 14:41:35', 7, '02950654799', 'Gabriel Almeida', 'MASCULINO', true, '63995123456'),
            (1, '2003-11-11', 8, '2024-09-23 14:41:36', '2024-09-23 14:41:36', 8, '03582649120', 'Roberta Lima', 'FEMININO', true, '63996014851'),
            (1, '1998-06-30', 9, '2024-09-23 14:41:37', '2024-09-23 14:41:37', 9, '01249567348', 'Maria Pereira', 'FEMININO', false, '63994567832'),
-           (0, '2006-02-17', 10, '2024-09-23 14:41:38', '2024-09-23 14:41:38', 10, '02467985462', 'Pedro Costa', 'MASCULINO', true, '63997456329');
+           (0, '2006-02-17', 10, '2024-09-23 14:41:38', '2024-09-23 14:41:38', 10, '02467985462', 'Filipe Dias', 'MASCULINO', true, '63984969981');
 
 -- Inserções para a tabela treino
 INSERT INTO treino (data, horario, datahoraatualizacao, datahoracriacao, local)

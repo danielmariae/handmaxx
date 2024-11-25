@@ -87,7 +87,7 @@ public class TreinoServiceImpl implements TreinoService {
             throw new CustomException(errorResponse);
         }
         
-        // notificarTodosAtletasCreate(treino);
+        notificarTodosAtletasCreate(treino);
 
         return TreinoFullResponseDTO.valueOf(treino);
     }
@@ -101,7 +101,7 @@ public class TreinoServiceImpl implements TreinoService {
             throw new CustomException(new ErrorResponse("Treino não encontrado", "TreinoServiceImpl(delete)", 404));
         }
         try {
-            // notificarTodosAtletasDelete(treino);
+            notificarTodosAtletasDelete(treino);
             treinoRepository.delete(treino);
         } catch (Exception e) {
             throw new CustomException(new ErrorResponse("Erro no servidor.", "TreinoServiceImpl(delete): "+e.getMessage(), 500));
@@ -139,13 +139,13 @@ public class TreinoServiceImpl implements TreinoService {
             treino.setHorario(dto.horario());
         
         if(dto.listarAtletas().isEmpty()){
-            // notificarTodosAtletasUpdate(treino);
+            notificarTodosAtletasUpdate(treino);
             return TreinoFullResponseDTO.valueOf(treino);
         }else{
             List<Long> ids = dto.listarAtletas().stream().map(AtletaTreinoDTO::id).toList();
             List<Atleta> atletasEncontrados = atletaRepository.findByIds(ids);
             treino.setListaAtletas(atletasEncontrados);
-            // notificarTodosAtletasUpdate(treino);
+            notificarTodosAtletasUpdate(treino);
             return TreinoFullResponseDTO.valueOf(treino);
         }
     }    

@@ -40,7 +40,7 @@ public class AuthResource {
         String token = jwtService.generateJwt(result);
     
         return Response.ok(result)
-                       .header("Authorization", "Bearer " + token)
+                       .header("authorization", token)
                        .build();
     }
 }
