@@ -6,6 +6,7 @@ import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
 import br.org.handmaxx.app.result.Result;
 import br.org.handmaxx.dto.publicacao.PublicacaoDTO;
+import br.org.handmaxx.dto.publicacao.PublicacaoResponseDTO;
 import br.org.handmaxx.form.PublicacaoImageForm;
 import br.org.handmaxx.service.publicacao.PublicacaoFileService;
 import br.org.handmaxx.service.publicacao.PublicacaoService;
@@ -55,7 +56,7 @@ public class PublicacaoResource {
     public Response update(PublicacaoDTO dto, @PathParam("id") Long id) {
 
         try {
-            PublicacaoDTO publicacao = publicacaoService.update(id, dto);
+            PublicacaoResponseDTO publicacao = publicacaoService.update(id, dto);
             return Response.ok(publicacao).build();
 
         } catch (ConstraintViolationException e) {
