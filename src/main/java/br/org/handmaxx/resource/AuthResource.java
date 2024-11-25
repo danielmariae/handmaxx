@@ -34,13 +34,13 @@ public class AuthResource {
     @Path("login")
     public Response login(@Valid UsuarioLoginDTO user){
         String hashSenha = hashService.getHashSenha(user.senha());
-
+    
         UsuarioResponseDTO result = userService.findByLoginAndSenha(user.login(), hashSenha);
-
+    
         String token = jwtService.generateJwt(result);
-
-        return Response.ok(result).header("authorization", token).build();
+    
+        return Response.ok(result)
+                       .header("Authorization", "Bearer " + token)
+                       .build();
     }
-
-
 }

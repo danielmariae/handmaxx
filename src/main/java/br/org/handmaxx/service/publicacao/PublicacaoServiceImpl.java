@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
 import br.org.handmaxx.dto.publicacao.PublicacaoDTO;
+import br.org.handmaxx.dto.publicacao.PublicacaoResponseDTO;
 import br.org.handmaxx.form.PublicacaoImageForm;
 import br.org.handmaxx.model.Publicacao;
 import br.org.handmaxx.model.Usuario;
@@ -39,7 +40,7 @@ public class PublicacaoServiceImpl implements PublicacaoService {
 
     @Override
     @Transactional
-    public PublicacaoDTO create(PublicacaoDTO dto) {
+    public PublicacaoResponseDTO create(PublicacaoDTO dto) {
         Publicacao publicacao = new Publicacao();
         publicacao.setTitulo(dto.titulo());
         publicacao.setConteudo(dto.conteudo());
@@ -50,12 +51,12 @@ public class PublicacaoServiceImpl implements PublicacaoService {
         publicacao.setAutor(autor);
 
         publicacaoRepository.persist(publicacao);
-        return PublicacaoDTO.valueOf(publicacao);
+        return PublicacaoResponseDTO.valueOf(publicacao);
     }
 
     @Override
     @Transactional
-    public PublicacaoDTO update(Long id, PublicacaoDTO dto) {
+    public PublicacaoResponseDTO update(Long id, PublicacaoDTO dto) {
         Publicacao publicacao = publicacaoRepository.findById(id);
 
         publicacao.setId(id);
@@ -63,13 +64,13 @@ public class PublicacaoServiceImpl implements PublicacaoService {
         publicacao.setConteudo(dto.conteudo());
 
         publicacaoRepository.persist(publicacao);
-        return PublicacaoDTO.valueOf(publicacao);
+        return PublicacaoResponseDTO.valueOf(publicacao);
     }
 
     @Override
-    public PublicacaoDTO findById(Long id) {
+    public PublicacaoResponseDTO findById(Long id) {
         Publicacao publicacao = publicacaoRepository.findById(id);
-        return PublicacaoDTO.valueOf(publicacao);
+        return PublicacaoResponseDTO.valueOf(publicacao);
     }
 
     @Override
@@ -109,18 +110,18 @@ public class PublicacaoServiceImpl implements PublicacaoService {
     }
 
     @Override
-    public List<PublicacaoDTO> getAll(int page, int pageSize) {
+    public List<PublicacaoResponseDTO> getAll(int page, int pageSize) {
         List<Publicacao> list = publicacaoRepository
                 .findAll()
                 .page(page, pageSize)
                 .list();
 
-        return list.stream().map(e -> PublicacaoDTO.valueOf(e)).collect(Collectors.toList());
+        return list.stream().map(e -> PublicacaoResponseDTO.valueOf(e)).collect(Collectors.toList());
     }
 
     @Override
-    public List<PublicacaoDTO> findAll() {
-        return publicacaoRepository.listAll().stream().map(e -> PublicacaoDTO.valueOf(e)).toList();
+    public List<PublicacaoResponseDTO> findAll() {
+        return publicacaoRepository.listAll().stream().map(e -> PublicacaoResponseDTO.valueOf(e)).toList();
     }
 
 }

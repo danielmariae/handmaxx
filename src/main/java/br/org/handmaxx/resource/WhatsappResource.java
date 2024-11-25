@@ -2,6 +2,7 @@ package br.org.handmaxx.resource;
 
 import br.org.handmaxx.dto.mensagem.MensagemDTO;
 import br.org.handmaxx.service.whatsapp.WhatsappService;
+import io.quarkus.security.Authenticated;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
@@ -14,6 +15,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 @Path("/whatsapp")
+@Authenticated
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class WhatsappResource {

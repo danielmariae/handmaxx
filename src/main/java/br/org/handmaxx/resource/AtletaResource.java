@@ -8,9 +8,10 @@ import br.org.handmaxx.dto.atleta.AtletaCadastroInicialDTO;
 import br.org.handmaxx.dto.atleta.AtletaDTO;
 import br.org.handmaxx.dto.atleta.AtletaResponseDTO;
 import br.org.handmaxx.dto.atleta.AtletaTreinoDTO;
+import br.org.handmaxx.dto.resetpassword.PasswordResetResponseDTO;
 import br.org.handmaxx.service.atleta.AtletaService;
 import io.quarkus.security.Authenticated;
-
+import jakarta.annotation.security.PermitAll;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -27,7 +28,6 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 
-// @Authenticated
 @Path("atleta")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -43,11 +43,22 @@ public class AtletaResource {
     @POST
     @Path("/initial")
     @Transactional
+    @Authenticated
     public Response createInitial(@Valid AtletaCadastroInicialDTO dto) {
         return Response.status(201).entity(atletaService.createInitial(dto)).build();
     }
 
+    @PUT
+    @Path("/token/{token}")
+    @PermitAll
+    @Transactional
+    public Response completarCadastro(@PathParam("token") String token, @Valid AtletaDTO dto){
+        atletaService.completarCadastroToken(dto, token);
+        return Response.status(Status.NO_CONTENT).build();
+    }
+
     @POST
+    @Authenticated
     @Transactional
     public Response create(@Valid AtletaDTO dto) {
 
@@ -56,6 +67,7 @@ public class AtletaResource {
 
     @PUT
     @Path("/update/{id}")
+    @Authenticated
     @Transactional
     public Response update(@Valid AtletaDTO dto, @PathParam("id") Long id) {
 
@@ -65,9 +77,9 @@ public class AtletaResource {
 
     @DELETE
     @Path("/{id}")
+    @Authenticated
     @Transactional
     public Response delete(@PathParam("id") Long id) {
-
         atletaService.delete(id);
         return Response.status(Status.NO_CONTENT).build();
     }
@@ -75,6 +87,7 @@ public class AtletaResource {
     // Permitir que qualquer usuário autenticado possa buscar um atleta por ID
     @GET
     @Path("/{id}")
+    @Authenticated
     @Transactional
     public Response getById(@PathParam("id") Long id) {
 
@@ -84,6 +97,7 @@ public class AtletaResource {
     // Permitir que qualquer usuário autenticado possa buscar atletas por nome
     @GET
     @Path("/nome/{nome}")
+    @Authenticated
     @Transactional
     public Response getByNome(@PathParam("nome") String nome) {
         List<AtletaResponseDTO> atletas = atletaService.findByNome(nome);
@@ -92,6 +106,7 @@ public class AtletaResource {
 
     @GET
     @Path("/all")
+    @Authenticated
     @Transactional
     public Response findAll() {
         List<AtletaResponseDTO> atletas = atletaService.findAll();
@@ -100,6 +115,7 @@ public class AtletaResource {
 
     @GET
     @Path("/all/treinos")
+    @Authenticated
     @Transactional
     public Response findAllTreinos() {
         List<AtletaTreinoDTO> atletas = atletaService.findAllTreinos();
@@ -107,22 +123,23 @@ public class AtletaResource {
     }
 
     @POST
+    @Authenticated
     @Path("/{id}/gerar-token")
     public Response gerarTokenCadastro(@PathParam("id") Long atletaId) {
         try {
             atletaService.gerarTokenCadastro(atletaId);
-            return Response.ok("Token gerado e enviado pelo WhatsApp com sucesso!").build();
+            return Response.ok(new PasswordResetResponseDTO("Token gerado e enviado pelo WhatsApp com sucesso!")).build();
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         }
     }
 
     @GET
+    @PermitAll
     @Path("/validar-token/{token}")
     public Response validarToken(@PathParam("token") String token) {
         try {
-            atletaService.validarToken(token);
-            return Response.ok("Token validado com sucesso!").build();
+            return Response.ok(atletaService.validarToken(token)).build();
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         }

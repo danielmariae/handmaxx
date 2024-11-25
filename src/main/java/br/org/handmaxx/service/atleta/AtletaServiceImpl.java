@@ -100,8 +100,9 @@ public class AtletaServiceImpl implements AtletaService {
         }
     
         if(dto.enviarCadastroTelefone()){
-            gerarTokenCadastro(atleta.getId());
+            gerarTokenCadastro(atleta);
         }
+
         return AtletaResponseDTO.valueOf(atleta);
     }
 
@@ -198,6 +199,7 @@ public class AtletaServiceImpl implements AtletaService {
                       .collect(Collectors.toList());
     }
 
+    @Override
     public AtletaResponseDTO completarCadastroToken(AtletaDTO dto, String token){
         Atleta atleta = atletaRepository.findAtletaByToken(token);
         CadastroAtletaToken cadastroToken = cadastroTokenRepository.findByToken(token);
@@ -263,7 +265,7 @@ public class AtletaServiceImpl implements AtletaService {
         }
 
         CadastroAtletaToken tokenAnterior = cadastroTokenRepository.findByAtleta(atletaId);
-        
+
         if(tokenAnterior != null){
             cadastroTokenRepository.delete(tokenAnterior);
         }
@@ -290,6 +292,43 @@ public class AtletaServiceImpl implements AtletaService {
         
         whatsAppResource.sendTextMessage(new MensagemDTO(retirarPrimeiroNove(atleta.getTelefone()), mensagem, "default"));
     }
+
+    private void gerarTokenCadastro(Atleta atleta) {
+
+        if (atleta == null) {
+            throw new CustomException(new ErrorResponse("Atleta não encontrado", "AtletaServiceImpl(completarCadastroToken)", 404));
+        }
+
+        CadastroAtletaToken tokenAnterior = cadastroTokenRepository.findByAtleta(atleta.getId());
+
+        if(tokenAnterior != null){
+            cadastroTokenRepository.delete(tokenAnterior);
+        }
+
+        // Criar token único e data de expiração
+        String token = UUID.randomUUID().toString();
+        LocalDateTime dataExpiracao = LocalDateTime.now().plusHours(48);
+
+        CadastroAtletaToken cadastroToken = new CadastroAtletaToken();
+        cadastroToken.setToken(token);
+        cadastroToken.setDataExpiracao(dataExpiracao);
+        cadastroToken.setUtilizado(false);
+        cadastroToken.setAtleta(atleta);
+
+        cadastroTokenRepository.persist(cadastroToken);
+
+        System.out.println(cadastroToken.getToken());
+        // Montar URL para o cadastro
+        String urlCadastro = "http://localhost:8100/completar-cadastro/" + token;
+
+        // Enviar mensagem via WhatsApp
+        String mensagem = String.format("Olá atleta %s, complete seu cadastro no Handmaxx clicando no link abaixo:\n%s\n\n*Você tem 48h para completar seu cadastro.*\n\nAtenciosamente,\nEquipe Handmaxx.", 
+                                         atleta.getNome(), urlCadastro);
+
+        
+        whatsAppResource.sendTextMessage(new MensagemDTO("55"+retirarPrimeiroNove(atleta.getTelefone())+"@c.us", mensagem, "default"));
+    }
+
 
     @Override
     public boolean validarToken(String token) {

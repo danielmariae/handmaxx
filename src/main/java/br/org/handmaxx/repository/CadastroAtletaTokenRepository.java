@@ -11,6 +11,6 @@ public class CadastroAtletaTokenRepository implements PanacheRepository<Cadastro
     }
 
     public CadastroAtletaToken findByAtleta(Long atletaId) {
-        return find("atleta_id", atletaId).firstResultOptional().orElse(null);
+        return find("atleta.id", atletaId).firstResultOptional().orElse(null);
     }
 }

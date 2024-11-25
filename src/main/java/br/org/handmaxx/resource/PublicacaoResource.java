@@ -10,6 +10,7 @@ import br.org.handmaxx.form.PublicacaoImageForm;
 import br.org.handmaxx.service.publicacao.PublicacaoFileService;
 import br.org.handmaxx.service.publicacao.PublicacaoService;
 import br.org.handmaxx.util.Error;
+import io.quarkus.security.Authenticated;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.ConstraintViolationException;
@@ -31,6 +32,7 @@ import jakarta.ws.rs.core.Response.ResponseBuilder;
 import jakarta.ws.rs.core.Response.Status;
 
 @Path("homepage")
+@Authenticated
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class PublicacaoResource {
@@ -72,7 +74,6 @@ public class PublicacaoResource {
     }
 
     @GET
-    //@RolesAllowed("User")
     public Response findAll(
                 @QueryParam("page") @DefaultValue("0") int page,
                 @QueryParam("pageSize") @DefaultValue("100") int pageSize) {

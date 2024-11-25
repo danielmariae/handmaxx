@@ -3,17 +3,18 @@ package br.org.handmaxx.service.publicacao;
 import java.util.List;
 
 import br.org.handmaxx.dto.publicacao.PublicacaoDTO;
+import br.org.handmaxx.dto.publicacao.PublicacaoResponseDTO;
 import br.org.handmaxx.form.PublicacaoImageForm;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.core.Response;
 
 public interface PublicacaoService {
     
-    PublicacaoDTO create(PublicacaoDTO dto);
+    PublicacaoResponseDTO create(PublicacaoDTO dto);
 
-    PublicacaoDTO update(Long id, PublicacaoDTO dto);
+    PublicacaoResponseDTO update(Long id, PublicacaoDTO dto);
 
-    PublicacaoDTO findById(Long id);
+    PublicacaoResponseDTO findById(Long id);
 
     void delete(Long id);
 
@@ -21,7 +22,7 @@ public interface PublicacaoService {
 
     public Response salvarImagem(PublicacaoImageForm form,@PathParam("id") Long id);
 
-    List<PublicacaoDTO> getAll(int page, int pageSize);
+    List<PublicacaoResponseDTO> getAll(int page, int pageSize);
 
-    List<PublicacaoDTO> findAll();
+    List<PublicacaoResponseDTO> findAll();
 }

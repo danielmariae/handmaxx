@@ -4,8 +4,6 @@ import br.org.handmaxx.model.Publicacao;
 import jakarta.validation.constraints.NotBlank;
 
 public record PublicacaoDTO(
-        Long id, 
-
         @NotBlank(message = "O título não pode ser nulo.") 
         String titulo,
 
@@ -17,7 +15,6 @@ public record PublicacaoDTO(
 {
     public static PublicacaoDTO valueOf(Publicacao publicacao) {
         return new PublicacaoDTO(
-                publicacao.getId(),         
                 publicacao.getTitulo(),
                 publicacao.getConteudo(),
                 publicacao.getNomeImagem());
