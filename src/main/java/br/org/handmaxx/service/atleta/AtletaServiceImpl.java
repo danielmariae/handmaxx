@@ -68,12 +68,13 @@ public class AtletaServiceImpl implements AtletaService {
         questionario.setCadastroNIS(dto.questionario().cadastroNIS());
         atleta.setDadosSociais(questionario);
 
+        verificaCPF(dto.cpf());
         try {
             atletaRepository.persist(atleta);
         } catch (PersistenceException e) {
             ErrorResponse errorResponse = new ErrorResponse(
-                    "Erro ao criar atleta",
-                    "AtletaServiceImpl(create): " + e.getMessage(),
+                    "Erro ao criar atleta: "+e.getCause().toString(),
+                    "AtletaServiceImpl(create)",
                     500);
             throw new CustomException(errorResponse);
         }
@@ -87,7 +88,6 @@ public class AtletaServiceImpl implements AtletaService {
         Atleta atleta = new Atleta();
         atleta.setNome(dto.nome());
         atleta.setTelefone(dto.telefone()); // Usar o telefone no lugar do CPF
-        // atleta.setCpf(dto.cpf());
         atleta.setDataNascimento(dto.dataNascimento());
         atleta.atualizarCategoria(); // Atualizar a categoria com base na idade
         atleta.setCadastroCompleto(false); // Definir como cadastro incompleto
@@ -95,8 +95,8 @@ public class AtletaServiceImpl implements AtletaService {
         try {
             atletaRepository.persist(atleta);
         } catch (PersistenceException e) {
-            throw new CustomException(new ErrorResponse("Erro ao criar atleta",
-                    "AtletaServiceImpl(createInitial): " + e.getMessage(), 500));
+            throw new CustomException(new ErrorResponse("Erro ao criar atleta: "+e.getCause().getMessage(),
+                    "AtletaServiceImpl(createInitial)", 500));
         }
     
         if(dto.enviarCadastroTelefone()){
@@ -112,7 +112,7 @@ public class AtletaServiceImpl implements AtletaService {
         Atleta atleta = atletaRepository.findById(id);
 
         if (atleta == null) {
-            throw new CustomException(new ErrorResponse("Atleta não encontrado", "AtletaServiceImpl(update)", 404));
+            throw new CustomException(new ErrorResponse("Atleta não encontrado.", "AtletaServiceImpl(update)", 404));
         }
 
         // Atualizar apenas os campos que foram enviados e não são nulos
@@ -151,7 +151,7 @@ public class AtletaServiceImpl implements AtletaService {
             atletaRepository.persist(atleta);
         } catch (PersistenceException e) {
             throw new CustomException(
-                    new ErrorResponse("Erro ao atualizar atleta", "AtletaServiceImpl(update): " + e.getMessage(), 500));
+                    new ErrorResponse("Erro ao atualizar atleta: "+e.getCause().toString(), "AtletaServiceImpl(update): " + e.getMessage(), 500));
         }
 
         return AtletaResponseDTO.valueOf(atleta);
@@ -161,13 +161,12 @@ public class AtletaServiceImpl implements AtletaService {
     public void delete(Long id) {
         Atleta atleta = atletaRepository.findById(id);
         if (atleta == null) {
-            throw new CustomException(new ErrorResponse("Atleta não encontrado", "AtletaServiceImpl(delete)", 404));
+            throw new CustomException(new ErrorResponse("Atleta não encontrado.", "AtletaServiceImpl(delete)", 404));
         }
         try {
             atletaRepository.delete(atleta);
         } catch (Exception e) {
-            throw new CustomException(
-                    new ErrorResponse("Erro no servidor.", "AtletaServiceImpl(delete): " + e.getMessage(), 500));
+            throw new CustomException(new ErrorResponse("Erro no servidor: "+e.getCause().toString(), "AtletaServiceImpl(delete)", 500));
         }
     }
 
@@ -249,7 +248,7 @@ public class AtletaServiceImpl implements AtletaService {
             atletaRepository.persist(atleta);
         } catch (PersistenceException e) {
             throw new CustomException(
-                    new ErrorResponse("Erro ao atualizar atleta", "AtletaServiceImpl(update): " + e.getMessage(), 500));
+                    new ErrorResponse("Erro ao atualizar atleta: "+e.getMessage(), "AtletaServiceImpl(update)", 500));
         }
 
         return AtletaResponseDTO.valueOf(atleta);
@@ -294,7 +293,6 @@ public class AtletaServiceImpl implements AtletaService {
     }
 
     private void gerarTokenCadastro(Atleta atleta) {
-
         if (atleta == null) {
             throw new CustomException(new ErrorResponse("Atleta não encontrado", "AtletaServiceImpl(completarCadastroToken)", 404));
         }
@@ -360,5 +358,12 @@ public class AtletaServiceImpl implements AtletaService {
             return numero.substring(0, 2) + numero.substring(3);
         }
         return numero; 
+    }
+
+    private void verificaCPF(String cpf) {
+        Atleta atleta = atletaRepository.findByCpf(cpf);
+        if(atleta != null){
+            throw new CustomException(new ErrorResponse("Atleta com CPF cadastro já existe.", "AtletaServiceImpl(update)", 404));
+        }
     }
 }

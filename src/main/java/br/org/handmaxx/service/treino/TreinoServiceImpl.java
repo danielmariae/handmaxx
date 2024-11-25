@@ -70,8 +70,8 @@ public class TreinoServiceImpl implements TreinoService {
             
             if (!idsNaoEncontrados.isEmpty()) {
                 throw new CustomException(new ErrorResponse(
-                    "Atletas não encontrados para os ID's: " + String.join(", ", idsNaoEncontrados.toString()),
-                "TreinoService(criarTreino)",
+                    "Erro ao selecionar atletas.",
+                "TreinoService(criarTreino): Atletas não encontrados para os ID's "+String.join(", ", idsNaoEncontrados.toString()),
                 404
                 ));
             }
@@ -87,7 +87,7 @@ public class TreinoServiceImpl implements TreinoService {
             throw new CustomException(errorResponse);
         }
         
-        notificarTodosAtletasCreate(treino);
+        // notificarTodosAtletasCreate(treino);
 
         return TreinoFullResponseDTO.valueOf(treino);
     }
@@ -98,10 +98,10 @@ public class TreinoServiceImpl implements TreinoService {
         Treino treino = treinoRepository.findById(id);
 
         if(treino == null){
-            throw new CustomException(new ErrorResponse("Treino não encontrado", "TreinoServiceImpl(delete)", 404));
+            throw new CustomException(new ErrorResponse("Erro ao deletar treino.", "TreinoServiceImpl(delete): Treino não encontrado.", 404));
         }
         try {
-            notificarTodosAtletasDelete(treino);
+            // notificarTodosAtletasDelete(treino);
             treinoRepository.delete(treino);
         } catch (Exception e) {
             throw new CustomException(new ErrorResponse("Erro no servidor.", "TreinoServiceImpl(delete): "+e.getMessage(), 500));
@@ -112,7 +112,7 @@ public class TreinoServiceImpl implements TreinoService {
     public TreinoFullResponseDTO findById(Long id) {
         Treino treino = treinoRepository.findById(id);
         if(treino == null){
-            throw new CustomException(new ErrorResponse("Treino não encontrado", "TreinoServiceImpl(findById)", 404));
+            throw new CustomException(new ErrorResponse("Erro ao procurar treino.", "TreinoServiceImpl(findById): Treino não encontrado", 404));
         }
         return TreinoFullResponseDTO.valueOf(treino);
     }
@@ -121,14 +121,14 @@ public class TreinoServiceImpl implements TreinoService {
     public List<TreinoResponseDTO> findAll(){
         List<Treino> treinos = treinoRepository.findAll().list();
         return treinos.stream().map(TreinoResponseDTO::valueOf).collect(Collectors.toList());
-
     }
+
     @Override
     @Transactional
     public TreinoFullResponseDTO update(TreinoDTO dto, Long id) {
         Treino treino = treinoRepository.findById(id);
         if (treino == null) {
-            throw new CustomException(new ErrorResponse("Treino não encontrado", "TreinoServiceImpl(update)", 404));
+            throw new CustomException(new ErrorResponse("Erro ao atualizar treino.", "TreinoServiceImpl(update): Treino não encontrado.", 404));
         }
 
         if(dto.local()!=null)
@@ -138,16 +138,14 @@ public class TreinoServiceImpl implements TreinoService {
         if(dto.horario()!=null)
             treino.setHorario(dto.horario());
         
-        if(dto.listarAtletas().isEmpty()){
-            notificarTodosAtletasUpdate(treino);
-            return TreinoFullResponseDTO.valueOf(treino);
-        }else{
+        if(!dto.listarAtletas().isEmpty()){
             List<Long> ids = dto.listarAtletas().stream().map(AtletaTreinoDTO::id).toList();
             List<Atleta> atletasEncontrados = atletaRepository.findByIds(ids);
             treino.setListaAtletas(atletasEncontrados);
-            notificarTodosAtletasUpdate(treino);
-            return TreinoFullResponseDTO.valueOf(treino);
         }
+        
+        // notificarTodosAtletasUpdate(treino);
+        return TreinoFullResponseDTO.valueOf(treino);
     }    
 
     private void notificarTodosAtletasCreate(Treino treino){
@@ -185,7 +183,7 @@ public class TreinoServiceImpl implements TreinoService {
 
 
     private String criarMensagemTreinoCancelado(Atleta atleta, Treino treino){
-        return "Olá, atleta "+atleta.getNome()+"!\nEstamos cancelado seu treino que estava agendado para "
+        return "Olá, atleta "+atleta.getNome()+"!\nEstamos cancelando seu treino que estava agendado para "
                 +formatarData(treino.getData())+", às "+formatarHorario(treino.getHorario())
                 +".\n\n*Pedimos desculpas e contamos com a colaboração de todos.*";
     }
