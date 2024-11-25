@@ -70,8 +70,8 @@ public class TreinoServiceImpl implements TreinoService {
             
             if (!idsNaoEncontrados.isEmpty()) {
                 throw new CustomException(new ErrorResponse(
-                    "Erro ao selecionar atletas.",
-                "TreinoService(criarTreino): Atletas não encontrados para os ID's "+String.join(", ", idsNaoEncontrados.toString()),
+                    "Atletas não encontrados para os ID's: "+String.join(", ", idsNaoEncontrados.toString()),
+                "TreinoService(criarTreino)",
                 404
                 ));
             }
@@ -98,13 +98,13 @@ public class TreinoServiceImpl implements TreinoService {
         Treino treino = treinoRepository.findById(id);
 
         if(treino == null){
-            throw new CustomException(new ErrorResponse("Erro ao deletar treino.", "TreinoServiceImpl(delete): Treino não encontrado.", 404));
+            throw new CustomException(new ErrorResponse("Treino não encontrado.", "TreinoServiceImpl(delete)", 404));
         }
         try {
             // notificarTodosAtletasDelete(treino);
             treinoRepository.delete(treino);
         } catch (Exception e) {
-            throw new CustomException(new ErrorResponse("Erro no servidor.", "TreinoServiceImpl(delete): "+e.getMessage(), 500));
+            throw new CustomException(new ErrorResponse("Erro no servidor: "+e.getCause().toString(), "TreinoServiceImpl(delete)", 500));
         }
     }
 

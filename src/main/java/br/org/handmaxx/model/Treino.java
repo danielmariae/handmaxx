@@ -22,23 +22,18 @@ public class Treino extends DefaultEntity {
     // Atualizar esse treino depois com a UML.
     private LocalDate data;
     private LocalTime horario;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(
         name = "atletas_treino", 
         joinColumns = @JoinColumn(name = "treino_id"), 
         inverseJoinColumns = @JoinColumn(name = "atleta_id")
     )
     private List<Atleta> listaAtletas;
-    @OneToMany(mappedBy = "treino", cascade = CascadeType.ALL)
-    private List<Frequencia> frequencia;
+    @OneToMany(mappedBy = "treino")
+    private List<Frequencia> frequencias;
 
     @PreRemove
-    public void removerAtletasAssociados() {
-        if(frequencia != null){
-            frequencia.clear();
-        }
-        if (listaAtletas != null) {
-            listaAtletas.clear(); // Remove todas as associações
-        }
-    }   
+    private void preRemove() {
+        this.listaAtletas.clear(); // Remove as associações antes de excluir o treino
+    }
 }

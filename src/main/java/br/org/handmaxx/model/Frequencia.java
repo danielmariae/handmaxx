@@ -13,12 +13,10 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class Frequencia extends DefaultEntity {
     
-    //@OneToOne(cascade = CascadeType.PERSIST)
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Treino treino;
 
-    //@OneToOne(cascade = CascadeType.PERSIST)
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Atleta atleta;
 
     private boolean presenca;

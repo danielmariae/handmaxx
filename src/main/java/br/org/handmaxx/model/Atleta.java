@@ -2,6 +2,7 @@ package br.org.handmaxx.model;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.List;
 
 import jakarta.persistence.CascadeType;
 
@@ -12,8 +13,10 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreRemove;
 import jakarta.persistence.PreUpdate;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -47,6 +50,9 @@ public class Atleta extends DefaultEntity {
 
     private boolean cadastroCompleto = false;
 
+    @ManyToMany(mappedBy = "listaAtletas")
+    private List<Treino> treinos;
+
     // Método para atualizar automaticamente a categoria com base na data de nascimento
     public void atualizarCategoria() {
         if (this.dataNascimento != null) {
@@ -60,5 +66,14 @@ public class Atleta extends DefaultEntity {
     @PreUpdate
     public void calcularCategoriaAntesDeSalvar() {
         atualizarCategoria();
+    }
+
+    @PreRemove
+    private void removerAssociacoes() {
+        if (treinos != null) {
+            for (Treino treino : treinos) {
+                treino.getListaAtletas().remove(this); // Remove o atleta de cada treino associado
+            }
+        }
     }
 }

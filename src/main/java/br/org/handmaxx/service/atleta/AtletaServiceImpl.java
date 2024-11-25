@@ -158,6 +158,7 @@ public class AtletaServiceImpl implements AtletaService {
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         Atleta atleta = atletaRepository.findById(id);
         if (atleta == null) {
@@ -248,7 +249,7 @@ public class AtletaServiceImpl implements AtletaService {
             atletaRepository.persist(atleta);
         } catch (PersistenceException e) {
             throw new CustomException(
-                    new ErrorResponse("Erro ao atualizar atleta: "+e.getMessage(), "AtletaServiceImpl(update)", 500));
+                    new ErrorResponse("Erro ao excluir atleta: "+e.getMessage(), "AtletaServiceImpl(update)", 500));
         }
 
         return AtletaResponseDTO.valueOf(atleta);

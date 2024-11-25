@@ -1,3 +1,4 @@
+BEGIN;
 -- Inserções para a tabela usuario (não mexi)
 INSERT INTO usuario (datahoraatualizacao, datahoracriacao, email, login, senha)
 VALUES
@@ -104,3 +105,4 @@ VALUES
     (8, 10),
     (9, 1),
     (10, 2);
+    COMMIT;
