@@ -14,6 +14,7 @@ import br.org.handmaxx.model.Usuario;
 import br.org.handmaxx.util.Error;
 import br.org.handmaxx.repository.PublicacaoRepository;
 import br.org.handmaxx.repository.UsuarioRepository;
+import br.org.handmaxx.service.file.ImageService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -28,7 +29,6 @@ import jakarta.ws.rs.core.MediaType;
 
 @ApplicationScoped
 public class PublicacaoServiceImpl implements PublicacaoService {
-
     @Inject
     PublicacaoRepository publicacaoRepository;
 
@@ -36,7 +36,7 @@ public class PublicacaoServiceImpl implements PublicacaoService {
     UsuarioRepository usuarioRepository;
 
     @Inject
-    PublicacaoFileService publicacaoFileService;
+    ImageService publicacaoFileService;
 
     @Override
     @Transactional

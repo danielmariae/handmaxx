@@ -6,6 +6,7 @@ import br.org.handmaxx.dto.frequencia.FrequenciaDTO;
 import br.org.handmaxx.dto.frequencia.FrequenciaResponseDTO;
 import br.org.handmaxx.dto.frequencia.FrequenciaTreinoDTO;
 import br.org.handmaxx.service.frequencia.FrequenciaService;
+import io.quarkus.security.Authenticated;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
@@ -17,6 +18,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 @Path("/frequencia")
+@Authenticated
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class FrequenciaResource {

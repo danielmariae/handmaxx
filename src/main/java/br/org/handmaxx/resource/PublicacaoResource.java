@@ -8,7 +8,7 @@ import br.org.handmaxx.app.result.Result;
 import br.org.handmaxx.dto.publicacao.PublicacaoDTO;
 import br.org.handmaxx.dto.publicacao.PublicacaoResponseDTO;
 import br.org.handmaxx.form.PublicacaoImageForm;
-import br.org.handmaxx.service.publicacao.PublicacaoFileService;
+import br.org.handmaxx.service.file.ImageService;
 import br.org.handmaxx.service.publicacao.PublicacaoService;
 import br.org.handmaxx.util.Error;
 import io.quarkus.security.Authenticated;
@@ -33,7 +33,6 @@ import jakarta.ws.rs.core.Response.ResponseBuilder;
 import jakarta.ws.rs.core.Response.Status;
 
 @Path("homepage")
-@Authenticated
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class PublicacaoResource {
@@ -42,7 +41,7 @@ public class PublicacaoResource {
     PublicacaoService publicacaoService;
 
     @Inject
-    PublicacaoFileService publicacaoFileService;
+    ImageService publicacaoFileService;
 
     @POST
     @Transactional

@@ -28,5 +28,4 @@ public class PublicacaoImageForm {
     public void setImagem(byte[] imagem) {
         this.imagem = imagem;
     }
-
 }
