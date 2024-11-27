@@ -11,10 +11,10 @@ import br.org.handmaxx.dto.publicacao.PublicacaoResponseDTO;
 import br.org.handmaxx.form.PublicacaoImageForm;
 import br.org.handmaxx.model.Publicacao;
 import br.org.handmaxx.model.Usuario;
-import br.org.handmaxx.util.Error;
 import br.org.handmaxx.repository.PublicacaoRepository;
 import br.org.handmaxx.repository.UsuarioRepository;
 import br.org.handmaxx.service.file.ImageService;
+import br.org.handmaxx.util.Error;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -23,9 +23,9 @@ import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.PATCH;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
-import jakarta.ws.rs.core.MediaType;
 
 @ApplicationScoped
 public class PublicacaoServiceImpl implements PublicacaoService {
@@ -36,7 +36,7 @@ public class PublicacaoServiceImpl implements PublicacaoService {
     UsuarioRepository usuarioRepository;
 
     @Inject
-    ImageService publicacaoFileService;
+    PublicacaoImageService publicacaoFileService;
 
     @Override
     @Transactional
@@ -44,7 +44,6 @@ public class PublicacaoServiceImpl implements PublicacaoService {
         Publicacao publicacao = new Publicacao();
         publicacao.setTitulo(dto.titulo());
         publicacao.setConteudo(dto.conteudo());
-        publicacao.setNomeImagem(dto.nomeImagem());
         publicacao.setDataPublicacao(new java.util.Date());
 
         Usuario autor = usuarioRepository.findByLogin("usuarioLogado"); // Recuperar o usuário logado adequadamente
@@ -81,13 +80,15 @@ public class PublicacaoServiceImpl implements PublicacaoService {
     }
 
     @Override
+    @Transactional
     public void updateNomeImagem(Long id, String nomeImagem) {
         Publicacao publicacao = publicacaoRepository.findById(id);
 
         if (publicacao == null)
             throw new NullPointerException("Nenhuma publicacao encontrada");
         publicacao.setNomeImagem(nomeImagem);
-
+        
+        publicacaoRepository.persist(publicacao);
     }
 
     @PATCH
@@ -99,12 +100,27 @@ public class PublicacaoServiceImpl implements PublicacaoService {
             publicacaoFileService.salvar(form.getNomeImagem(), form.getImagem());
 
         } catch (IOException e) {
-            e.printStackTrace();
             Error error = new Error("409", e.getMessage());
             return Response.status(Status.CONFLICT).entity(error).build();
         }
 
-        ((PublicacaoService) publicacaoFileService).updateNomeImagem(id, form.getNomeImagem());
+        updateNomeImagem(id, form.getNomeImagem());
+
+        return Response.ok(Status.NO_CONTENT).build();
+    }
+
+    @PATCH
+    @Path("/upload/imagem")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Override
+    public Response salvarImagem(@MultipartForm PublicacaoImageForm form) {
+        try {
+            publicacaoFileService.salvar(form.getNomeImagem(), form.getImagem());
+
+        } catch (IOException e) {
+            Error error = new Error("409", e.getMessage());
+            return Response.status(Status.CONFLICT).entity(error).build();
+        }
 
         return Response.ok(Status.NO_CONTENT).build();
     }

@@ -21,6 +21,7 @@ public interface PublicacaoService {
     void updateNomeImagem(Long id, String nomeImagem) ;
 
     public Response salvarImagem(PublicacaoImageForm form,@PathParam("id") Long id);
+    public Response salvarImagem(PublicacaoImageForm form);
 
     List<PublicacaoResponseDTO> getAll(int page, int pageSize);
 

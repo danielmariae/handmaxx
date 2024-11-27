@@ -7,6 +7,7 @@ import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 import br.org.handmaxx.app.result.Result;
 import br.org.handmaxx.dto.publicacao.PublicacaoDTO;
 import br.org.handmaxx.dto.publicacao.PublicacaoResponseDTO;
+import br.org.handmaxx.dto.resetpassword.PasswordResetResponseDTO;
 import br.org.handmaxx.form.PublicacaoImageForm;
 import br.org.handmaxx.service.file.ImageService;
 import br.org.handmaxx.service.publicacao.PublicacaoService;
@@ -104,6 +105,23 @@ public class PublicacaoResource {
 
         return Response.ok(Status.NO_CONTENT).build();
     }
+
+    @PATCH
+    @Path("/upload/imagem")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Response salvarImagem(@MultipartForm PublicacaoImageForm form) {
+        String nomeImagem;
+        try {
+            nomeImagem = publicacaoFileService.salvar(form.getNomeImagem(), form.getImagem());
+        } catch (IOException e) {
+            e.printStackTrace();
+            Error error = new Error("409", e.getMessage());
+            return Response.status(Status.CONFLICT).entity(error).build();
+        }
+
+        return Response.ok(new PasswordResetResponseDTO(nomeImagem)).build();
+    }
+
 
     @GET
     @Path("/download/imagem/{nomeImagem}")

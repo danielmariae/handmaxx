@@ -8,15 +8,12 @@ public record PublicacaoDTO(
         String titulo,
 
         @NotBlank(message = "O conteúdo não pode ser nulo.") 
-        String conteudo,
-        
-        String nomeImagem
+        String conteudo
         ) 
 {
     public static PublicacaoDTO valueOf(Publicacao publicacao) {
         return new PublicacaoDTO(
                 publicacao.getTitulo(),
-                publicacao.getConteudo(),
-                publicacao.getNomeImagem());
+                publicacao.getConteudo());
     }
 }

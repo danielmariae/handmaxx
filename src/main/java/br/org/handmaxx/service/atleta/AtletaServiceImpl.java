@@ -261,7 +261,7 @@ public class AtletaServiceImpl implements AtletaService {
         Atleta atleta = atletaRepository.findById(atletaId);
 
         if (atleta == null) {
-            throw new CustomException(new ErrorResponse("Atleta não encontrado", "AtletaServiceImpl(completarCadastroToken)", 404));
+            throw new CustomException(new ErrorResponse("Atleta não encontrado", "AtletaServiceImpl(gerarTokenCadastro)", 404));
         }
 
         CadastroAtletaToken tokenAnterior = cadastroTokenRepository.findByAtleta(atletaId);
