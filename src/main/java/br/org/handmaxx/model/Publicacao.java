@@ -5,6 +5,7 @@ import java.util.Date;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -19,6 +20,7 @@ public class Publicacao extends DefaultEntity {
     @Column(nullable = false)
     private String titulo;
 
+    @Lob
     @Column(nullable = false)
     private String conteudo;
 
