@@ -6,13 +6,12 @@ import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
 import br.org.handmaxx.app.result.Result;
 import br.org.handmaxx.dto.publicacao.PublicacaoDTO;
-import br.org.handmaxx.dto.publicacao.PublicacaoResponseDTO;
+import br.org.handmaxx.dto.publicacao.PublicacaoFullResponseDTO;
 import br.org.handmaxx.dto.resetpassword.PasswordResetResponseDTO;
 import br.org.handmaxx.form.PublicacaoImageForm;
 import br.org.handmaxx.service.file.ImageService;
 import br.org.handmaxx.service.publicacao.PublicacaoService;
 import br.org.handmaxx.util.Error;
-import io.quarkus.security.Authenticated;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.ConstraintViolationException;
@@ -56,9 +55,8 @@ public class PublicacaoResource {
     public Response update(PublicacaoDTO dto, @PathParam("id") Long id) {
 
         try {
-            PublicacaoResponseDTO publicacao = publicacaoService.update(id, dto);
+            PublicacaoFullResponseDTO publicacao = publicacaoService.update(id, dto);
             return Response.ok(publicacao).build();
-
         } catch (ConstraintViolationException e) {
             Result result = new Result(e.getConstraintViolations());
             return Response.status(Status.NOT_FOUND).entity(result).build();
