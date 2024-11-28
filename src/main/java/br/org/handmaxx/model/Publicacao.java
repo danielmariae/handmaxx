@@ -2,8 +2,10 @@ package br.org.handmaxx.model;
 
 import java.util.Date;
 
+import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
@@ -20,8 +22,7 @@ public class Publicacao extends DefaultEntity {
     @Column(nullable = false)
     private String titulo;
 
-    @Lob
-    @Column(nullable = false)
+    @Column(columnDefinition = "text", nullable = false) // Garante compatibilidade com bancos como PostgreSQL
     private String conteudo;
 
     private String nomeImagem;

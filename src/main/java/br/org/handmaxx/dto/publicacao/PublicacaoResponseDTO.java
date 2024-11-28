@@ -9,6 +9,14 @@ public record PublicacaoResponseDTO(
         String nomeImagem
 ) {
     public static PublicacaoResponseDTO valueOf(Publicacao p){
-        return new PublicacaoResponseDTO(p.getId(), p.getTitulo(), p.getConteudo(), p.getNomeImagem());
+        return new PublicacaoResponseDTO(p.getId(), p.getTitulo(), limitaString(p.getConteudo(), 200), p.getNomeImagem());
+    
     }
+    public static String limitaString(String texto, int maximo){
+        if (texto.length() <= maximo){
+           return texto;
+        }else{
+           return texto.substring(0, maximo);
+        }
+     }
 }

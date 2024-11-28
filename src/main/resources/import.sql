@@ -105,4 +105,6 @@ VALUES
     (8, 10),
     (9, 1),
     (10, 2);
-    COMMIT;
+
+INSERT INTO publicacao (usuario_id,conteudo,dataHoraAtualizacao,dataHoraCriacao,dataPublicacao,nomeImagem,titulo)
+    VALUES (1, 'O time HANDMAX conquistou o título do Campeonato Estadual de Handebol, após uma performance impressionante ao longo do torneio. A equipe demonstrou habilidade, trabalho em equipe e determinação, superando todas as adversárias e garantindo o primeiro lugar na competição. Durante a final, o HANDMAX enfrentou um time forte e experiente, mas conseguiu impor seu ritmo e dominar o jogo desde o início. A vitória foi resultado de uma estratégia bem elaborada e da excelente atuação dos jogadores, que se destacaram em todas as áreas do campo. O técnico do HANDMAX, João Silva, elogiou a dedicação e o esforço dos atletas, afirmando que "essa conquista é fruto de muita disciplina e trabalho árduo". Ele também destacou a importância da torcida e do apoio da comunidade, que foram fundamentais para motivar a equipe. Com este título, o HANDMAX garantiu uma vaga no Campeonato Nacional de Handebol, onde terá a oportunidade de enfrentar os melhores times do país. A equipe está confiante e animada com a perspectiva de continuar sua jornada de sucesso. A cidade celebra a conquista do HANDMAX com festas e homenagens aos atletas, que são agora heróis locais. A vitória não só traz orgulho à equipe, mas também inspira jovens talentos a se dedicarem ao esporte e a perseguirem seus sonhos.', NOW(), NOW(), NOW(), NULL, 'HANDMAX Campeão do Campeonato Estadual de Handebol');
