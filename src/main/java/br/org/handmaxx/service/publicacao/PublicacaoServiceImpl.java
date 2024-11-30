@@ -1,6 +1,7 @@
 package br.org.handmaxx.service.publicacao;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,17 +42,22 @@ public class PublicacaoServiceImpl implements PublicacaoService {
     @Override
     @Transactional
     public PublicacaoFullResponseDTO create(PublicacaoDTO dto) {
-        Publicacao publicacao = new Publicacao();
-        publicacao.setTitulo(dto.titulo());
-        publicacao.setConteudo(dto.conteudo());
-        publicacao.setDataPublicacao(new java.util.Date());
+    Publicacao publicacao = new Publicacao();
+    publicacao.setTitulo(dto.titulo());
 
-        Usuario autor = usuarioRepository.findByLogin("usuarioLogado"); // Recuperar o usuário logado adequadamente
-        publicacao.setAutor(autor);
+    // Ajustado para lidar com múltiplos conteúdos (List<String>)
+    publicacao.setConteudos(dto.conteudos()); 
 
-        publicacaoRepository.persist(publicacao);
-        return PublicacaoFullResponseDTO.valueOf(publicacao);
+    // Converte o horário atual para LocalDateTime
+    publicacao.setDataPublicacao(LocalDateTime.now());
+
+    Usuario autor = usuarioRepository.findByLogin("usuarioLogado"); // Recuperar o usuário logado adequadamente
+    publicacao.setAutor(autor);
+
+    publicacaoRepository.persist(publicacao);
+    return PublicacaoFullResponseDTO.valueOf(publicacao);
     }
+
 
     @Override
     @Transactional
@@ -60,7 +66,9 @@ public class PublicacaoServiceImpl implements PublicacaoService {
 
         publicacao.setId(id);
         publicacao.setTitulo(dto.titulo());
-        publicacao.setConteudo(dto.conteudo());
+
+        // Ajustado para lidar com múltiplos conteúdos (List<String>)
+        publicacao.setConteudos(dto.conteudos());
 
         publicacaoRepository.persist(publicacao);
         return PublicacaoFullResponseDTO.valueOf(publicacao);
@@ -86,7 +94,8 @@ public class PublicacaoServiceImpl implements PublicacaoService {
 
         if (publicacao == null)
             throw new NullPointerException("Nenhuma publicacao encontrada");
-        publicacao.setNomeImagem(nomeImagem);
+        // Ajustado para lidar com listas de imagens
+        publicacao.getNomeImagens().add(nomeImagem); // Adiciona nova imagem à lista de imagens
         
         publicacaoRepository.persist(publicacao);
     }
@@ -139,5 +148,4 @@ public class PublicacaoServiceImpl implements PublicacaoService {
     public List<PublicacaoResponseDTO> findAll() {
         return publicacaoRepository.listAll().stream().map(e -> PublicacaoResponseDTO.valueOf(e)).toList();
     }
-
 }
