@@ -8,7 +8,7 @@ import jakarta.persistence.ElementCollection;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.time.LocalDateTime;  // Importando LocalDateTime
+import java.time.LocalDateTime;  
 import java.util.List;
 
 @Entity
@@ -36,5 +36,5 @@ public class Publicacao extends DefaultEntity {
     @JoinColumn(name = "usuario_id")
     private Usuario autor;
 
-    // Construtores, getters e setters são gerados automaticamente pelo Lombok.
+  
 }

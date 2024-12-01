@@ -63,16 +63,19 @@ public class PublicacaoServiceImpl implements PublicacaoService {
     @Transactional
     public PublicacaoFullResponseDTO update(Long id, PublicacaoDTO dto) {
         Publicacao publicacao = publicacaoRepository.findById(id);
-
-        publicacao.setId(id);
+        
+        if (publicacao == null) {
+            throw new NotFoundException("Publicação não encontrada.");
+        }
+    
         publicacao.setTitulo(dto.titulo());
-
-        // Ajustado para lidar com múltiplos conteúdos (List<String>)
         publicacao.setConteudos(dto.conteudos());
-
+        publicacao.setNomeImagens(dto.nomeImagens()); // Adicionando a lógica para salvar imagens
+    
         publicacaoRepository.persist(publicacao);
         return PublicacaoFullResponseDTO.valueOf(publicacao);
     }
+    
 
     @Override
     public PublicacaoFullResponseDTO findById(Long id) {
