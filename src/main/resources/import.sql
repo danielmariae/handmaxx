@@ -106,7 +106,7 @@ VALUES
     (9, 1),
     (10, 2);
 
-insert into publicacao (
+/* insert into publicacao (
    usuario_id,
    conteudos,
    datahoraatualizacao,
@@ -120,4 +120,5 @@ insert into publicacao (
            now(),
            now(),
            '001900d9-0cc7-4bed-8f85-a2ed6fb3ef0a.jpeg',
-           'Handmax Conquista o Campeonato Estadual de Handebol em Palmas' );
+           'Handmax Conquista o Campeonato Estadual de Handebol em Palmas' );*/
+
