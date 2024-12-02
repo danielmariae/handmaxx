@@ -7,13 +7,13 @@ import java.util.stream.Collectors;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
 import br.org.handmaxx.dto.publicacao.PublicacaoDTO;
-import br.org.handmaxx.dto.publicacao.PublicacaoFullResponseDTO;
 import br.org.handmaxx.dto.publicacao.PublicacaoResponseDTO;
 import br.org.handmaxx.form.PublicacaoImageForm;
 import br.org.handmaxx.model.Publicacao;
 import br.org.handmaxx.model.Usuario;
 import br.org.handmaxx.repository.PublicacaoRepository;
 import br.org.handmaxx.repository.UsuarioRepository;
+import br.org.handmaxx.service.file.ImageService;
 import br.org.handmaxx.util.Error;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -40,7 +40,7 @@ public class PublicacaoServiceImpl implements PublicacaoService {
 
     @Override
     @Transactional
-    public PublicacaoFullResponseDTO create(PublicacaoDTO dto) {
+    public PublicacaoResponseDTO create(PublicacaoDTO dto) {
         Publicacao publicacao = new Publicacao();
         publicacao.setTitulo(dto.titulo());
         publicacao.setConteudo(dto.conteudo());
@@ -50,12 +50,12 @@ public class PublicacaoServiceImpl implements PublicacaoService {
         publicacao.setAutor(autor);
 
         publicacaoRepository.persist(publicacao);
-        return PublicacaoFullResponseDTO.valueOf(publicacao);
+        return PublicacaoResponseDTO.valueOf(publicacao);
     }
 
     @Override
     @Transactional
-    public PublicacaoFullResponseDTO update(Long id, PublicacaoDTO dto) {
+    public PublicacaoResponseDTO update(Long id, PublicacaoDTO dto) {
         Publicacao publicacao = publicacaoRepository.findById(id);
 
         publicacao.setId(id);
@@ -63,13 +63,13 @@ public class PublicacaoServiceImpl implements PublicacaoService {
         publicacao.setConteudo(dto.conteudo());
 
         publicacaoRepository.persist(publicacao);
-        return PublicacaoFullResponseDTO.valueOf(publicacao);
+        return PublicacaoResponseDTO.valueOf(publicacao);
     }
 
     @Override
-    public PublicacaoFullResponseDTO findById(Long id) {
+    public PublicacaoResponseDTO findById(Long id) {
         Publicacao publicacao = publicacaoRepository.findById(id);
-        return PublicacaoFullResponseDTO.valueOf(publicacao);
+        return PublicacaoResponseDTO.valueOf(publicacao);
     }
 
     @Override

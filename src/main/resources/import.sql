@@ -106,18 +106,5 @@ VALUES
     (9, 1),
     (10, 2);
 
-insert into publicacao (
-   usuario_id,
-   conteudo,
-   datahoraatualizacao,
-   datahoracriacao,
-   datapublicacao,
-   nomeimagem,
-   titulo
-) values ( 1,
-           '<div style="text-align: center;"><img src="http://localhost:8080/homepage/download/imagem/c2e94ff5-9e41-438f-8ae1-7d8836e0839d.jpeg" alt="c2e94ff5-9e41-438f-8ae1-7d8836e0839d.jpeg" style="color: var(--ion-color-light); font-size: 1rem; text-align: initial; font-style: inherit; font-variant-ligatures: inherit; font-variant-caps: inherit; height: auto;"></div><div style="text-align: center;"><i>Confira como foi o gol do título do Handmax.</i></div><p style="text-align: justify;">A escolinha de Handebol Handmax alcançou um feito histórico neste último fim de semana ao se consagrar campeã do Campeonato Estadual de Handebol, realizado em Palmas. A equipe, formada por jovens promissores do esporte, mostrou determinação e habilidade ao longo da competição, superando adversários de peso e levando o troféu para casa.</p><p style="text-align: justify;">O torneio, que reuniu as principais equipes do estado, foi um verdadeiro teste de resistência e talento. Com um elenco técnico e dedicado, a Handmax se destacou pela forte defesa e ataque preciso, garantindo vitórias nas fases mais decisivas. O time demonstrou um entrosamento exemplar e um espírito de equipe que conquistou a torcida e impressionou os adversários.</p><p style="text-align: justify;">Os atletas, que treinaram arduamente para chegar à final, comemoraram a conquista com muita emoção. O trabalho de base da escolinha foi destacado como um dos maiores responsáveis pelo sucesso, com treinamentos intensivos e a orientação de técnicos experientes que moldaram cada jogador para se destacar em sua posição.</p><p style="text-align: justify;">Este título não é apenas uma vitória para os atletas e treinadores da Handmax, mas também para o Handebol no estado, mostrando o crescimento do esporte e o potencial da nova geração. A Handmax segue com seus planos de continuar formando atletas de alto nível e, claro, almeja mais conquistas no futuro próximo.</p>',
-           now(),
-           now(),
-           now(),
-           '001900d9-0cc7-4bed-8f85-a2ed6fb3ef0a.jpeg',
-           'Handmax Conquista o Campeonato Estadual de Handebol em Palmas' );
+INSERT INTO publicacao (usuario_id,conteudo,dataHoraAtualizacao,dataHoraCriacao,dataPublicacao,nomeImagem,titulo)
+    VALUES (1, 'O time HANDMAX conquistou o título do Campeonato Estadual de Handebol, após uma performance impressionante ao longo do torneio. A equipe demonstrou habilidade, trabalho em equipe e determinação, superando todas as adversárias e garantindo o primeiro lugar na competição. Durante a final, o HANDMAX enfrentou um time forte e experiente, mas conseguiu impor seu ritmo e dominar o jogo desde o início. A vitória foi resultado de uma estratégia bem elaborada e da excelente atuação dos jogadores, que se destacaram em todas as áreas do campo. O técnico do HANDMAX, João Silva, elogiou a dedicação e o esforço dos atletas, afirmando que "essa conquista é fruto de muita disciplina e trabalho árduo". Ele também destacou a importância da torcida e do apoio da comunidade, que foram fundamentais para motivar a equipe. Com este título, o HANDMAX garantiu uma vaga no Campeonato Nacional de Handebol, onde terá a oportunidade de enfrentar os melhores times do país. A equipe está confiante e animada com a perspectiva de continuar sua jornada de sucesso. A cidade celebra a conquista do HANDMAX com festas e homenagens aos atletas, que são agora heróis locais. A vitória não só traz orgulho à equipe, mas também inspira jovens talentos a se dedicarem ao esporte e a perseguirem seus sonhos.', NOW(), NOW(), NOW(), NULL, 'HANDMAX Campeão do Campeonato Estadual de Handebol');
