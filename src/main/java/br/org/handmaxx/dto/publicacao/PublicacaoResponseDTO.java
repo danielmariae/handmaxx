@@ -1,8 +1,7 @@
 package br.org.handmaxx.dto.publicacao;
 
-import org.jsoup.Jsoup;
-
 import br.org.handmaxx.model.Publicacao;
+import org.jsoup.Jsoup;
 
 public record PublicacaoResponseDTO(
         Long id,
@@ -11,18 +10,18 @@ public record PublicacaoResponseDTO(
         String nomeImagem) {
 
     public static PublicacaoResponseDTO valueOf(Publicacao p) {
-        return new PublicacaoResponseDTO(p.getId(), p.getTitulo(), limitaString(removeHtmlTags(p.getConteudo()), 200), p.getNomeImagem());
+        return new PublicacaoResponseDTO(
+                p.getId(),
+                p.getTitulo(),
+                limitaConteudo(removeHtmlTags(p.getConteudo())),
+                p.getNomeImagem());
     }
 
-    public static String limitaString(String texto, int maximo) {
-        if (texto.length() <= maximo) {
-            return texto;
-        } else {
-            return texto.substring(0, maximo);
-        }
+    public static String removeHtmlTags(String conteudo) {
+        return Jsoup.parse(conteudo).text();
     }
 
-    public static String removeHtmlTags(String texto) {
-        return Jsoup.parse(texto).text();
+    public static String limitaConteudo(String conteudo) {
+        return conteudo.length() <= 1000 ? conteudo : conteudo.substring(0, 200);
     }
 }

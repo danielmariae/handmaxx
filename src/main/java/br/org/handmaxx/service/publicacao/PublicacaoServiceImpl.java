@@ -7,13 +7,13 @@ import java.util.stream.Collectors;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
 import br.org.handmaxx.dto.publicacao.PublicacaoDTO;
+import br.org.handmaxx.dto.publicacao.PublicacaoFullResponseDTO;
 import br.org.handmaxx.dto.publicacao.PublicacaoResponseDTO;
 import br.org.handmaxx.form.PublicacaoImageForm;
 import br.org.handmaxx.model.Publicacao;
 import br.org.handmaxx.model.Usuario;
 import br.org.handmaxx.repository.PublicacaoRepository;
 import br.org.handmaxx.repository.UsuarioRepository;
-import br.org.handmaxx.service.file.ImageService;
 import br.org.handmaxx.util.Error;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -45,7 +45,7 @@ public class PublicacaoServiceImpl implements PublicacaoService {
         publicacao.setTitulo(dto.titulo());
         publicacao.setConteudo(dto.conteudo());
         publicacao.setDataPublicacao(new java.util.Date());
-
+        
         Usuario autor = usuarioRepository.findByLogin("usuarioLogado"); // Recuperar o usuário logado adequadamente
         publicacao.setAutor(autor);
 
@@ -53,23 +53,29 @@ public class PublicacaoServiceImpl implements PublicacaoService {
         return PublicacaoFullResponseDTO.valueOf(publicacao);
     }
 
+
     @Override
     @Transactional
-    public PublicacaoResponseDTO update(Long id, PublicacaoDTO dto) {
+    public PublicacaoFullResponseDTO update(Long id, PublicacaoDTO dto) {
         Publicacao publicacao = publicacaoRepository.findById(id);
-
-        publicacao.setId(id);
+        
+        if (publicacao == null) {
+            throw new NotFoundException("Publicação não encontrada.");
+        }
+    
         publicacao.setTitulo(dto.titulo());
         publicacao.setConteudo(dto.conteudo());
+        publicacao.setDataPublicacao(new java.util.Date());
 
         publicacaoRepository.persist(publicacao);
-        return PublicacaoResponseDTO.valueOf(publicacao);
+        return PublicacaoFullResponseDTO.valueOf(publicacao);
     }
+    
 
     @Override
-    public PublicacaoResponseDTO findById(Long id) {
+    public PublicacaoFullResponseDTO findById(Long id) {
         Publicacao publicacao = publicacaoRepository.findById(id);
-        return PublicacaoResponseDTO.valueOf(publicacao);
+        return PublicacaoFullResponseDTO.valueOf(publicacao);
     }
 
     @Override
@@ -83,11 +89,10 @@ public class PublicacaoServiceImpl implements PublicacaoService {
     @Transactional
     public void updateNomeImagem(Long id, String nomeImagem) {
         Publicacao publicacao = publicacaoRepository.findById(id);
-
         if (publicacao == null)
             throw new NullPointerException("Nenhuma publicacao encontrada");
-        publicacao.setNomeImagem(nomeImagem);
-        
+        // Ajustado para lidar com listas de imagens
+        publicacao.setNomeImagem(nomeImagem); // Adiciona nova imagem à lista de imagens
         publicacaoRepository.persist(publicacao);
     }
 
@@ -98,7 +103,6 @@ public class PublicacaoServiceImpl implements PublicacaoService {
     public Response salvarImagem(@MultipartForm PublicacaoImageForm form, @PathParam("id") Long id) {
         try {
             publicacaoFileService.salvar(form.getNomeImagem(), form.getImagem());
-
         } catch (IOException e) {
             Error error = new Error("409", e.getMessage());
             return Response.status(Status.CONFLICT).entity(error).build();
