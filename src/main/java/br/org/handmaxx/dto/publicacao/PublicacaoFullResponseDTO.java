@@ -7,7 +7,7 @@ public record PublicacaoFullResponseDTO(
         Long id,
         String titulo,
         String conteudo,
-        String nomeImagens,
+        String nomeImagem,
         Date dataPublicacao) {
 
     public static PublicacaoFullResponseDTO valueOf(Publicacao p) {
