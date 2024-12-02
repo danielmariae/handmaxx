@@ -40,7 +40,7 @@ public class PublicacaoServiceImpl implements PublicacaoService {
 
     @Override
     @Transactional
-    public PublicacaoResponseDTO create(PublicacaoDTO dto) {
+    public PublicacaoFullResponseDTO create(PublicacaoDTO dto) {
         Publicacao publicacao = new Publicacao();
         publicacao.setTitulo(dto.titulo());
         publicacao.setConteudo(dto.conteudo());
@@ -50,7 +50,7 @@ public class PublicacaoServiceImpl implements PublicacaoService {
         publicacao.setAutor(autor);
 
         publicacaoRepository.persist(publicacao);
-        return PublicacaoResponseDTO.valueOf(publicacao);
+        return PublicacaoFullResponseDTO.valueOf(publicacao);
     }
 
     @Override
@@ -139,5 +139,4 @@ public class PublicacaoServiceImpl implements PublicacaoService {
     public List<PublicacaoResponseDTO> findAll() {
         return publicacaoRepository.listAll().stream().map(e -> PublicacaoResponseDTO.valueOf(e)).toList();
     }
-
 }
