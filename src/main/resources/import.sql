@@ -108,11 +108,11 @@ VALUES
 
 insert into publicacao (
    usuario_id,
-   conteudos,
+   conteudo,
    datahoraatualizacao,
    datahoracriacao,
    datapublicacao,
-   nomeimagems,
+   nomeimagem,
    titulo
 ) values ( 1,
            '<div style="text-align: center;"><img src="http://localhost:8080/homepage/download/imagem/c2e94ff5-9e41-438f-8ae1-7d8836e0839d.jpeg" alt="c2e94ff5-9e41-438f-8ae1-7d8836e0839d.jpeg" style="color: var(--ion-color-light); font-size: 1rem; text-align: initial; font-style: inherit; font-variant-ligatures: inherit; font-variant-caps: inherit; height: auto;"></div><div style="text-align: center;"><i>Confira como foi o gol do título do Handmax.</i></div><p style="text-align: justify;">A escolinha de Handebol Handmax alcançou um feito histórico neste último fim de semana ao se consagrar campeã do Campeonato Estadual de Handebol, realizado em Palmas. A equipe, formada por jovens promissores do esporte, mostrou determinação e habilidade ao longo da competição, superando adversários de peso e levando o troféu para casa.</p><p style="text-align: justify;">O torneio, que reuniu as principais equipes do estado, foi um verdadeiro teste de resistência e talento. Com um elenco técnico e dedicado, a Handmax se destacou pela forte defesa e ataque preciso, garantindo vitórias nas fases mais decisivas. O time demonstrou um entrosamento exemplar e um espírito de equipe que conquistou a torcida e impressionou os adversários.</p><p style="text-align: justify;">Os atletas, que treinaram arduamente para chegar à final, comemoraram a conquista com muita emoção. O trabalho de base da escolinha foi destacado como um dos maiores responsáveis pelo sucesso, com treinamentos intensivos e a orientação de técnicos experientes que moldaram cada jogador para se destacar em sua posição.</p><p style="text-align: justify;">Este título não é apenas uma vitória para os atletas e treinadores da Handmax, mas também para o Handebol no estado, mostrando o crescimento do esporte e o potencial da nova geração. A Handmax segue com seus planos de continuar formando atletas de alto nível e, claro, almeja mais conquistas no futuro próximo.</p>',
