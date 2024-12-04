@@ -3,8 +3,6 @@ package br.org.handmaxx.resource;
 import java.util.List;
 
 import br.org.handmaxx.dto.frequencia.FrequenciaDTO;
-import br.org.handmaxx.dto.frequencia.FrequenciaResponseDTO;
-import br.org.handmaxx.dto.frequencia.FrequenciaTreinoDTO;
 import br.org.handmaxx.service.frequencia.FrequenciaService;
 import io.quarkus.security.Authenticated;
 import jakarta.inject.Inject;

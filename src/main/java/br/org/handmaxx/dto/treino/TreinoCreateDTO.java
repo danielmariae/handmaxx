@@ -1,12 +1,12 @@
 package br.org.handmaxx.dto.treino;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 import br.org.handmaxx.dto.atleta.AtletaTreinoDTO;
+import br.org.handmaxx.dto.enums.CategoriaDTO;
+import br.org.handmaxx.dto.enums.NotificacaoAntesDTO;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -15,10 +15,10 @@ public record TreinoCreateDTO(
     @NotBlank
     String local,
     @NotNull @FutureOrPresent(message = "Proibido marcar com datas no passado.") 
-    @JsonFormat(pattern = "dd/MM/yyyy") // Define o formato específico para o campo
-    LocalDate data,
-    @NotNull  
-    LocalTime horario,
+    LocalDateTime dataHorario,
     boolean criarTreinoTodosAtletas,
-    List<AtletaTreinoDTO> listarAtletas
+    boolean notificarAtletasAgora,
+    List<CategoriaDTO> listarCategorias,
+    List<AtletaTreinoDTO> listarAtletas,
+    NotificacaoAntesDTO notificarEm
 ) {}

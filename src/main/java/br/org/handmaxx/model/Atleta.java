@@ -67,13 +67,4 @@ public class Atleta extends DefaultEntity {
     public void calcularCategoriaAntesDeSalvar() {
         atualizarCategoria();
     }
-
-    @PreRemove
-    private void removerAssociacoes() {
-        if (treinos != null) {
-            for (Treino treino : treinos) {
-                treino.getListaAtletas().remove(this); // Remove o atleta de cada treino associado
-            }
-        }
-    }
 }

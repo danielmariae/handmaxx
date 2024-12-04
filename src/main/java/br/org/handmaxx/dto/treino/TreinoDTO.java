@@ -1,7 +1,6 @@
 package br.org.handmaxx.dto.treino;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,16 +15,13 @@ public record TreinoDTO(
     @NotBlank
     String local,
     @NotNull @FutureOrPresent(message = "Proibido marcar com datas no passado.")
-    LocalDate data,
-    @NotNull  
-    LocalTime horario,
+    LocalDateTime dataHorario,
     List<AtletaTreinoDTO> listarAtletas
     ) {
     public static TreinoDTO valueOf(Treino t){
         return new TreinoDTO(
             t.getLocal(),
-            t.getData(),
-            t.getHorario(),
+            t.getDataHorario(),
             t.getListaAtletas().stream().map(AtletaTreinoDTO::valueOf).collect(Collectors.toList())
         );
     }

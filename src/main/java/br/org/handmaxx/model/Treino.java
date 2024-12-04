@@ -1,10 +1,10 @@
 package br.org.handmaxx.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
@@ -20,8 +20,7 @@ import lombok.EqualsAndHashCode;
 public class Treino extends DefaultEntity {
     private String local;
     // Atualizar esse treino depois com a UML.
-    private LocalDate data;
-    private LocalTime horario;
+    private LocalDateTime dataHorario;
     @ManyToMany
     @JoinTable(
         name = "atletas_treino", 
@@ -31,9 +30,5 @@ public class Treino extends DefaultEntity {
     private List<Atleta> listaAtletas;
     @OneToMany(mappedBy = "treino")
     private List<Frequencia> frequencias;
-
-    @PreRemove
-    private void preRemove() {
-        this.listaAtletas.clear(); // Remove as associações antes de excluir o treino
-    }
+    private LocalDateTime dataHorarioNotificacao;
 }
