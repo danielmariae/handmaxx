@@ -11,4 +11,8 @@ public class CategoriaRepository implements PanacheRepository<Categoria> {
     public List<Categoria> findByIds(List<Integer> ids) {
         return list("id IN ?1", ids);
     }
+
+    public Categoria findById(Integer id){
+        return find("id = ?1", id).singleResult();
+    }
 }

@@ -26,10 +26,9 @@ public class UniqueConstraintExceptionMapper implements ExceptionMapper<Persiste
                     .entity(errorResponse)
                     .build();
         }
-
         // Se não for uma violação de chave única, pode-se passar a exceção adiante
         return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                .entity(new ErrorResponse("Erro interno do servidor", "Ocorreu um erro inesperado." + exception.getMessage(), Status.INTERNAL_SERVER_ERROR.getStatusCode()))
+                .entity(new ErrorResponse("Erro interno do servidor", "Ocorreu um erro inesperado: " + exception.getMessage(), Status.INTERNAL_SERVER_ERROR.getStatusCode()))
                 .build();
     }
 }

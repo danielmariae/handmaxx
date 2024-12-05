@@ -16,7 +16,6 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreRemove;
 import jakarta.persistence.PreUpdate;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

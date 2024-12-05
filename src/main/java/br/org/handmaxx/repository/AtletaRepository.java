@@ -1,15 +1,16 @@
 package br.org.handmaxx.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import br.org.handmaxx.model.Atleta;
 import br.org.handmaxx.model.Categoria;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 @ApplicationScoped
 public class AtletaRepository implements PanacheRepository<Atleta> {
-
     //Método customizado para buscar atletas pelo nome
     public List<Atleta> findByNome(String nome) {
         return find("nome", nome).list();
@@ -32,7 +33,6 @@ public class AtletaRepository implements PanacheRepository<Atleta> {
         return find("SELECT a from CadastroAtletaToken t JOIN t.atleta a WHERE t.token = ?1", token).singleResult();
     }
     
-    public List<Atleta> findByCategorias(List<Categoria> categorias){ 
-        return list("categoria IN ?1", categorias);
-    }
-}
+    public Optional<List<Atleta>> findByCategoria(Categoria categoria) {
+        return Optional.ofNullable(list("categoria", categoria));
+    }}

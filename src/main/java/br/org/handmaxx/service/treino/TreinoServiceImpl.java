@@ -3,6 +3,7 @@ package br.org.handmaxx.service.treino;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -50,8 +51,8 @@ public class TreinoServiceImpl implements TreinoService {
 
         if (treinoExistente.isPresent()) {
             ErrorResponse errorResponse = new ErrorResponse(
-                    "Erro ao criar treino",
-                    "TreinoServiceImpl(create): Já há treino cadastrado na mesma data e mesmo horário.",
+                    "Erro ao criar treino: Já há treino cadastrado na mesma data e mesmo horário.",
+                    "TreinoServiceImpl(create)",
                     403);
             throw new CustomException(errorResponse);
         }
@@ -60,27 +61,33 @@ public class TreinoServiceImpl implements TreinoService {
 
         treino.setLocal(treinoDTO.local());
         treino.setDataHorario(treinoDTO.dataHorario());
-
+        
         if (treinoDTO.criarTreinoTodosAtletas()) {
             List<Atleta> todosAtletas = atletaRepository.findAll().list();
             treino.setListaAtletas(todosAtletas);
-        } else if (!treinoDTO.listarAtletas().isEmpty()) {
-            treino.setListaAtletas(relacionarAtletasPorIdsAtletas(treinoDTO.listarAtletas()));
-        } else if (!treinoDTO.listarCategorias().isEmpty()) {
-            treino.setListaAtletas(relacionarAtletasPorCategorias(treinoDTO.listarCategorias()));
+        } else if (!treinoDTO.listarAtletas().isEmpty() && !treinoDTO.criarTreinoTodosAtletas()) {
+            System.out.println("Tentando buscar atletas por Ids.");
+            List<Atleta> atletasIds = relacionarAtletasPorIdsAtletas(treinoDTO.listarAtletas());
+            treino.setListaAtletas(atletasIds);
+        } else if (!treinoDTO.listarCategorias().isEmpty() && !treinoDTO.criarTreinoTodosAtletas()) {
+            System.out.println("Tentando buscar atletas por categorias.");
+            List<Atleta> atletasCategoria = relacionarAtletasPorCategorias(treinoDTO.listarCategorias());
+            treino.setListaAtletas(atletasCategoria);
         }else{
             throw new CustomException(new ErrorResponse("Nenhum atleta selecionado.", "TreinoServiceImpl(create)", 400));
         }
+
 
         try {
             treinoRepository.persist(treino);
         } catch (PersistenceException e) {
             ErrorResponse errorResponse = new ErrorResponse(
-                    "Erro ao criar treino",
-                    "TreinoServiceImpl(create): " + e.getMessage(),
+                    "Erro ao criar treino: "+ e.getMessage(),
+                    "TreinoServiceImpl(create)" ,
                     500);
             throw new CustomException(errorResponse);
         }
+
         if(treinoDTO.notificarAtletasAgora())
             notificarTodosAtletasCreate(treino);
         
@@ -88,27 +95,20 @@ public class TreinoServiceImpl implements TreinoService {
     }
 
     private List<Atleta> relacionarAtletasPorIdsAtletas(List<AtletaTreinoDTO> atletasListados) {
-        List<Long> ids = atletasListados.stream().map(AtletaTreinoDTO::id).toList();
-        List<Atleta> atletasEncontrados = atletaRepository.findByIds(ids);
-        List<Long> idsNaoEncontrados = ids.stream()
-                .filter(id -> atletasEncontrados.stream()
-                .noneMatch(atleta -> atleta.getId().equals(id)))
-                .toList();
-
-        if (!idsNaoEncontrados.isEmpty()) {
-            throw new CustomException(new ErrorResponse(
-                    "Atletas não encontrados para os ID's: " + String.join(", ", idsNaoEncontrados.toString()),
-                    "TreinoService(criarTreino)",
-                    404
-            ));
+        List<Atleta> atletasEncontrados = new ArrayList<>();
+        for(AtletaTreinoDTO atleta : atletasListados){
+            Atleta encontrado = atletaRepository.findById(atleta.id());
+            atletasEncontrados.add(encontrado);
         }
         return atletasEncontrados;
     }
 
     private List<Atleta> relacionarAtletasPorCategorias(List<CategoriaDTO> categoriasListadas) {
-        List<Integer> ids = categoriasListadas.stream().map(CategoriaDTO::id).toList();
-        List<Categoria> categoriasEncontradas = categoriaRepository.findByIds(ids);
-        List<Atleta> atletasEncontrados = atletaRepository.findByCategorias(categoriasEncontradas);
+        List<Atleta> atletasEncontrados = new ArrayList<>();
+        for (CategoriaDTO dto : categoriasListadas) {
+            Categoria categoria = Categoria.valueOf(dto.enumName());
+            Optional<List<Atleta>> atletaCategoriaOpt = atletaRepository.findByCategoria(categoria); 
+            atletaCategoriaOpt.ifPresent(atletasEncontrados::addAll);        }
         return atletasEncontrados;
     }
 
@@ -132,7 +132,7 @@ public class TreinoServiceImpl implements TreinoService {
     public TreinoFullResponseDTO findById(Long id) {
         Treino treino = treinoRepository.findById(id);
         if (treino == null) {
-            throw new CustomException(new ErrorResponse("Erro ao procurar treino.", "TreinoServiceImpl(findById): Treino não encontrado", 404));
+            throw new CustomException(new ErrorResponse("Erro ao procurar treino: Treino não encontrado", "TreinoServiceImpl(findById)", 404));
         }
         return TreinoFullResponseDTO.valueOf(treino);
     }
@@ -148,7 +148,7 @@ public class TreinoServiceImpl implements TreinoService {
     public TreinoFullResponseDTO update(TreinoDTO dto, Long id) {
         Treino treino = treinoRepository.findById(id);
         if (treino == null) {
-            throw new CustomException(new ErrorResponse("Erro ao atualizar treino.", "TreinoServiceImpl(update): Treino não encontrado.", 404));
+            throw new CustomException(new ErrorResponse("Erro ao atualizar treino: Treino não encontrado.", "TreinoServiceImpl(update)", 404));
         }
 
         treino.setLocal(dto.local());
