@@ -72,6 +72,14 @@ public class TreinoResource {
         return Response.status(200).entity(treinoService.findAll()).build();
     }
 
+    @GET
+    @Transactional
+    @Path("/next-3")
+
+    public Response getProximosTresTreinos() {
+        return Response.status(200).entity(treinoService.findProximosTresTreinos()).build();
+    }
+
     // // Permitir que qualquer usuário autenticado possa buscar atletas por nome
     // @GET
     // @Path("/nome/{nome}")

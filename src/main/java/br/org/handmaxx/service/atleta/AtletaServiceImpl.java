@@ -390,6 +390,11 @@ public class AtletaServiceImpl implements AtletaService {
         return true;
     }
 
+    @Override
+    public Long countTodosAtletas(){
+        return atletaRepository.count();
+    }
+
     private String retirarPrimeiroNove(String numero){
 
         if (numero == null || numero.length() <= 10) {

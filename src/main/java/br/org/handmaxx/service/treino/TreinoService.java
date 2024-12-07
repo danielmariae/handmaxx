@@ -13,4 +13,5 @@ public interface TreinoService {
     public void delete(Long id);   
     public TreinoFullResponseDTO findById(Long id);
     public List<TreinoResponseDTO> findAll();
+    public List<TreinoResponseDTO> findProximosTresTreinos();
 }

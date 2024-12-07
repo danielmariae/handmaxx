@@ -20,4 +20,5 @@ public interface AtletaService {
     public void gerarTokenCadastro(Long id);
     public boolean validarToken(String token);
     public AtletaResponseDTO completarCadastroToken(AtletaDTO dto, String token);
+    public Long countTodosAtletas();
 }

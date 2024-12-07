@@ -98,7 +98,6 @@ public class AtletaResource {
     @Authenticated
     @Transactional
     public Response getById(@PathParam("id") Long id) {
-
         return Response.status(200).entity(atletaService.findById(id)).build();
     }
 
@@ -153,5 +152,12 @@ public class AtletaResource {
         }
     }
 
-    
+    @GET
+    @Path("/count/all")
+    @Authenticated
+    @Transactional
+    public Response countTodosAtletas() {
+        return Response.ok(atletaService.countTodosAtletas()).build();
+    }
+
 }

@@ -68,6 +68,7 @@ public class TreinoServiceImpl implements TreinoService {
         );
         
         if (treinoDTO.criarTreinoTodosAtletas()) {
+            System.out.println("Caiu no todos atletas (explique como!!!)");
             List<Atleta> todosAtletas = atletaRepository.findAll().list();
             treino.setListaAtletas(todosAtletas);
         } else if (!treinoDTO.listarAtletas().isEmpty() && !treinoDTO.criarTreinoTodosAtletas()) {
@@ -169,6 +170,12 @@ public class TreinoServiceImpl implements TreinoService {
     @Override
     public List<TreinoResponseDTO> findAll() {
         List<Treino> treinos = treinoRepository.findAll().list();
+        return treinos.stream().map(TreinoResponseDTO::valueOf).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<TreinoResponseDTO> findProximosTresTreinos() {
+        List<Treino> treinos = treinoRepository.findProximosTresTreinos();
         return treinos.stream().map(TreinoResponseDTO::valueOf).collect(Collectors.toList());
     }
 
