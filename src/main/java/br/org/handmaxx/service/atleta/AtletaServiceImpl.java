@@ -15,8 +15,10 @@ import br.org.handmaxx.dto.mensagem.MensagemDTO;
 import br.org.handmaxx.model.Atleta;
 import br.org.handmaxx.model.CadastroAtletaToken;
 import br.org.handmaxx.model.QuestionarioSocial;
+import br.org.handmaxx.model.Treino;
 import br.org.handmaxx.repository.AtletaRepository;
 import br.org.handmaxx.repository.CadastroAtletaTokenRepository;
+import br.org.handmaxx.repository.TreinoRepository;
 import br.org.handmaxx.resource.WhatsappResource;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -32,6 +34,10 @@ public class AtletaServiceImpl implements AtletaService {
 
     @Inject
     CadastroAtletaTokenRepository cadastroTokenRepository;
+
+    @Inject
+    TreinoRepository treinoRepository;
+
 
     @Inject
     WhatsappResource whatsAppResource;
@@ -77,6 +83,42 @@ public class AtletaServiceImpl implements AtletaService {
                     "AtletaServiceImpl(create)",
                     500);
             throw new CustomException(errorResponse);
+        }
+
+        return AtletaResponseDTO.valueOf(atleta);
+    }
+
+    @Override
+    @Transactional
+    public AtletaResponseDTO createInitialWithTreino(AtletaCadastroInicialDTO dto, Long treinoId) {
+        Atleta atleta = new Atleta();
+        atleta.setNome(dto.nome());
+        atleta.setTelefone(dto.telefone()); // Usar o telefone no lugar do CPF
+        atleta.setDataNascimento(dto.dataNascimento());
+        atleta.atualizarCategoria(); // Atualizar a categoria com base na idade
+        atleta.setCadastroCompleto(false); // Definir como cadastro incompleto
+        
+        try {
+            atletaRepository.persist(atleta);
+        } catch (PersistenceException e) {
+            throw new CustomException(new ErrorResponse("Erro ao criar atleta: "+e.getCause().getMessage(),
+                    "AtletaServiceImpl(createInitial)", 500));
+        }
+    
+        if(dto.enviarCadastroTelefone()){
+            gerarTokenCadastro(atleta);
+        }
+
+        Treino treino = treinoRepository.findById(treinoId);
+        List<Atleta> atletas = treino.getListaAtletas();
+        atletas.add(atleta);
+        treino.setListaAtletas(atletas);
+        
+        try {
+            treinoRepository.persist(treino);
+        } catch (PersistenceException e) {
+            throw new CustomException(new ErrorResponse("Erro ao criar atleta: "+e.getCause().getMessage(),
+                    "AtletaServiceImpl(createInitial)", 500));
         }
 
         return AtletaResponseDTO.valueOf(atleta);

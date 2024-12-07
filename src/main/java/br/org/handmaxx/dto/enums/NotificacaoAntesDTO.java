@@ -4,9 +4,10 @@ import br.org.handmaxx.model.NotificacaoAntes;
 
 public record NotificacaoAntesDTO(
     Integer id,
-    String descricao
+    String descricao,
+    String enumName
 ) {
     public static  NotificacaoAntesDTO valueOf(NotificacaoAntes n){
-        return new NotificacaoAntesDTO(n.getId(), n.getDescricao());
+        return new NotificacaoAntesDTO(n.getId(), n.getDescricao(), n.toString());
     }
 }

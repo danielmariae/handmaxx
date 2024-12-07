@@ -1,6 +1,7 @@
 package br.org.handmaxx.service.treino;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import br.org.handmaxx.dto.treino.TreinoFullResponseDTO;
 import br.org.handmaxx.dto.treino.TreinoResponseDTO;
 import br.org.handmaxx.model.Atleta;
 import br.org.handmaxx.model.Categoria;
+import br.org.handmaxx.model.NotificacaoAntes;
 import br.org.handmaxx.model.Treino;
 import br.org.handmaxx.repository.AtletaRepository;
 import br.org.handmaxx.repository.CategoriaRepository;
@@ -61,6 +63,9 @@ public class TreinoServiceImpl implements TreinoService {
 
         treino.setLocal(treinoDTO.local());
         treino.setDataHorario(treinoDTO.dataHorario());
+        treino.setDataHorarioNotificacao(
+            calcularDataHorarioNotificacao(treinoDTO.dataHorario(), NotificacaoAntes.valueOf(treinoDTO.notificarEm().enumName()))
+        );
         
         if (treinoDTO.criarTreinoTodosAtletas()) {
             List<Atleta> todosAtletas = atletaRepository.findAll().list();
@@ -87,7 +92,7 @@ public class TreinoServiceImpl implements TreinoService {
                     500);
             throw new CustomException(errorResponse);
         }
-
+        
         if(treinoDTO.notificarAtletasAgora())
             notificarTodosAtletasCreate(treino);
         
@@ -108,9 +113,33 @@ public class TreinoServiceImpl implements TreinoService {
         for (CategoriaDTO dto : categoriasListadas) {
             Categoria categoria = Categoria.valueOf(dto.enumName());
             Optional<List<Atleta>> atletaCategoriaOpt = atletaRepository.findByCategoria(categoria); 
-            atletaCategoriaOpt.ifPresent(atletasEncontrados::addAll);        }
+            atletaCategoriaOpt.ifPresent(atletasEncontrados::addAll);        
+        }
         return atletasEncontrados;
     }
+
+    private LocalDateTime calcularDataHorarioNotificacao(LocalDateTime dataHorario, NotificacaoAntes notificacaoAntes) {
+    if (notificacaoAntes == null) {
+        throw new IllegalArgumentException("O tipo de notificação não pode ser nulo.");
+    }
+
+    switch (notificacaoAntes) {
+        case TRINTA_MINUTOS:
+            return dataHorario.minusMinutes(30);
+        case UMA_HORA:
+            return dataHorario.minusHours(1);
+        case DUAS_HORAS:
+            return dataHorario.minusHours(2);
+        case OITO_HORAS:
+            return dataHorario.minusHours(8);
+        case DOZE_HORAS:
+            return dataHorario.minusHours(12);
+        case VINTE_QUATRO_HORAS:
+            return dataHorario.minusDays(1);
+        default:
+            throw new IllegalArgumentException("Tipo de notificação inválido: " + notificacaoAntes);
+    }
+}
 
     @Override
     @Transactional

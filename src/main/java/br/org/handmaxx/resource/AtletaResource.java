@@ -48,6 +48,14 @@ public class AtletaResource {
         return Response.status(201).entity(atletaService.createInitial(dto)).build();
     }
 
+    // Cadastro inicial com PATCH (dados mínimos)
+    @POST
+    @Path("/initial/{treino}")
+    @Transactional
+    @Authenticated
+    public Response createInitialWithTreino(@Valid AtletaCadastroInicialDTO dto, @PathParam("treino") Long treinoId) {
+        return Response.status(201).entity(atletaService.createInitialWithTreino(dto, treinoId)).build();
+    }
     @PUT
     @Path("/token/{token}")
     @PermitAll
