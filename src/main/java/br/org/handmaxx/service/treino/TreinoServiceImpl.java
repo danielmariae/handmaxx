@@ -94,8 +94,9 @@ public class TreinoServiceImpl implements TreinoService {
             throw new CustomException(errorResponse);
         }
         
-        if(treinoDTO.notificarAtletasAgora())
+        if(treinoDTO.notificarAtletasAgora()){
             notificarTodosAtletasCreate(treino);
+        }
         
         return TreinoFullResponseDTO.valueOf(treino);
     }
