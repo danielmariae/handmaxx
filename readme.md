@@ -1,73 +1,48 @@
-<h1> Olá! Bem-vindo ao projeto HANDMAXX.</h1>
+**Este repositório foi oficialmente integrado ao projeto principal [HandMax](https://github.com/LucasCastroo/handmax), consolidando todos os módulos em uma única plataforma.**
 
-Este projeto foi feito usando a plataforma Quarkus e as linguagens: Java, SQL (através do SGBD PostgreSQL), AngularJS, NodeJS.
+---
 
-Como fazer para executar o projeto:
+# 🧠 Repositório Arquivado: HandMaxx Backend
 
-<h3>BANCO DE DADOS</h3>
+Este repositório continha o backend original do sistema **HandMaxx**, desenvolvido com Quarkus e Java para apoiar a gestão de uma escolinha de handebol sem fins lucrativos. A aplicação foi projetada para facilitar o acompanhamento de atletas, treinos, frequência e comunicação com a comunidade.
 
-*Necessário ter o PostgreSQL instalado, a partir da versão 14.*
+## 🔄 Integração ao Projeto Principal
 
-**1. Criar usuário no PgAdmin com as seguintes informações de usuário:**
+A partir de novembro de 2025, este backend foi **integrado ao repositório oficial do projeto HandMax**, disponível em:
 
-```java
-Nome de usuário: handmaxx_admin
-Senha: 123456
-```
-**2. Criar o banco de dados informando o usuário 'handmaxx_admin' como admin.**
+👉 [github.com/LucasCastroo/handmax](https://github.com/LucasCastroo/handmax)
 
-```
-Nome da base de dados: handmaxx_db
-```
+Essa integração visa:
 
-**3. Atualizar endereço do Postgres no arquivo application.propeties no seguinte caminho:**
-```
-.\src\main\resources\application.properties
-```
+- Consolidar todos os módulos (frontend, backend e landing page) em um único repositório
+- Facilitar a manutenção, colaboração e evolução do projeto
+- Centralizar a documentação, testes e deploys
 
-<h3>BACKEND</h3>
+## 📦 Conteúdo Original
 
-*Necessário ter o JDK ou OpenJDK instalado na versão 17.*
+Este repositório incluía:
 
-**1. Verificar instalação do JDK 17, o suportado por esse projeto. Digite o comando:**
+- API REST com Quarkus (Java 17)
+- Integração com PostgreSQL
+- Serviços de envio de e-mail via SMTP
+- Comunicação automatizada via API WhatsApp (Docker)
+- Autenticação com JWT
+- Documentação via Swagger UI
 
-```
-java --version
-```
-**2. Compilar o Quarkus e iniciar execução do servidor através dos comandos (usar Terminal ou PowerShell):**
-```
-./mvnw compile quarkus:dev
+## 📁 Novo Local do Backend
 
-# Caso esteja no Linux ou MacOs, usar:
-mvn compile quarkus:dev
-```
-
-<h3>API DO WHATSAPP</h3>
-
-*Necessário ter o Docker Desktop instalado (em qualquer plataforma).*
-
-**1. Executar os comandos abaixo:**
+O backend agora está disponível na seguinte pasta do repositório principal:
 
 ```
-docker pull devlikeapro/waha
-docker run -it -p 3000:3000/tcp -e "WHATSAPP_DEFAULT_ENGINE=NOWEB" devlikeapro/waha
+/handmax/backend/
 ```
 
-**Fazer a conexão com WhatsApp, acessando o endereço: http://localhost:3000/dashboard**
+Todas as instruções de execução, configuração e integração foram migradas para o README oficial do projeto.
 
-<h3>EMAIL (GMAIL)</h3>
+## 📄 Licença
 
-*Necessário ter o Docker Desktop instalado (em qualquer plataforma).*
+Este projeto permanece sob a licença [MIT](https://github.com/LucasCastroo/handmax/blob/master/LICENSE).
 
-**1. Configurar em application.properties:**
+---
 
-```
-quarkus.mailer.from=#@gmail.com // Colocar aqui seu email do Google.
-quarkus.mailer.host=smtp.gmail.com
-quarkus.mailer.port=465
-quarkus.mailer.ssl=true
-quarkus.mailer.username=#@gmail.com // Colocar aqui também seu email do Google.
-quarkus.mailer.password=# // Aqui digitar a senha de aplicativo, obtida nas configurações de segurança do seu gmail.
-quarkus.mailer.mock=false // Se colocar = true, ele não enviará os emails.
-```
-
+Se você chegou até aqui buscando o backend do HandMaxx, recomendamos acessar o repositório consolidado para obter a versão mais atualizada e completa do sistema.
