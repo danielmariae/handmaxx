@@ -8,7 +8,7 @@ Este repositório continha o backend original do sistema **HandMaxx**, desenvolv
 
 ## 🔄 Integração ao Projeto Principal
 
-A partir de novembro de 2025, este backend foi **integrado ao repositório oficial do projeto HandMax**, disponível em:
+A partir de novembro de 2024, este backend foi **integrado ao repositório oficial do projeto HandMax**, disponível em:
 
 👉 [github.com/LucasCastroo/handmax](https://github.com/LucasCastroo/handmax)
 
